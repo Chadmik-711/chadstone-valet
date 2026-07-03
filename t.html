@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Valet Ticket — Chadstone</title>
+<!-- Short customer-ticket URL: keeps the check-in SMS inside one segment.
+     Forwards to the full ticket page, preserving ?t=<ticket> (+ any hash). -->
+<meta http-equiv="refresh" content="0; url=ticket.html">
+<link rel="canonical" href="ticket.html">
+<script>location.replace('ticket.html' + location.search + location.hash);</script>
+</head>
+<body>
+<p>Opening your <a href="ticket.html">valet ticket</a>…</p>
+</body>
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chadstone Valet — Staff &amp; Manager Manual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --maroon:#531620;--maroon-light:#6e1d2c;--bronze:#a48d53;--bronze-light:#b08f59;
+    --green:#4a7c4f;--red:#a83838;--sandstone:#f1f0ee;--bone:#fbfaf8;
+    --text:#2a2420;--text-muted:#6c6359;--border:#e3ded7;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',Arial,sans-serif;color:var(--text);line-height:1.6;margin:0;background:#fff}
+  .wrap{max-width:880px;margin:0 auto;padding:32px 26px 80px}
+  header.cover{border-bottom:3px solid var(--bronze);padding-bottom:18px;margin-bottom:8px}
+  header.cover .brand{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--bronze);font-weight:600}
+  header.cover h1{font-size:30px;color:var(--maroon);margin:6px 0 4px}
+  header.cover .sub{color:var(--text-muted);font-size:14px}
+  h2{font-size:21px;color:var(--maroon);margin:38px 0 6px;padding-top:10px;border-top:1px solid var(--border)}
+  h3{font-size:16px;color:var(--maroon-light);margin:22px 0 4px}
+  h4{font-size:14px;color:var(--text);margin:16px 0 2px;text-transform:uppercase;letter-spacing:.5px}
+  p{margin:6px 0}
+  ul,ol{margin:6px 0 12px;padding-left:22px}
+  li{margin:3px 0}
+  code{background:var(--sandstone);padding:1px 6px;border-radius:4px;font-family:'Courier New',monospace;font-size:.9em}
+  .tag{display:inline-block;background:var(--maroon);color:#fff;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;letter-spacing:.5px;vertical-align:middle}
+  .tag.bronze{background:var(--bronze)}.tag.green{background:var(--green)}.tag.red{background:var(--red)}
+  .note{background:var(--sandstone);border-left:3px solid var(--bronze);padding:10px 14px;border-radius:0 6px 6px 0;margin:12px 0;font-size:13.5px}
+  .note.warn{border-left-color:var(--red)}
+  .note.tip{border-left-color:var(--green)}
+  .note b{color:var(--maroon)}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin:12px 0}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);background:var(--sandstone)}
+  td.mono{font-family:'Courier New',monospace;font-weight:bold;color:var(--maroon);white-space:nowrap}
+  .toc{background:var(--sandstone);border-radius:8px;padding:16px 20px;margin:18px 0 8px;column-count:2;column-gap:30px}
+  .toc a{color:var(--maroon);text-decoration:none;font-size:13.5px;display:block;padding:3px 0;break-inside:avoid}
+  .toc a:hover{text-decoration:underline}
+  .toc .lead{font-weight:700;color:var(--text);text-transform:uppercase;font-size:11px;letter-spacing:1px;margin-top:8px}
+  .steps{counter-reset:step}
+  .steps li{margin:7px 0}
+  .pill{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--border);border-radius:5px;padding:2px 8px;font-size:12px;font-weight:600;background:var(--bone)}
+  .kbd{font-family:'Courier New',monospace;background:#fff;border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:.9em}
+  figure.shot{margin:16px 0 18px;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+  figure.shot img{display:block;width:100%;height:auto}
+  figure.shot figcaption{padding:8px 13px;font-size:12px;color:var(--text-muted);background:var(--sandstone);border-top:1px solid var(--border)}
+  figure.shot figcaption b{color:var(--maroon)}
+  .printbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);padding:10px 0;margin-bottom:10px;display:flex;justify-content:flex-end;z-index:10}
+  .btn{background:var(--maroon);color:#fff;border:none;border-radius:6px;padding:9px 18px;font-size:13px;font-weight:600;letter-spacing:.5px;cursor:pointer;font-family:inherit}
+  .btn:hover{background:var(--maroon-light)}
+  footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);color:var(--text-muted);font-size:12px}
+  @media print{
+    .printbar{display:none}
+    body{font-size:11.5px}
+    .wrap{max-width:none;padding:0 8px}
+    h2{break-after:avoid;page-break-after:avoid}
+    h3,h4{break-after:avoid}
+    table,.note,ul,ol{break-inside:avoid}
+    a{color:var(--text);text-decoration:none}
+  }
+  @media (max-width:620px){ .toc{column-count:1} header.cover h1{font-size:24px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="printbar"><button class="btn" onclick="window.print()">🖨 Print / Save as PDF</button></div>
+
+  <header class="cover">
+    <div class="brand">Chadstone Melbourne</div>
+    <h1>Valet App — Staff &amp; Manager Manual</h1>
+    <div class="sub">How to run the day-to-day valet operation and manage the system. Keep this open on the counter tablet or print a copy for the desk.</div>
+  </header>
+
+  <div class="toc">
+    <div class="lead">Getting started</div>
+    <a href="#overview">1. What this app is</a>
+    <a href="#login">2. Logging in &amp; screen modes</a>
+    <a href="#tabs">3. The tabs at a glance</a>
+    <div class="lead">Daily operations</div>
+    <a href="#checkin">4. Checking a car IN</a>
+    <a href="#pickup">5. Returning a car (Quick Pickup)</a>
+    <a href="#queue">6. The Pickup Queue</a>
+    <a href="#active">7. Active Cars</a>
+    <a href="#checkout">8. Checking a car OUT &amp; payment</a>
+    <a href="#bags">9. Bags (hands-free shopping)</a>
+    <a href="#carwash">10. Car wash service</a>
+    <div class="lead">Insight &amp; admin</div>
+    <a href="#dashboard">11. The Dashboard</a>
+    <a href="#customers">12. Customers</a>
+    <a href="#reports">13. Reports</a>
+    <a href="#settings">14. Settings (manager)</a>
+    <a href="#hardware">15. Hardware &amp; integrations</a>
+    <div class="lead">Reference</div>
+    <a href="#pricing">16. Pricing reference</a>
+    <a href="#troubleshooting">17. Troubleshooting</a>
+    <a href="#glossary">18. Glossary</a>
+  </div>
+
+  <!-- 1 -->
+  <h2 id="overview">1. What this app is</h2>
+  <p>This is the Chadstone valet dashboard — a single web app that runs in the browser on every device at the stand (counter PC, tablets and staff phones). It tracks every car from drop-off to pick-up, takes payment, prints key tags, texts customers their ticket, and gives the manager live reports.</p>
+  <ul>
+    <li><b>Cloud-synced:</b> all devices share the same live data through a secure cloud database. A car logged on the tablet appears on the counter PC within a couple of seconds.</li>
+    <li><b>Works offline:</b> if the internet drops, the app keeps working and syncs everything once it reconnects.</li>
+    <li><b>Installable:</b> it can be added to a tablet's home screen like an app (full-screen, no browser bars).</li>
+  </ul>
+  <div class="note tip"><b>Golden rule:</b> always log the car the moment you take the keys, and mark it out the moment the customer drives away. The reports, revenue and "cars on site" counts are only as accurate as the timing of your taps.</div>
+
+  <!-- 2 -->
+  <h2 id="login">2. Logging in &amp; screen modes</h2>
+  <h3>Logging in</h3>
+  <p>Open the app and sign in with your staff name and password. Each staff member has their own login so the app can credit who parked and who returned each car (used in the Staff Performance report). Your manager sets up logins under <a href="#settings">Settings → Staff &amp; Access</a>.</p>
+  <h3>Mobile vs Desktop mode</h3>
+  <p>A toggle in the top bar switches between two layouts (the choice is remembered per device):</p>
+  <ul>
+    <li><span class="tag bronze">Mobile</span> Fewer tabs — just the day-to-day ones (New Entry, Quick Pickup, Queue, Bags, Active Cars). Best on a phone at the kerb.</li>
+    <li><span class="tag">Desktop</span> Every tab including Dashboard, Customers, Reports and Settings. Best on the counter PC.</li>
+  </ul>
+  <div class="note"><b>Keep screen awake:</b> turn on the wake-lock option (Settings → Devices) on the counter tablet so the screen doesn't sleep during a shift.</div>
+
+  <!-- 3 -->
+  <h2 id="tabs">3. The tabs at a glance</h2>
+  <table>
+    <tr><th>Tab</th><th>What it's for</th></tr>
+    <tr><td><b>Dashboard</b></td><td>Live snapshot of the day — cars in/out, on site now, revenue, handover notes, top brands, recent activity.</td></tr>
+    <tr><td><b>New Entry</b></td><td>Check a car in (the drop-off form).</td></tr>
+    <tr><td><b>Quick Pickup</b></td><td>Find a car fast to return it — scan the key tag or search.</td></tr>
+    <tr><td><b>Queue</b></td><td>Cars customers have requested, with a countdown so you know what to fetch next.</td></tr>
+    <tr><td><b>Bags</b></td><td>Hands-free shopping — bags collected from stores and put in the customer's car.</td></tr>
+    <tr><td><b>Active Cars</b></td><td>Every car currently on site, with how long it's been here, the running fee, and all the actions.</td></tr>
+    <tr><td><b>Customers</b></td><td>Searchable database of everyone who's used the valet, with their visit history.</td></tr>
+    <tr><td><b>Reports</b></td><td>Manager analytics — volume, payments, staff, customers, comparisons and the full log.</td></tr>
+    <tr><td><b>Settings</b></td><td>Manager setup — staff, car park, retailers, messaging, devices, data &amp; backup.</td></tr>
+  </table>
+  <p>The <b>Queue</b>, <b>Bags</b> and <b>Active Cars</b> tabs show a small number badge when there's something waiting.</p>
+
+  <!-- 4 -->
+  <h2 id="checkin">4. Checking a car IN</h2>
+  <p>Go to <b>New Entry</b>. The ticket number and time-in are filled automatically. Fill the rest as you take the keys:</p>
+  <figure class="shot"><img src="screenshots/manual/new-entry.png" alt="New Entry / check-in form"><figcaption><b>New Entry</b> — the check-in form, including the optional car-wash picker and the tap-to-mark damage diagram.</figcaption></figure>
+  <table>
+    <tr><th>Field</th><th>Notes</th></tr>
+    <tr><td><b>Customer Name</b> <span class="tag red">required</span></td><td>Who the car belongs to.</td></tr>
+    <tr><td><b>Phone</b> <span class="tag red">required</span></td><td>Australian mobile (e.g. <code>0412 345 678</code>). Used to text them their ticket and pickup updates.</td></tr>
+    <tr><td><b>Car Brand</b> <span class="tag red">required</span></td><td>Pick the make; Model and Colour are optional but help identify the car.</td></tr>
+    <tr><td><b>Parking Bay</b> <span class="tag red">required</span></td><td>Where you parked it (e.g. <code>A1</code>). Critical for finding it again.</td></tr>
+    <tr><td><b>Number plate (Rego)</b> <span class="tag red">required</span></td><td>Type it, or use the camera to read it automatically (see Plate scan below).</td></tr>
+    <tr><td><b>Attendant</b></td><td>Your initials — credits you as the staff member who parked it.</td></tr>
+    <tr><td><b>Charge parking to shop</b></td><td>VIP / store-validated parking — the shop pays, settle later. Optionally set how much the shop covers.</td></tr>
+    <tr><td><b>Car wash</b></td><td>Optional — add a wash now (see <a href="#carwash">section 10</a>).</td></tr>
+    <tr><td><b>Notes</b></td><td>Damage observations, special instructions, etc.</td></tr>
+    <tr><td><b>VIP</b></td><td>Tick to flag a VIP — they get a star throughout the app.</td></tr>
+  </table>
+  <h3>Pre-existing damage</h3>
+  <p>Tap the car diagram to mark any existing scratches or dents <i>before</i> you park. These marks are shown again at checkout so you can verify the car is handed back in the same condition — your protection against false claims.</p>
+  <h3>Photo &amp; location</h3>
+  <p>You can attach a photo of the car and capture its GPS location at drop-off for extra proof and easier finding.</p>
+  <h3>Save</h3>
+  <p>Tap <span class="pill">Save</span>. Then automatically:</p>
+  <ul>
+    <li>A <b>key tag prints</b> (if a printer is set up) — attach it to the keys.</li>
+    <li>The customer is <b>texted their QR ticket</b> link (if you entered a mobile) — the message opens pre-filled, just send it.</li>
+    <li>The car appears on <b>Active Cars</b> and the <b>Dashboard</b> on every device.</li>
+  </ul>
+
+  <!-- 5 -->
+  <h2 id="pickup">5. Returning a car (Quick Pickup)</h2>
+  <p>When a customer comes back, use <b>Quick Pickup</b> to find their car instantly:</p>
+  <ul>
+    <li><b>Scan the key tag / their QR ticket</b> — the camera reads it and jumps straight to the car.</li>
+    <li><b>Search</b> by ticket number, name, plate or bay.</li>
+  </ul>
+  <p>The card shows the bay, how long the car's been here and the fee due. From here you can go straight to checkout. You can also use the global search box in the top bar from any screen.</p>
+  <figure class="shot"><img src="screenshots/manual/quick-pickup.png" alt="Quick Pickup screen"><figcaption><b>Quick Pickup</b> — search or scan to find a car; requested cars show an arrival badge and pickup-status buttons.</figcaption></figure>
+  <div class="note"><b>Lost ticket?</b> Tap <span class="pill">🎫 Lost ticket</span> on Quick Pickup. Search the on-site cars by name, plate or phone, confirm the customer's identity (match at least two details, or check photo ID), then release — the release is logged against your login for accountability.</div>
+
+  <!-- 6 -->
+  <h2 id="queue">6. The Pickup Queue</h2>
+  <p>When a customer asks for their car ahead of time (in person, by phone, or via their ticket page), put it in the <b>Queue</b> so the runner knows what to fetch and when.</p>
+  <ul>
+    <li>From Active Cars, tap <span class="pill">Request</span> on the car and enter how many minutes until the customer wants it (the ETA).</li>
+    <li>The Queue sorts by urgency — most overdue first. The button on each car turns colour and counts down: bronze (plenty of time) → amber → red (<b>now / overdue</b>).</li>
+    <li>You can push a live status to the customer's ticket page — "on its way" or "ready at the desk".</li>
+  </ul>
+  <figure class="shot"><img src="screenshots/manual/pickup-queue.png" alt="Pickup Queue screen"><figcaption><b>Queue</b> — requested cars sorted by urgency, with a colour-coded countdown.</figcaption></figure>
+
+  <!-- 7 -->
+  <h2 id="active">7. Active Cars</h2>
+  <p>The working list of every car currently on site. Each row shows ticket, customer, plate, brand, bay, time in, how long it's been here, and the running fee. The duration is colour-coded: green under 2 hours, amber 2–4, red 4+, flashing red 6+.</p>
+  <figure class="shot"><img src="screenshots/manual/active-cars.png" alt="Active Cars screen"><figcaption><b>Active Cars</b> — on-site cars with the grouped action icons, pickup countdown, a car-wash status chip, and "Checked Out Today" below.</figcaption></figure>
+  <h3>Row actions</h3>
+  <p>The small grouped icons cover the occasional actions; the two buttons on the right are the ones you use most:</p>
+  <table>
+    <tr><th>Action</th><th>What it does</th></tr>
+    <tr><td><b>📞 Call</b></td><td>Phones the customer (shows only if a number is on file).</td></tr>
+    <tr><td><b>QR</b></td><td>Re-sends the customer their QR ticket link by text.</td></tr>
+    <tr><td><b>Print</b></td><td>Re-prints the key tag.</td></tr>
+    <tr><td><b>Edit</b></td><td>Fix the bay, time in or customer details.</td></tr>
+    <tr><td><b>Bag</b></td><td>Log a hands-free shopping bag pickup for this car (see section 9).</td></tr>
+    <tr><td><b>Droplet</b></td><td>Add or manage a car wash (see section 10).</td></tr>
+    <tr><td><span class="tag bronze">Request</span></td><td>Put the car in the pickup queue with an ETA.</td></tr>
+    <tr><td><span class="tag">✓ Mark Out</span></td><td>Check the car out and take payment.</td></tr>
+  </table>
+  <p>Below the on-site list is a <b>Checked Out Today</b> section so you can see what's already been returned.</p>
+  <div class="note warn"><b>Overstay alerts:</b> a banner appears at the top of Active Cars listing any cars left <b>overnight</b> (still on site since before the last closing time) or <b>over a set number of hours</b> (default 6, adjustable in <b>Settings → Car Park → Overstay Alert</b>). Tap a car's chip in the banner to go straight to its checkout.</div>
+
+  <!-- 8 -->
+  <h2 id="checkout">8. Checking a car OUT &amp; payment</h2>
+  <p>Tap <span class="tag">✓ Mark Out</span> on the car (from Active Cars or Quick Pickup). The checkout window shows the duration and the fee, broken down into parking + the $20 valet fee. Before confirming:</p>
+  <h3>Discounts &amp; validations</h3>
+  <p>Add a store validation or discount (a percentage or a dollar amount) — e.g. a David Jones validation. Each one is recorded so the manager can see who validates and how much is given away (Reports → Payments → Discounts).</p>
+  <h3>Payment status &amp; method</h3>
+  <table>
+    <tr><th>Status</th><th>Meaning</th></tr>
+    <tr><td><b>Paid</b></td><td>Customer paid now. Choose the method: Card (the norm here), Cash, EFTPOS or Other.</td></tr>
+    <tr><td><b>Unpaid</b></td><td>Left without paying / to chase. Shows as outstanding in reports.</td></tr>
+    <tr><td><b>Complimentary</b></td><td>No charge for the parking (a car wash, if any, is still charged).</td></tr>
+    <tr><td><b>Charged to account / shop</b></td><td>Billed to a shop's account to settle later.</td></tr>
+  </table>
+  <p>You can also add a <b>tip</b>, or override the fee. The <b>Attendant (returning car)</b> field credits who fetched it.</p>
+  <h3>Return condition check</h3>
+  <p>Every checkout has a <b>Return condition</b> step. Leave it on <b>✓ No new damage</b> for a clean handover, or tap <b>⚠ New damage / incident</b> to describe damage found on return and tick that the customer acknowledged it. Logged incidents appear in <b>Reports → Incidents</b> — your record if a claim comes up later.</p>
+  <h3>Square Terminal</h3>
+  <p>If a Square Terminal is set up, tap <span class="pill">Charge on Square Terminal</span> to send the exact amount to the card machine. When the payment succeeds the car is checked out automatically.</p>
+  <div class="note warn"><b>Car still at the wash?</b> If a car has a wash marked "At car wash", checkout warns you before handing it over — don't give the car back until it's back and marked "Washed — back".</div>
+  <p>Confirm to finish. The car leaves the on-site list, the revenue is recorded, and the bill includes any car wash on top of the parking.</p>
+
+  <!-- 9 -->
+  <h2 id="bags">9. Bags (hands-free shopping)</h2>
+  <p>Hands-free shopping lets a customer leave their purchases with stores and have valet collect everything and load it into their car. Track each job on the <b>Bags</b> tab:</p>
+  <figure class="shot"><img src="screenshots/manual/bags.png" alt="Bags screen"><figcaption><b>Bags</b> — each job with its store, bag count and the requested → collecting → in car → done tracker.</figcaption></figure>
+  <ol class="steps">
+    <li>Log the bag pickup (from the car's row in Active Cars, the Bag icon, or the Bags tab) — note the store/location and number of bags.</li>
+    <li>The job moves through: <b>requested → collecting → in car → done</b>.</li>
+    <li><b>Several shops at once.</b> A car can have more than one round at the same time. Tap the Bag icon again (or the customer taps "another shop" on their ticket) to add a round — each keeps its own photos and timing, and earlier rounds aren't lost. Rounds for the same car appear as separate cards labelled <b>#1 of 2</b>, <b>#2 of 2</b>, etc.</li>
+    <li><b>Claim or assign it.</b> Anyone can tap <b>I'll get it</b> to take a job. On <b>desktop</b>, the person at the counter can instead use the <b>Assign to…</b> dropdown to hand it to a specific bag-enabled staff member — it then <b>rings on that person's phone</b> (sound + vibration + an "Assigned to you" popup) and shows as <b>YOUR JOB</b> (highlighted) in their Bags queue. If that staff member has turned on <b>alerts</b> for their phone (Settings → Car-Request Alerts) and is logged in as themselves, they also get an <b>OS notification even when the app is closed</b>. Picked the wrong person? Open the job and use the <b>Reassign…</b> dropdown to switch them, or choose <b>↺ Unassign</b> to put it back in the open queue.</li>
+    <li><b>One proof photo</b> is taken <b>in the car</b> when you load the bags (required; sent to the customer as confirmation). <i>(An in-shop photo step exists but is currently turned off until we have each shop's permission.)</i></li>
+    <li>The app credits both the collector and whoever loaded the car (Reports → Bag Jobs by Staff).</li>
+  </ol>
+  <p>The Bags tab badge shows how many jobs are still open.</p>
+
+  <!-- 10 -->
+  <h2 id="carwash">10. Car wash service</h2>
+  <p>Valet customers can add a car wash from <b>Xtream Car Care</b> in the centre. The valet looks after the whole thing and the customer pays for it on the same valet bill.</p>
+  <h3>How it works</h3>
+  <ol class="steps">
+    <li><b>Add the wash</b> — at check-in (the "Car wash" picker) or anytime while the car is parked (the droplet icon on the Active Cars row). Choose the package and vehicle size (Small = sedan/hatch, Large = SUV/4WD); the price fills in automatically.</li>
+    <li><b>Take it to Xtream</b> — valet staff drive the car over and tap <span class="pill">Taken to car wash</span>. The car shows a maroon "At car wash" chip.</li>
+    <li><b>Bring it back</b> — once washed, drive it back and tap <span class="pill">✓ Back from wash</span>. The chip turns green "Washed — back".</li>
+    <li><b>Customer pays once</b> — at checkout the wash appears as its own line and is added to the parking total. The customer pays valet for everything together.</li>
+  </ol>
+  <div class="note"><b>Settling with Xtream:</b> washes are collected on the valet bill and tracked separately from parking revenue. Enter your <b>wholesale cost</b> per package in <b>Settings → Car Wash</b>, and the <b>Reports → Payments → Car Wash</b> panel shows, per service, what you charged, what you owe Xtream, and your margin.</div>
+  <figure class="shot"><img src="screenshots/manual/settings-carwash.png" alt="Settings — Car Wash costs"><figcaption><b>Settings → Car Wash</b> — enter your Xtream wholesale cost per package and size (retail shown for reference) so the report can work out your margin.</figcaption></figure>
+  <p>Prices are in the <a href="#pricing">pricing reference</a>. To change or remove a wash, tap the chip or droplet to reopen the dialog.</p>
+
+  <!-- 11 -->
+  <h2 id="dashboard">11. The Dashboard</h2>
+  <figure class="shot"><img src="screenshots/manual/dashboard.png" alt="Dashboard screen"><figcaption><b>Dashboard</b> — the day's stat tiles, occupancy gauge, handover notes, top brands and recent activity.</figcaption></figure>
+  <p>The manager's at-a-glance view of today:</p>
+  <ul>
+    <li><b>Stat tiles:</b> Cars In, Cars Out, Currently On Site, Pickups Pending, Today's Revenue, Average Stay. Tap <b>Today's Revenue</b> to see who paid how much.</li>
+    <li><b>Today's Notes / Handover:</b> a shared notepad for the team (VIP arriving at 6pm, Bay 1 reserved, etc.). Auto-saves as you type and clears automatically the next morning.</li>
+    <li><b>Top Brands</b> and <b>Recent Activity</b> for the day.</li>
+  </ul>
+
+  <!-- 12 -->
+  <h2 id="customers">12. Customers</h2>
+  <p>Every car logged builds a customer database, keyed by number plate. Search by name, plate or phone to see someone's full visit history and total spend. Returning customers and VIPs are easy to spot — useful for recognising regulars. Editing a customer's details updates them across all their past visits.</p>
+
+  <!-- 13 -->
+  <h2 id="reports">13. Reports</h2>
+  <p>Pick a date range at the top; every panel updates to that range. The Reports menu groups related panels together:</p>
+  <figure class="shot"><img src="screenshots/manual/reports-management.png" alt="Management Summary report"><figcaption><b>Reports → Management Summary</b> — the centre-facing roll-up: KPIs, pickup wait times, and tenant validations, with a Print / PDF one-pager.</figcaption></figure>
+  <figure class="shot"><img src="screenshots/manual/reports-payments.png" alt="Payments report"><figcaption><b>Reports → Payments</b> — cash-up, shop accounts, the car-wash settlement (charged · cost · margin) and discounts, all stacked.</figcaption></figure>
+  <table>
+    <tr><th>Menu item</th><th>What's inside</th></tr>
+    <tr><td><b>Management Summary</b></td><td>Centre-facing roll-up — cars handled, revenue, tips, car wash, validation value, average pickup wait, peak occupancy and incidents — plus <b>Pickup Wait Times</b> (request→handover SLA) and <b>Tenant Validations</b> (by retailer). Has a <b>Print / PDF</b> one-pager for monthly reporting.</td></tr>
+    <tr><td><b>Daily Volume</b></td><td>Cars per day (with revenue), busiest/slowest day and trend vs the previous period, average by day of week, peak times by hour, peak cars on site, customer spend and brand breakdown.</td></tr>
+    <tr><td><b>Payments</b></td><td>Cash-up: paid revenue split Card/EFTPOS vs cash, tips, outstanding, with non-card payments flagged. Plus <b>Shop Accounts</b>, <b>Car Wash</b> and <b>Discounts</b> panels stacked beneath.</td></tr>
+    <tr><td><b>Staff Performance</b></td><td>Cars parked per attendant, and checkouts + revenue + tips per attendant.</td></tr>
+    <tr><td><b>Customers</b></td><td>Stay-length tiers (how many park free under 2 hr vs paid) and repeat customers by visit count and spend.</td></tr>
+    <tr><td><b>Bag Jobs by Staff</b></td><td>Hands-free shopping jobs per staff member, split into <b>Collected</b> (picked the bags up at the shop) and <b>Delivered</b> (put them in the car), plus <b>Avg time</b> per job per person. A breakdown at the top shows the average <b>Wait to claim</b> (requested → claimed), <b>To shop</b> (claimed → bags photographed at the shop), <b>Shop → car</b> (shop → loaded in car) and <b>Total per job</b>, over the selected range.</td></tr>
+    <tr><td><b>Period Comparison</b></td><td>This week/month/year vs the last.</td></tr>
+    <tr><td><b>Incidents</b></td><td>Cars where new damage was logged at handover, with notes and whether the customer acknowledged it.</td></tr>
+    <tr><td><b>Full Log</b></td><td>Every entry, searchable — the complete record.</td></tr>
+  </table>
+  <p>You can <b>export</b> a report to CSV (for a spreadsheet) or to a print-ready PDF for end-of-day or end-of-week records.</p>
+
+  <!-- 14 -->
+  <h2 id="settings">14. Settings (manager)</h2>
+  <table>
+    <tr><th>Section</th><th>What you set</th></tr>
+    <tr><td><b>Staff &amp; Access</b></td><td>Add/remove staff logins and passwords, and security settings. Each login lets the app credit work to the right person.</td></tr>
+    <tr><td><b>Car Park</b></td><td>Capacity (open spots) for the occupancy gauge, and the <b>overstay alert</b> threshold (hours) that flags long-staying cars on Active Cars.</td></tr>
+    <tr><td><b>Retailers</b></td><td>The list of stores used for validations and charge-to-shop accounts. Edit this to match the centre's tenants.</td></tr>
+    <tr><td><b>Car Wash</b></td><td>Your wholesale cost (what you owe Xtream) per package and size. Lets the Car Wash report show your margin. The customer always pays the retail menu price.</td></tr>
+    <tr><td><b>Alerts &amp; Messaging</b></td><td>Customer SMS (the QR ticket text is sent via ClickSend) and the end-of-day close reminder.</td></tr>
+    <tr><td><b>Devices</b></td><td>Key-tag printer (BIXOLON via the WebPrint bridge), Square Terminal device ID, the camera scanner, and keep-screen-awake.</td></tr>
+    <tr><td><b>Data &amp; Backup</b></td><td>Export/import the data and check cloud-sync status.</td></tr>
+  </table>
+  <div class="note tip"><b>Tip:</b> open the <b>Help &amp; Manual</b> item in the Settings menu at any time to bring this guide back up on the tablet.</div>
+
+  <!-- 15 -->
+  <h2 id="hardware">15. Hardware &amp; integrations</h2>
+  <h4>Key-tag printer (BIXOLON)</h4>
+  <p>Key tags print to a BIXOLON SPP-R200III through the WebPrint bridge app on the device. A tag prints automatically on check-in; you can reprint from the car's row. Set the printer name and connection in Settings → Devices.</p>
+  <h4>QR / key-tag scanner</h4>
+  <p>The camera reads the QR code on a key tag or the customer's ticket to find a car instantly. The scanner library loads the first time you open it. Allow camera access when the browser asks.</p>
+  <h4>Number-plate scan (OCR)</h4>
+  <p>On the check-in form you can photograph the plate to read it automatically instead of typing. It tries a fast cloud read first and falls back to on-device reading offline.</p>
+  <h4>Customer SMS (ClickSend)</h4>
+  <p>When you save a check-in with a mobile number, the customer gets a text with a link to their live QR ticket (showing status and pickup updates). Sent through ClickSend.</p>
+  <h4>Square Terminal</h4>
+  <p>Card payments can be sent straight to a paired Square Terminal from the checkout screen; a successful charge checks the car out automatically. Configure the terminal's Device ID in Settings → Devices.</p>
+
+  <!-- 16 -->
+  <h2 id="pricing">16. Pricing reference</h2>
+  <h3>Parking (valet)</h3>
+  <p>A flat <b>$20 valet fee</b> applies, plus parking time after the first 2 hours free:</p>
+  <table>
+    <tr><th>Duration</th><th>Parking fee</th></tr>
+    <tr><td>0 – 2 hrs</td><td class="mono">FREE</td></tr>
+    <tr><td>2 – 2.5 hrs</td><td class="mono">$3</td></tr>
+    <tr><td>2.5 – 3 hrs</td><td class="mono">$5</td></tr>
+    <tr><td>3 – 3.5 hrs</td><td class="mono">$7</td></tr>
+    <tr><td>3.5 – 4 hrs</td><td class="mono">$10</td></tr>
+    <tr><td>4 – 4.5 hrs</td><td class="mono">$20</td></tr>
+    <tr><td>4.5 – 5 hrs</td><td class="mono">$25</td></tr>
+    <tr><td>5 – 5.5 hrs</td><td class="mono">$30</td></tr>
+    <tr><td>5.5 – 6 hrs</td><td class="mono">$35</td></tr>
+    <tr><td>6 – 6.5 hrs</td><td class="mono">$40</td></tr>
+    <tr><td>6.5 – 7 hrs</td><td class="mono">$45</td></tr>
+    <tr><td>7+ hrs (daily max)</td><td class="mono">$80</td></tr>
+  </table>
+  <p>The total fee is always <b>valet fee + parking</b>. The app calculates it automatically at checkout.</p>
+  <h3>Car wash (Xtream Car Care)</h3>
+  <table>
+    <tr><th>Service</th><th>Small (sedan/hatch)</th><th>Large (SUV/4WD)</th></tr>
+    <tr><td>Xtream Wash (steam wash)</td><td class="mono">$75</td><td class="mono">$95</td></tr>
+    <tr><td>Hand Polish (+wax &amp; polish)</td><td class="mono">$100</td><td class="mono">$130</td></tr>
+    <tr><td>Interior Detailing</td><td class="mono">$195</td><td class="mono">$245</td></tr>
+    <tr><td>Semi Detailing</td><td class="mono">$250</td><td class="mono">$320</td></tr>
+    <tr><td>Full Detailing</td><td class="mono">$295</td><td class="mono">$420</td></tr>
+  </table>
+  <p>Paint correction, paint protection and other specialty services are quote-only — ask Xtream.</p>
+
+  <!-- 17 -->
+  <h2 id="troubleshooting">17. Troubleshooting</h2>
+  <table>
+    <tr><th>Problem</th><th>What to do</th></tr>
+    <tr><td>A car logged on one device isn't on another</td><td>Check the internet. The other device syncs within seconds of reconnecting — nothing is lost; offline changes queue and send automatically.</td></tr>
+    <tr><td>"Connecting to cloud database…" stuck</td><td>Refresh the page. If it persists, check the internet connection on that device.</td></tr>
+    <tr><td>Camera scanner won't open</td><td>Allow camera access when the browser prompts. The app must be on <code>https</code> for the camera to work.</td></tr>
+    <tr><td>Key tag won't print</td><td>Check the WebPrint bridge app is running and the printer name matches Settings → Devices. The bridge and the app must use compatible secure connections.</td></tr>
+    <tr><td>Customer didn't get their text</td><td>Re-send from the car's row (QR action). Confirm the mobile number is a valid Australian mobile.</td></tr>
+    <tr><td>Screen keeps sleeping</td><td>Turn on keep-screen-awake in Settings → Devices.</td></tr>
+    <tr><td>Wrong bay / time entered</td><td>Use the Edit action on the car's row in Active Cars.</td></tr>
+  </table>
+
+  <!-- 18 -->
+  <h2 id="glossary">18. Glossary</h2>
+  <table>
+    <tr><td><b>Active / on site</b></td><td>A car that's been checked in but not yet checked out.</td></tr>
+    <tr><td><b>Attendant</b></td><td>The staff member who parked (in) or returned (out) a car.</td></tr>
+    <tr><td><b>Charge to shop / shop account</b></td><td>Parking billed to a store to settle later, instead of the customer paying.</td></tr>
+    <tr><td><b>Comp</b></td><td>Complimentary — parking given for free.</td></tr>
+    <tr><td><b>ETA</b></td><td>How many minutes until a customer wants their car (pickup queue).</td></tr>
+    <tr><td><b>Key tag</b></td><td>The printed ticket attached to the keys, carrying the QR code.</td></tr>
+    <tr><td><b>Validation</b></td><td>A store-sponsored discount on the parking fee.</td></tr>
+    <tr><td><b>VIP</b></td><td>A flagged customer who gets a star and priority handling.</td></tr>
+  </table>
+
+  <footer>
+    Chadstone Valet App — staff &amp; manager manual. Open this anytime from <b>Settings → Help &amp; Manual</b>.
+    Use the <b>Print / Save as PDF</b> button at the top to make a desk copy.
+  </footer>
+</div>
+</body>
+</html>

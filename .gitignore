@@ -1,0 +1,11 @@
+# Local tooling / preview config
+.claude/
+
+# Internal setup notes (contain the shared-login email + default passwords — keep private)
+SUPABASE-SETUP.md
+
+# Supabase CLI local state (points at whichever project was last linked)
+supabase/.temp/
+
+# Screenshots carried over from the source centre (may contain its customer PII)
+screenshots/

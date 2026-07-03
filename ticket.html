@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111111">
+<title>Your Valet Ticket — Chadstone</title>
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=4">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=4">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=4">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    background:linear-gradient(135deg,#111111 0%,#000000 100%);
+    min-height:100vh;
+    display:flex;align-items:center;justify-content:center;
+    padding:10px;
+    color:#333333;
+  }
+  .card{
+    background:#fff;
+    border-radius:14px;
+    padding:16px 16px 18px;
+    max-width:360px;
+    width:100%;
+    text-align:center;
+    box-shadow:0 16px 50px rgba(0,0,0,.35);
+  }
+  .subtitle{
+    font-size:9px;letter-spacing:2px;text-transform:uppercase;
+    color:#6b6b6b;margin-bottom:8px;
+  }
+  .ticket-label{
+    font-size:10px;letter-spacing:2px;text-transform:uppercase;
+    color:#6b6b6b;margin-bottom:2px;
+  }
+  .ticket-number{
+    font-family:'Courier New',monospace;
+    font-size:30px;font-weight:bold;
+    color:#111111;letter-spacing:3px;
+    margin-bottom:8px;
+  }
+  .qr-wrap{
+    background:#fff;
+    padding:7px;
+    display:inline-block;
+    border:1px solid #e6e6e6;
+    border-radius:8px;
+    margin-bottom:8px;
+  }
+  .qr-wrap canvas, .qr-wrap img{display:block;margin:0 auto;width:116px;height:116px}
+  .details{
+    margin-bottom:6px;
+  }
+  .detail-plate{
+    font-family:'Courier New',monospace;
+    font-size:18px;font-weight:bold;letter-spacing:2px;
+    color:#333333;
+    display:inline-block;
+    border:2px solid #333333;border-radius:6px;
+    padding:2px 12px;background:#fafafa;
+  }
+  .detail-time{
+    font-size:11px;color:#6b6b6b;
+    margin-top:3px;
+  }
+  .instructions{
+    font-size:11px;color:#5b554e;line-height:1.4;
+    margin-bottom:2px;
+  }
+  .footer{
+    margin-top:12px;padding-top:10px;
+    border-top:1px solid #e6e6e6;
+    font-size:11px;color:#6b6b6b;line-height:1.6;
+  }
+  .footer a{color:#111111;text-decoration:none;font-weight:bold}
+  .error{
+    font-size:14px;color:#a83838;
+    background:#fbe5e5;border-radius:6px;
+    padding:14px;
+  }
+  /* ── Request-your-car section ── */
+  .req{
+    margin-top:12px;padding-top:12px;
+    border-top:1px solid #e6e6e6;
+  }
+  .req-title{
+    font-size:13px;font-weight:bold;color:#111111;margin-bottom:2px;
+  }
+  .req-sub{
+    font-size:11px;color:#6b6b6b;margin-bottom:8px;line-height:1.35;
+  }
+  .req-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:7px;
+  }
+  .req-btn{
+    appearance:none;-webkit-appearance:none;
+    border:1.5px solid #111111;border-radius:8px;
+    background:#fff;color:#111111;
+    font-size:13px;font-weight:bold;
+    padding:10px 4px;cursor:pointer;
+    font-family:inherit;
+    transition:background .12s,color .12s,transform .05s;
+  }
+  .req-btn:active{transform:scale(.97)}
+  .req-btn.now{grid-column:1 / -1;background:#111111;color:#fff}
+  .req-btn[disabled]{opacity:.5;cursor:default}
+  .req-status{
+    font-size:14px;line-height:1.5;color:#2a6b2a;
+    background:#e6f4e6;border:1px solid #b8e0b8;border-radius:10px;
+    padding:16px;
+  }
+  .req-status .big{font-size:17px;font-weight:bold;display:block;margin-bottom:4px}
+  .req-change{
+    display:inline-block;margin-top:12px;font-size:13px;color:#111111;
+    text-decoration:underline;cursor:pointer;background:none;border:none;font-family:inherit;
+  }
+  .req-error{
+    font-size:13px;color:#a83838;background:#fbe5e5;border-radius:8px;
+    padding:12px;margin-top:12px;
+  }
+  /* iOS: allow saving the QR section as image via long-press */
+  .qr-wrap canvas{user-select:none;-webkit-user-select:none;-webkit-touch-callout:default}
+</style>
+</head>
+<body>
+<div class="card">
+  <img src="logo-maroon.png?v=5" alt="Chadstone" style="width:220px;max-width:80%;height:auto;margin:0 auto 8px;display:block">
+  <div class="subtitle">Valet Ticket</div>
+
+  <div id="content">
+    <div class="ticket-number" id="ticket">—</div>
+    <div class="qr-wrap" id="qr-wrap">
+      <div id="qr">Generating…</div>
+    </div>
+    <div class="details" id="details"></div>
+    <div class="instructions">
+      Show this QR to our valet staff when collecting your car.
+    </div>
+
+    <!-- Customer "bring my car" section — populated by the script below
+         only when a valid entry id is present in the link. -->
+    <div class="req" id="req-section" style="display:none">
+      <!-- The request controls are hidden when the "customer car-request"
+           feature is switched off in the dashboard; req-result stays so the
+           post-collection thank-you + rating still appears. -->
+      <div id="req-controls">
+        <div class="req-title">Ready to leave?</div>
+        <div class="req-sub">Tap when you'd like your car brought round:</div>
+        <div class="req-grid" id="req-buttons">
+          <button class="req-btn now" data-min="0">I'm here now</button>
+          <button class="req-btn" data-min="5">in 5 min</button>
+          <button class="req-btn" data-min="10">in 10 min</button>
+          <button class="req-btn" data-min="15">in 15 min</button>
+          <button class="req-btn" data-min="20">in 20 min</button>
+          <button class="req-btn" data-min="30">in 30 min</button>
+        </div>
+      </div>
+      <div id="req-result"></div>
+    </div>
+
+    <!-- Customer "hands-free shopping" section — collect bags & put in car -->
+    <div class="req" id="bag-section" style="display:none">
+      <div class="req-title">Hands-free shopping</div>
+      <div class="req-sub">We'll bring your shopping to your car — tap and tell us where you are.</div>
+      <div id="bag-buttons" class="req-grid">
+        <button class="req-btn now" id="bag-start" style="grid-column:1 / -1">Bring my shopping to the car</button>
+      </div>
+      <div id="bag-form" style="display:none;margin-top:12px;text-align:left">
+        <label style="font-size:12px;color:#6b6b6b;font-weight:bold;display:block;margin-bottom:4px">Which shop are you at?</label>
+        <select id="bag-shop" style="width:100%;box-sizing:border-box;padding:12px;font-size:16px;border:1.5px solid #e6e6e6;border-radius:10px;font-family:inherit;margin-bottom:10px;background:#fff">
+          <option value="">— Choose your shop —</option>
+          <option>Bvlgari</option>
+          <option>Burberry</option>
+          <option>Cartier</option>
+          <option>Céline</option>
+          <option>Chaumet</option>
+          <option>Dior</option>
+          <option>Dolce &amp; Gabbana</option>
+          <option>Emporio Armani</option>
+          <option>FRED</option>
+          <option>Georg Jensen</option>
+          <option>Hermès</option>
+          <option>Jaeger-LeCoultre</option>
+          <option>Louis Vuitton</option>
+          <option>Moncler</option>
+          <option>Omega</option>
+          <option>Rimowa</option>
+          <option>Rolex</option>
+          <option>TAG Heuer</option>
+          <option>Tiffany &amp; Co</option>
+          <option value="__other__">Other / not listed…</option>
+        </select>
+        <input id="bag-loc" type="text" placeholder="Type your shop or where you are" maxlength="60"
+          style="display:none;width:100%;box-sizing:border-box;padding:12px;font-size:16px;border:1.5px solid #e6e6e6;border-radius:10px;font-family:inherit;margin-bottom:10px">
+        <label style="font-size:12px;color:#6b6b6b;font-weight:bold;display:block;margin-bottom:4px">How many bags?</label>
+        <select id="bag-count" style="width:100%;box-sizing:border-box;padding:12px;font-size:16px;border:1.5px solid #e6e6e6;border-radius:10px;font-family:inherit;margin-bottom:12px;background:#fff">
+          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6+</option>
+        </select>
+        <button class="req-btn now" id="bag-send" style="width:100%">Send request</button>
+      </div>
+      <div id="bag-result"></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Valet desk <a href="tel:0427000822">0427 000 822</a><br>
+    Open daily 10am&ndash;7pm &middot; Thu 10am&ndash;10pm
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<script>
+(function(){
+  var params = new URLSearchParams(location.search);
+  var ticket = (params.get('t') || '').trim().toUpperCase();
+  var content = document.getElementById('content');
+
+  // Basic validation — accept letters/digits/dashes only, max 16 chars
+  if (!ticket || !/^[A-Z0-9-]{1,16}$/.test(ticket)) {
+    content.innerHTML = '<div class="error">This link is missing or has an invalid ticket number. Please ask the valet staff for a fresh link.</div>';
+    return;
+  }
+
+  document.getElementById('ticket').textContent = ticket;
+  document.title = 'Ticket ' + ticket + ' — Chadstone Valet';
+
+  // Plate + check-in time shown under the QR (from ?r= and ?ci= params).
+  // Rendered via textContent so user-supplied values can't inject markup.
+  var rego = (params.get('r') || '').trim().toUpperCase();
+  var ciRaw = (params.get('ci') || '').trim();
+  var details = document.getElementById('details');
+  details.innerHTML = '';
+
+  if (rego && /^[A-Z0-9 -]{1,12}$/.test(rego)) {
+    var plate = document.createElement('div');
+    plate.className = 'detail-plate';
+    plate.textContent = rego;
+    details.appendChild(plate);
+  }
+
+  if (ciRaw) {
+    var d = new Date(ciRaw);
+    if (!isNaN(d.getTime())) {
+      var when = d.toLocaleString('en-AU', {
+        weekday: 'short', day: 'numeric', month: 'short',
+        hour: 'numeric', minute: '2-digit', hour12: true
+      });
+      var t = document.createElement('div');
+      t.className = 'detail-time';
+      t.textContent = 'Checked in ' + when;
+      details.appendChild(t);
+    }
+  }
+
+  try {
+    // qrcode-generator: typeNumber=0 (auto), errorCorrectionLevel='M'
+    var qr = qrcode(0, 'M');
+    qr.addData(ticket);
+    qr.make();
+    // cellSize=8 px, margin=2 cells — comfortable scan size on a phone
+    document.getElementById('qr').outerHTML = qr.createImgTag(8, 16);
+  } catch (e) {
+    document.getElementById('qr').textContent = 'Could not generate QR code: ' + (e.message || e);
+  }
+})();
+</script>
+
+<!-- ── Customer "request my car" feature ──
+     Lets the customer ask for their car straight from this page. Writes the
+     request to the same Supabase row the valet dashboard reads, so staff get
+     an instant alarm. Uses the public anon key (same as the dashboard). -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  var SUPABASE_URL = 'https://ebqiitxiyzzbkgyfypss.supabase.co';
+  var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVicWlpdHhpeXp6YmtneWZ5cHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzODI3MjQsImV4cCI6MjA5NTk1ODcyNH0.ZkR9PetFUtsrsxXens0SxpOAOJQA8mXoS7d8qXRUhYs';
+
+  var params = new URLSearchParams(location.search);
+  var idParam = (params.get('id') || '').trim();
+  var ticketParam = (params.get('t') || '').trim().toUpperCase();
+  var section = document.getElementById('req-section');
+  var resultBox = document.getElementById('req-result');
+
+  // Need the Supabase library to do anything; without it we just show the QR.
+  if (!window.supabase) return;
+
+  var supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  // entryId is resolved either straight from the ?id= param (new links) or,
+  // for older/cached links that only carry the ticket number, by looking the
+  // active car up by ticket below.
+  var isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(idParam);
+  var entryId = isUuid ? idParam : null;
+
+  function fmtMins(mins){ return mins <= 0 ? 'right now' : 'in about ' + mins + ' minutes'; }
+
+  function showRequested(mins){
+    var when = mins <= 0
+      ? "We're getting your car right now."
+      : "We'll have your car ready " + fmtMins(mins) + '.';
+    resultBox.innerHTML =
+      '<div class="req-status">' +
+        '<span class="big">Request sent!</span>' + when +
+        '<br>Please make your way to the valet desk.' +
+        '<button class="req-change" id="req-change">Change time</button>' +
+      '</div>';
+    document.getElementById('req-buttons').style.display = 'none';
+    document.getElementById('req-change').addEventListener('click', function(){
+      resultBox.innerHTML = '';
+      document.getElementById('req-buttons').style.display = '';
+    });
+  }
+
+  // ── Bag jobs (hands-free shopping) — a car can have several rounds ──
+  // Mirror of the staff app's model so the customer page understands the
+  // bag_jobs array, migrating a legacy single-job row when needed.
+  var bagSeq = 0;
+  function newBagJobId(){ bagSeq = (bagSeq + 1) % 1e6; return 'bj' + Date.now().toString(36) + bagSeq.toString(36); }
+  function bagJobsFromRow(row){
+    if (row && Array.isArray(row.bag_jobs)) return row.bag_jobs.filter(Boolean);
+    if (!row || !row.bag_status) return [];
+    return [{
+      id: newBagJobId(), status: row.bag_status, requested: row.bag_requested,
+      location: row.bag_location, count: row.bag_count, notes: row.bag_notes, source: 'staff',
+      assigned: row.bag_assigned, assignedUser: row.bag_assigned_user, collectingAt: row.bag_collecting_at,
+      shopPhoto: row.bag_shop_photo, shopPhotoAt: row.bag_shop_photo_at,
+      inCarBy: row.bag_in_car_by, inCarAt: row.bag_in_car_at, photo: row.bag_photo, doneAt: row.bag_done_at
+    }];
+  }
+  // Legacy column mirror of the most relevant round, so older readers stay sane.
+  function bagLegacyMirror(jobs){
+    var active = (jobs||[]).filter(function(j){ return j.status && j.status !== 'done'; });
+    var j = active.length ? active[active.length-1] : (jobs && jobs.length ? jobs[jobs.length-1] : null);
+    return {
+      bag_status: j ? j.status : null, bag_requested: j ? j.requested : null,
+      bag_location: j ? j.location : null, bag_count: j ? j.count : null,
+      bag_photo: j ? j.photo : null, bag_in_car_by: j ? j.inCarBy : null,
+      bag_done_at: j ? j.doneAt : null, bag_assigned: j ? j.assigned : null
+    };
+  }
+
+  // Render whatever the car's current state is. Staff-driven states
+  // (on-the-way / ready / collected) always win and replace the buttons;
+  // a plain pending request is only reflected on first load (`initial`),
+  // so a realtime echo of the customer's own tap doesn't clobber their UI.
+  function applyLiveStatus(row, initial){
+    if (!row) return;
+    // Hands-free shopping status (independent of the car-pickup state).
+    // A car can have several rounds (different shops) at once, each kept.
+    var bagJobs = bagJobsFromRow(row);
+    var bagForm = document.getElementById('bag-form');
+    var bagFormOpen = bagForm && bagForm.style.display !== 'none';
+    if (bagJobs.length && !bagFormOpen) {   // don't clobber a customer mid-add
+      var bagBtns = document.getElementById('bag-buttons');
+      var bagRes = document.getElementById('bag-result');
+      var esc = function(s){ return String(s == null ? '' : s).replace(/</g,'&lt;'); };
+      if (bagRes) {
+        if (bagForm) bagForm.style.display = 'none';
+        if (bagBtns) bagBtns.style.display = 'none';
+        var html = '';
+        // Delivered rounds (most recent first) — each with its photo.
+        var delivered = bagJobs.filter(function(j){ return j.status === 'in_car' || j.status === 'done'; });
+        delivered.slice().reverse().forEach(function(j){
+          var img = j.photo ? '<br><img src="' + j.photo + '" alt="Your shopping in your car" style="max-width:100%;border-radius:10px;margin-top:10px;border:1px solid #e6e6e6">' : '';
+          html += '<div class="req-status" style="margin-bottom:10px"><span class="big">Your shopping is in your car!</span>'
+            + (j.location ? '<b>' + esc(j.location) + '</b> — ' : '') + 'here\'s a photo from our valet.' + img + '</div>';
+        });
+        // In-progress rounds.
+        var pending = bagJobs.filter(function(j){ return j.status === 'requested' || j.status === 'collecting'; });
+        pending.forEach(function(j){
+          html += '<div class="req-status" style="margin-bottom:10px"><span class="big">On our way!</span>A valet is collecting your shopping'
+            + (j.location ? ' at <b>' + esc(j.location) + '</b>' : '') + '. We\'ll text you when it\'s in your car.</div>';
+        });
+        html += '<button class="req-btn now" type="button" id="bag-again" style="width:100%;margin-top:4px" onclick="startBagAgain()">Shopping at another shop? Send my bags</button>';
+        bagRes.innerHTML = html;
+      }
+    }
+    var buttons = document.getElementById('req-buttons');
+    if (row.time_out) {
+      buttons.style.display = 'none';
+      section.style.display = '';   // reveal for the thank-you + rating, even if car-request is off
+      var thanks = '<div class="req-status" style="color:#6b6b6b;background:#fafafa;border-color:#e6e6e6">' +
+        '<span class="big">Thanks for visiting!</span>Your car has been collected. We hope to see you again at Chadstone.</div>';
+      resultBox.innerHTML = thanks + ratingSection(row);
+      wireRating();
+      return;
+    }
+    if (row.pickup_status === 'ready') {
+      buttons.style.display = 'none';
+      resultBox.innerHTML = '<div class="req-status">' +
+        '<span class="big">Your car is ready!</span>It\'s waiting for you at the valet desk — see you there.</div>';
+      return;
+    }
+    if (row.pickup_status === 'fetching') {
+      buttons.style.display = 'none';
+      resultBox.innerHTML = '<div class="req-status" style="color:#111111;background:#f7ecec;border-color:#e0b8b8">' +
+        '<span class="big">Your car is on its way!</span>Our valet is bringing it round now — please head to the valet desk.</div>';
+      return;
+    }
+    if (initial && row.pickup_requested && row.pickup_source === 'customer') {
+      var mins = row.pickup_eta
+        ? Math.max(0, Math.round((new Date(row.pickup_eta) - new Date()) / 60000))
+        : 0;
+      showRequested(mins);
+    }
+  }
+
+  // Keep the page current by polling the status RPC (the public key has no
+  // direct table/realtime access). Light: one row every 5s while the page is
+  // open; stops once the car has been collected.
+  var watchTimer = null;
+  function watchEntry(){
+    if (watchTimer) return;
+    watchTimer = setInterval(async function(){
+      if (document.hidden) return;            // don't poll a backgrounded tab
+      var row = await fetchTicket();
+      if (!row) return;
+      applyLiveStatus(row, false);
+      if (row.time_out) { clearInterval(watchTimer); watchTimer = null; }
+    }, 5000);
+  }
+
+  // ── Customer feedback (1-tap rating after the car is collected) ──
+  function ratingSection(row){
+    if (row && row.rating) {
+      var stars = '';
+      for (var i = 1; i <= 5; i++) stars += (i <= row.rating ? '★' : '☆');
+      return '<div class="req-status" style="margin-top:12px;background:#fafafa;border-color:#e6e6e6">'
+        + '<span class="big" style="color:#6b6b6b;letter-spacing:2px">' + stars + '</span>Thanks for your feedback!</div>';
+    }
+    var s = '';
+    for (var k = 1; k <= 5; k++) {
+      s += '<button type="button" class="rate-star" data-v="' + k + '" aria-label="' + k + ' stars" '
+        + 'style="background:none;border:none;font-size:40px;line-height:1;cursor:pointer;color:#d8d2c8;padding:2px 4px">☆</button>';
+    }
+    return '<div id="rate-box" style="margin-top:14px;text-align:center;background:#fff;border:1px solid #e6e6e6;border-radius:14px;padding:16px">'
+      + '<div style="font-size:16px;font-weight:600;color:#333;margin-bottom:8px">How did we do?</div>'
+      + '<div id="rate-stars" style="display:flex;justify-content:center;gap:2px">' + s + '</div>'
+      + '<div id="rate-after" style="display:none;margin-top:12px">'
+      +   '<textarea id="rate-comment" rows="2" placeholder="Anything we could do better? (optional)" '
+      +     'style="width:100%;box-sizing:border-box;border:1px solid #ddd;border-radius:10px;padding:10px;font-family:inherit;font-size:14px"></textarea>'
+      +   '<button type="button" id="rate-send" class="req-btn now" style="width:100%;margin-top:8px">Send</button>'
+      + '</div>'
+      + '<div id="rate-done" style="display:none;color:#3a7d44;font-weight:600;margin-top:8px">Thanks for your feedback!</div>'
+      + '</div>';
+  }
+  function wireRating(){
+    var stars = document.querySelectorAll('#rate-stars .rate-star');
+    if (!stars.length) return;
+    var chosen = 0;
+    function paint(v){ stars.forEach(function(b){ var on = +b.dataset.v <= v; b.textContent = on ? '★' : '☆'; b.style.color = on ? '#6b6b6b' : '#d8d2c8'; }); }
+    stars.forEach(function(b){
+      b.addEventListener('mouseenter', function(){ paint(+b.dataset.v); });
+      b.addEventListener('click', async function(){
+        chosen = +b.dataset.v; paint(chosen);
+        // 1-tap: record the score immediately; comment is optional after.
+        await saveRating(chosen, null);
+        var after = document.getElementById('rate-after'); if (after) after.style.display = '';
+      });
+    });
+    document.querySelector('#rate-stars').addEventListener('mouseleave', function(){ paint(chosen); });
+    var send = document.getElementById('rate-send');
+    if (send) send.addEventListener('click', async function(){
+      send.disabled = true;
+      var c = (document.getElementById('rate-comment').value || '').trim();
+      await saveRating(chosen, c);
+      document.getElementById('rate-after').style.display = 'none';
+      document.getElementById('rate-done').style.display = '';
+    });
+  }
+  async function saveRating(score, comment){
+    if (!entryId || !score) return;
+    try {
+      await supa.rpc('submit_rating', { p_id: entryId, p_score: score, p_comment: (comment != null ? comment : null) });
+    } catch (e) { /* best effort */ }
+  }
+
+  function showError(msg){
+    resultBox.insertAdjacentHTML('beforeend',
+      '<div class="req-error">' + msg + ' Please try again, or just head to the valet desk.</div>');
+  }
+
+  function setBusy(busy){
+    var btns = section.querySelectorAll('.req-btn');
+    for (var i=0;i<btns.length;i++) btns[i].disabled = busy;
+  }
+
+  async function requestCar(mins){
+    if (!entryId) { showError("We couldn't match your ticket."); return; }
+    setBusy(true);
+    // Clear any previous error
+    var oldErr = resultBox.querySelector('.req-error');
+    if (oldErr) oldErr.remove();
+    var now = new Date();
+    var eta = new Date(now.getTime() + mins * 60000);
+    try {
+      // Security-definer RPC — no direct table access from the public key.
+      var res = await supa.rpc('request_pickup', { p_id: entryId, p_eta: eta.toISOString() });
+
+      if (res.error) { showError("Something went wrong sending your request."); setBusy(false); return; }
+      if (!res.data || res.data === 0) {
+        // No row updated — either already collected or not active.
+        resultBox.innerHTML = '<div class="req-status" style="color:#6b6b6b;background:#fafafa;border-color:#e6e6e6">' +
+          'This ticket is no longer active — your car may already have been collected. Please see the valet desk if you need help.</div>';
+        return;
+      }
+      showRequested(mins);
+      // Fire OS push notifications to staff devices (fire-and-forget — the
+      // dashboard's realtime alarm already covers any open tabs regardless).
+      supa.functions.invoke('notify-pickup', { body: { id: entryId } }).catch(function(){});
+    } catch (e) {
+      showError("We couldn't reach the valet right now.");
+      setBusy(false);
+    }
+  }
+
+  // Identify the car, then show the request section. Prefer the ?id= param;
+  // if it's missing (older link or a cached dashboard), fall back to finding
+  // the active car by its ticket number so the buttons still appear.
+  // Fetch the car's public status via a security-definer RPC (no direct table
+  // access — customer PII like name/phone is never exposed to the public key).
+  // Which customer-facing features are switched on (set in the dashboard's
+  // Settings → Features). A PII-free security-definer RPC — never exposes the
+  // access PIN or anything else. Defaults to OFF if the call fails.
+  async function fetchFlags(){
+    try {
+      var q = await supa.rpc('get_public_settings');
+      if (q.error) return { handsfree: false, pickup: false };
+      var r = Array.isArray(q.data) ? q.data[0] : q.data;
+      return r || { handsfree: false, pickup: false };
+    } catch (e) { return { handsfree: false, pickup: false }; }
+  }
+
+  async function fetchTicket(){
+    try {
+      var q = await supa.rpc('get_ticket_status', {
+        p_id: entryId || null,
+        p_ticket: entryId ? null : (/^[A-Z0-9-]{1,16}$/.test(ticketParam) ? ticketParam : null)
+      });
+      if (q.error) return null;
+      var row = Array.isArray(q.data) ? q.data[0] : q.data;
+      return row || null;
+    } catch (e) { return null; }
+  }
+
+  // Short links carry only ?t= (ticket number), so the plate + check-in time
+  // under the QR come from the looked-up row instead of ?r=/?ci= params. Only
+  // fills when the details box is still empty, so older links that already
+  // rendered those from their params are left untouched.
+  function fillDetailsFromRow(row){
+    var details = document.getElementById('details');
+    if (!details || details.children.length) return;
+    var rrego = (row && row.rego ? String(row.rego) : '').trim().toUpperCase();
+    if (rrego && /^[A-Z0-9 -]{1,12}$/.test(rrego)) {
+      var plate = document.createElement('div');
+      plate.className = 'detail-plate';
+      plate.textContent = rrego;
+      details.appendChild(plate);
+    }
+    if (row && row.time_in) {
+      var d = new Date(row.time_in);
+      if (!isNaN(d.getTime())) {
+        var when = d.toLocaleString('en-AU', {
+          weekday: 'short', day: 'numeric', month: 'short',
+          hour: 'numeric', minute: '2-digit', hour12: true
+        });
+        var t = document.createElement('div');
+        t.className = 'detail-time';
+        t.textContent = 'Checked in ' + when;
+        details.appendChild(t);
+      }
+    }
+  }
+
+  (async function init(){
+    try {
+      var results = await Promise.all([fetchTicket(), fetchFlags()]);
+      var row = results[0];
+      var flags = results[1] || { handsfree: false, pickup: false };
+      if (!row || !row.id) return;            // couldn't match a car — just show the QR
+      entryId = row.id;
+      fillDetailsFromRow(row);                 // plate + check-in time for short links
+      // Car-request controls only when the feature is on; keep the section
+      // visible if the car's already collected so the rating can show.
+      var ctrl = document.getElementById('req-controls');
+      if (ctrl) ctrl.style.display = flags.pickup ? '' : 'none';
+      if (flags.pickup || row.time_out) section.style.display = '';
+      // Hands-free shopping section only when that feature is on.
+      if (flags.handsfree && !row.time_out) document.getElementById('bag-section').style.display = '';
+      // Reflect the car's current state, then keep it live by polling.
+      applyLiveStatus(row, true);
+      if (!row.time_out) watchEntry();
+    } catch (e) {
+      if (entryId) section.style.display = '';  // network hiccup — still let them try
+    }
+  })();
+
+  var reqButtonsEl = document.getElementById('req-buttons');
+  if (reqButtonsEl) reqButtonsEl.addEventListener('click', function(ev){
+    var btn = ev.target.closest('.req-btn');
+    if (!btn || btn.disabled) return;
+    requestCar(parseInt(btn.getAttribute('data-min'), 10) || 0);
+  });
+
+  // ── Hands-free shopping (customer bag request) ──
+  var bagStartBtn = document.getElementById('bag-start');
+  var bagForm = document.getElementById('bag-form');
+  var bagResult = document.getElementById('bag-result');
+  var bagSendBtn = document.getElementById('bag-send');
+  var bagShopSel = document.getElementById('bag-shop');
+  var bagLocInput = document.getElementById('bag-loc');
+  if (bagStartBtn) bagStartBtn.addEventListener('click', function(){
+    document.getElementById('bag-buttons').style.display = 'none';
+    bagForm.style.display = '';
+    if (bagShopSel) bagShopSel.focus();
+  });
+  // Show the free-text box only when "Other / not listed" is picked.
+  if (bagShopSel) bagShopSel.addEventListener('change', function(){
+    var other = bagShopSel.value === '__other__';
+    if (bagLocInput) {
+      bagLocInput.style.display = other ? '' : 'none';
+      if (other) { bagLocInput.value = ''; bagLocInput.focus(); }
+    }
+  });
+  // Re-open the request form after a previous lot was delivered, so the
+  // customer can send bags again from a different shop.
+  window.startBagAgain = function(){
+    if (bagResult) bagResult.innerHTML = '';
+    if (bagForm) bagForm.style.display = '';
+    if (bagSendBtn) bagSendBtn.disabled = false;
+    if (bagShopSel) { bagShopSel.selectedIndex = 0; bagShopSel.focus(); }
+    if (bagLocInput) { bagLocInput.value = ''; bagLocInput.style.display = 'none'; }
+    var cntSel = document.getElementById('bag-count');
+    if (cntSel) cntSel.selectedIndex = 0;
+  };
+  if (bagSendBtn) bagSendBtn.addEventListener('click', async function(){
+    if (!entryId) { bagResult.innerHTML = '<div class="req-error">We couldn\'t match your ticket. Please see the valet desk.</div>'; return; }
+    // Location comes from the shop dropdown; "Other" reveals the text box.
+    var sel = bagShopSel ? bagShopSel.value : '';
+    if (!sel) { bagResult.innerHTML = '<div class="req-error">Please choose your shop from the list.</div>'; return; }
+    var loc = (sel === '__other__') ? ((bagLocInput.value || '').trim() || 'Valet Desk') : sel;
+    var cnt = parseInt(document.getElementById('bag-count').value, 10) || 1;
+    bagSendBtn.disabled = true;
+    try {
+      // Append a NEW round server-side (keeps any earlier rounds). The RPC does
+      // the append, so the public key never touches the entries table directly.
+      var res = await supa.rpc('request_bag', { p_id: entryId, p_location: loc, p_count: cnt });
+      if (res.error) {
+        bagResult.innerHTML = '<div class="req-error">Couldn\'t send your request. Please call the valet on 0427 000 822.</div>';
+        bagSendBtn.disabled = false; return;
+      }
+      bagForm.style.display = 'none';
+      bagResult.innerHTML = '<div class="req-status"><span class="big">On our way!</span>A valet is coming to collect your shopping at <b>' + loc.replace(/</g,'&lt;') + '</b>. We\'ll text you when it\'s in your car.</div>';
+    } catch (e) {
+      bagResult.innerHTML = '<div class="req-error">We couldn\'t reach the valet right now. Please call 0427 000 822.</div>';
+      bagSendBtn.disabled = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>
