@@ -173,34 +173,26 @@
       </div>
       <div id="bag-form" style="display:none;margin-top:12px;text-align:left">
         <label style="font-size:12px;color:#6b6b6b;font-weight:bold;display:block;margin-bottom:4px">Which shop are you at?</label>
-        <select id="bag-shop" style="width:100%;box-sizing:border-box;padding:12px;font-size:16px;border:1.5px solid #e6e6e6;border-radius:10px;font-family:inherit;margin-bottom:10px;background:#fff">
-          <option value="">— Choose your shop —</option>
-          <option>Bvlgari</option>
-          <option>Burberry</option>
-          <option>Cartier</option>
-          <option>Céline</option>
-          <option>Chaumet</option>
-          <option>Dior</option>
-          <option>Dolce &amp; Gabbana</option>
-          <option>Emporio Armani</option>
-          <option>FRED</option>
-          <option>Georg Jensen</option>
-          <option>Hermès</option>
-          <option>Jaeger-LeCoultre</option>
-          <option>Louis Vuitton</option>
-          <option>Moncler</option>
-          <option>Omega</option>
-          <option>Rimowa</option>
-          <option>Rolex</option>
-          <option>TAG Heuer</option>
-          <option>Tiffany &amp; Co</option>
-          <option value="__other__">Other / not listed…</option>
-        </select>
-        <input id="bag-loc" type="text" placeholder="Type your shop or where you are" maxlength="60"
-          style="display:none;width:100%;box-sizing:border-box;padding:12px;font-size:16px;border:1.5px solid #e6e6e6;border-radius:10px;font-family:inherit;margin-bottom:10px">
-        <label style="font-size:12px;color:#6b6b6b;font-weight:bold;display:block;margin-bottom:4px">How many bags?</label>
+        <input id="bag-shop" list="chadstone-stores" autocomplete="off" placeholder="Start typing your store…" maxlength="60"
+          style="width:100%;box-sizing:border-box;padding:12px;font-size:16px;border:1.5px solid #e6e6e6;border-radius:10px;font-family:inherit;margin-bottom:10px;background:#fff">
+        <datalist id="chadstone-stores">
+          <option>David Jones</option><option>Myer</option><option>Target</option><option>Kmart</option>
+          <option>Apple</option><option>JB Hi-Fi</option><option>Samsung</option><option>Telstra</option><option>Optus</option><option>Vodafone</option><option>Sony</option><option>Bose</option><option>EB Games</option>
+          <option>Louis Vuitton</option><option>Gucci</option><option>Prada</option><option>Miu Miu</option><option>Dior</option><option>Fendi</option><option>Saint Laurent</option><option>Balenciaga</option><option>Bottega Veneta</option><option>Celine</option><option>Loewe</option><option>Givenchy</option><option>Valentino</option><option>Versace</option><option>Burberry</option><option>Moncler</option><option>Salvatore Ferragamo</option><option>Bally</option><option>Coach</option><option>Longchamp</option><option>Michael Kors</option><option>Kate Spade</option><option>Tory Burch</option><option>MCM</option><option>Christian Louboutin</option><option>Jimmy Choo</option><option>Rimowa</option><option>Montblanc</option><option>Tod's</option><option>Hermès</option><option>Emporio Armani</option><option>Dolce &amp; Gabbana</option>
+          <option>Tiffany &amp; Co</option><option>Cartier</option><option>Bvlgari</option><option>Van Cleef &amp; Arpels</option><option>Chaumet</option><option>FRED</option><option>Georg Jensen</option><option>Rolex</option><option>Omega</option><option>TAG Heuer</option><option>Breitling</option><option>Longines</option><option>Tudor</option><option>Jaeger-LeCoultre</option><option>Swatch</option><option>Michael Hill</option><option>Pandora</option><option>Swarovski</option><option>Lovisa</option><option>Bevilles</option><option>Prouds</option>
+          <option>Mecca</option><option>Sephora</option><option>Chanel</option><option>MAC</option><option>Kiehl's</option><option>L'Occitane</option><option>Jo Malone London</option><option>Aesop</option><option>The Body Shop</option><option>Lush</option><option>Rituals</option><option>Priceline Pharmacy</option><option>Chemist Warehouse</option><option>Sunglass Hut</option><option>OPSM</option><option>Specsavers</option><option>Bailey Nelson</option>
+          <option>Zara</option><option>H&amp;M</option><option>Uniqlo</option><option>COS</option><option>Country Road</option><option>Witchery</option><option>Mimco</option><option>Seed Heritage</option><option>Sportsgirl</option><option>Sportscraft</option><option>Cue</option><option>Veronika Maine</option><option>Review</option><option>Forever New</option><option>Portmans</option><option>Dotti</option><option>Bardot</option><option>Kookai</option><option>Sheike</option><option>Aje</option><option>Camilla</option><option>Gorman</option><option>Scanlan Theodore</option><option>Zimmermann</option><option>Cotton On</option><option>Cotton On Body</option><option>Glassons</option><option>Jeanswest</option><option>Just Jeans</option><option>Universal Store</option><option>General Pants Co</option><option>Culture Kings</option><option>Politix</option><option>Connor</option><option>yd.</option><option>Tarocash</option><option>Peter Alexander</option><option>Ralph Lauren</option><option>Tommy Hilfiger</option><option>Calvin Klein</option><option>Guess</option><option>Superdry</option><option>Levi's</option><option>Hugo Boss</option><option>Lacoste</option>
+          <option>Nike</option><option>adidas</option><option>New Balance</option><option>Lululemon</option><option>Lorna Jane</option><option>Rebel Sport</option><option>The Athlete's Foot</option><option>Foot Locker</option><option>JD Sports</option><option>Platypus</option><option>Hype DC</option><option>Skechers</option><option>Puma</option><option>Asics</option><option>Aquila</option><option>Wittner</option><option>Windsor Smith</option><option>R.M. Williams</option><option>Dr. Martens</option><option>Birkenstock</option><option>UGG</option><option>Vans</option><option>Converse</option>
+          <option>Lego</option><option>Smiggle</option><option>Typo</option><option>Dymocks</option><option>Australia Post</option><option>Adairs</option><option>West Elm</option><option>Bed Bath N' Table</option><option>Sheridan</option><option>Maxwell &amp; Williams</option>
+        </datalist>
+        <label style="font-size:12px;color:#6b6b6b;font-weight:bold;display:block;margin-bottom:4px">How many bags / parcels?</label>
         <select id="bag-count" style="width:100%;box-sizing:border-box;padding:12px;font-size:16px;border:1.5px solid #e6e6e6;border-radius:10px;font-family:inherit;margin-bottom:12px;background:#fff">
           <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6+</option>
+        </select>
+        <label style="font-size:12px;color:#6b6b6b;font-weight:bold;display:block;margin-bottom:4px">Do you need a trolley?</label>
+        <select id="bag-trolley" style="width:100%;box-sizing:border-box;padding:12px;font-size:16px;border:1.5px solid #e6e6e6;border-radius:10px;font-family:inherit;margin-bottom:12px;background:#fff">
+          <option value="no">No, bags are fine</option>
+          <option value="yes">Yes, please bring a trolley</option>
         </select>
         <button class="req-btn now" id="bag-send" style="width:100%">Send request</button>
       </div>
@@ -612,20 +604,11 @@
   var bagForm = document.getElementById('bag-form');
   var bagResult = document.getElementById('bag-result');
   var bagSendBtn = document.getElementById('bag-send');
-  var bagShopSel = document.getElementById('bag-shop');
-  var bagLocInput = document.getElementById('bag-loc');
+  var bagShopInput = document.getElementById('bag-shop');
   if (bagStartBtn) bagStartBtn.addEventListener('click', function(){
     document.getElementById('bag-buttons').style.display = 'none';
     bagForm.style.display = '';
-    if (bagShopSel) bagShopSel.focus();
-  });
-  // Show the free-text box only when "Other / not listed" is picked.
-  if (bagShopSel) bagShopSel.addEventListener('change', function(){
-    var other = bagShopSel.value === '__other__';
-    if (bagLocInput) {
-      bagLocInput.style.display = other ? '' : 'none';
-      if (other) { bagLocInput.value = ''; bagLocInput.focus(); }
-    }
+    if (bagShopInput) bagShopInput.focus();
   });
   // Re-open the request form after a previous lot was delivered, so the
   // customer can send bags again from a different shop.
@@ -633,31 +616,31 @@
     if (bagResult) bagResult.innerHTML = '';
     if (bagForm) bagForm.style.display = '';
     if (bagSendBtn) bagSendBtn.disabled = false;
-    if (bagShopSel) { bagShopSel.selectedIndex = 0; bagShopSel.focus(); }
-    if (bagLocInput) { bagLocInput.value = ''; bagLocInput.style.display = 'none'; }
+    if (bagShopInput) { bagShopInput.value = ''; bagShopInput.focus(); }
     var cntSel = document.getElementById('bag-count');
     if (cntSel) cntSel.selectedIndex = 0;
+    var trollSel = document.getElementById('bag-trolley');
+    if (trollSel) trollSel.selectedIndex = 0;
   };
   if (bagSendBtn) bagSendBtn.addEventListener('click', async function(){
     if (!entryId) { bagResult.innerHTML = '<div class="req-error">We couldn\'t match your ticket. Please see the valet desk.</div>'; return; }
-    // Location comes from the shop dropdown; "Other" reveals the text box.
-    var sel = bagShopSel ? bagShopSel.value : '';
-    if (!sel) { bagResult.innerHTML = '<div class="req-error">Please choose your shop from the list.</div>'; return; }
-    var loc = (sel === '__other__') ? ((bagLocInput.value || '').trim() || 'Valet Desk') : sel;
+    // Store name — type-to-search from the Chadstone list or free text.
+    var loc = ((bagShopInput && bagShopInput.value) || '').trim() || 'Valet Desk';
     var cnt = parseInt(document.getElementById('bag-count').value, 10) || 1;
+    var trolley = (document.getElementById('bag-trolley') || {}).value === 'yes';
     bagSendBtn.disabled = true;
     try {
       // Append a NEW round server-side (keeps any earlier rounds). The RPC does
       // the append, so the public key never touches the entries table directly.
-      var res = await supa.rpc('request_bag', { p_id: entryId, p_location: loc, p_count: cnt });
+      var res = await supa.rpc('request_bag', { p_id: entryId, p_location: loc, p_count: cnt, p_trolley: trolley });
       if (res.error) {
-        bagResult.innerHTML = '<div class="req-error">Couldn\'t send your request. Please call the valet on 0427 000 822.</div>';
+        bagResult.innerHTML = '<div class="req-error">Couldn\'t send your request. Please call the valet on (03) 9563 3355.</div>';
         bagSendBtn.disabled = false; return;
       }
       bagForm.style.display = 'none';
-      bagResult.innerHTML = '<div class="req-status"><span class="big">On our way!</span>A valet is coming to collect your shopping at <b>' + loc.replace(/</g,'&lt;') + '</b>. We\'ll text you when it\'s in your car.</div>';
+      bagResult.innerHTML = '<div class="req-status"><span class="big">On our way!</span>A valet is coming to collect your shopping at <b>' + loc.replace(/</g,'&lt;') + '</b>' + (trolley ? ' (with a trolley)' : '') + '. We\'ll text you when it\'s in your car.</div>';
     } catch (e) {
-      bagResult.innerHTML = '<div class="req-error">We couldn\'t reach the valet right now. Please call 0427 000 822.</div>';
+      bagResult.innerHTML = '<div class="req-error">We couldn\'t reach the valet right now. Please call (03) 9563 3355.</div>';
       bagSendBtn.disabled = false;
     }
   });

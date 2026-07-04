@@ -212,7 +212,8 @@ begin
   return jsonb_build_object('created_at', now(), 'entries', n);
 end $$;
 
-create or replace function public.request_bag(p_id text, p_location text, p_count integer)
+drop function if exists public.request_bag(text, text, integer);
+create or replace function public.request_bag(p_id text, p_location text, p_count integer, p_trolley boolean default false)
  returns void language plpgsql security definer set search_path to 'public'
 as $$
 declare jobs jsonb; newjob jsonb;
@@ -223,7 +224,8 @@ begin
   newjob := jsonb_build_object(
     'id', 'bj'||replace(gen_random_uuid()::text,'-',''), 'status','requested',
     'requested', to_jsonb(now()), 'location', coalesce(nullif(p_location,''),'Valet Desk'),
-    'count', greatest(1, coalesce(p_count,1)), 'notes','', 'source','customer',
+    'count', greatest(1, coalesce(p_count,1)), 'trolley', coalesce(p_trolley,false),
+    'notes','', 'source','customer',
     'assigned',null,'assignedUser',null,'collectingAt',null,'shopPhoto',null,'shopPhotoAt',null,
     'inCarBy',null,'inCarAt',null,'photo',null,'doneAt',null);
   update public.entries set bag_jobs = jobs || jsonb_build_array(newjob) where id=p_id and time_out is null;
@@ -253,7 +255,7 @@ $$;
 -- Customer-facing (called from the public ticket page with the anon key):
 grant execute on function public.get_public_settings()               to anon, authenticated, service_role;
 grant execute on function public.get_ticket_status(text, text)       to anon, authenticated, service_role;
-grant execute on function public.request_bag(text, text, integer)    to anon, authenticated, service_role;
+grant execute on function public.request_bag(text, text, integer, boolean) to anon, authenticated, service_role;
 grant execute on function public.request_pickup(text, timestamptz)   to anon, authenticated, service_role;
 grant execute on function public.submit_rating(text, integer, text)  to anon, authenticated, service_role;
 -- Staff/service only:
