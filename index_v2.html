@@ -175,7 +175,7 @@ body{
 /* label shown as a tooltip to the right on hover */
 .tab-label{
   position:absolute;left:calc(100% + 10px);top:50%;transform:translateY(-50%);
-  background:#36101a;color:#fff;padding:6px 11px;border-radius:6px;
+  background:#111111;color:#fff;padding:6px 11px;border-radius:6px;
   font-size:12px;letter-spacing:.6px;text-transform:uppercase;font-weight:600;white-space:nowrap;
   opacity:0;pointer-events:none;transition:opacity .12s;z-index:120;box-shadow:0 3px 12px rgba(0,0,0,.35);
 }
@@ -218,7 +218,7 @@ body.mobile-mode .tab.desktop-only{display:none}
 .view.active{display:block}
 
 /* ─── SETTINGS FLYOUT SUB-MENU (pops out beside the icon rail) ─── */
-.nav-flyout{display:none;flex:0 0 212px;background:#3a0e16;align-self:stretch;padding:14px 10px;flex-direction:column;gap:2px}
+.nav-flyout{display:none;flex:0 0 212px;background:#111111;align-self:stretch;padding:14px 10px;flex-direction:column;gap:2px}
 .nav-flyout.open{display:flex}
 .nav-flyout-title{color:var(--champagne);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;padding:4px 12px 12px}
 .flyout-item{display:block;width:100%;text-align:left;padding:11px 14px;border-radius:6px;border:none;background:none;color:rgba(255,255,255,.82);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .12s,color .12s}
@@ -938,7 +938,7 @@ body.dark-mode .welcome-box {
 body.dark-mode {
   --maroon: #333333;
   --maroon-dark: #111111;
-  --maroon-light: #a83444;
+  --maroon-light: #666666;
   --sandstone: #333333;
   --bone: #3a342a;
   --champagne: #6b5a3a;
@@ -9227,7 +9227,7 @@ function renderInsights(filtered) {
 
   c.innerHTML = cardGrid
     + `<div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--bronze);font-weight:600;margin-bottom:8px">Check-ins by hour</div>`
-    + renderHourChart(ins.inHours, 'linear-gradient(90deg,var(--maroon),#a04a52)')
+    + renderHourChart(ins.inHours, 'linear-gradient(90deg,var(--maroon),#555555)')
     + `<div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--bronze);font-weight:600;margin:16px 0 8px">Check-outs by hour</div>`
     + renderHourChart(ins.outHours, 'linear-gradient(90deg,var(--bronze),var(--bronze-light))');
 }
@@ -14044,7 +14044,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </div><!-- /checkout-more-body -->
 
     <div id="square-pay-row" style="display:none;margin-bottom:14px">
-      <button class="btn btn-primary" id="square-charge-btn" onclick="chargeOnTerminal()" style="width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#3a0e16">
+      <button class="btn btn-primary" id="square-charge-btn" onclick="chargeOnTerminal()" style="width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#111111">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         <span id="square-charge-label">Charge on Square Terminal</span>
       </button>

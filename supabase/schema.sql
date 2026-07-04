@@ -156,10 +156,14 @@ drop policy if exists auth_full on public.staff;
 create policy auth_full on public.staff              for all to authenticated using (true) with check (true);
 
 -- ---------- PII LOCKDOWN ----------
--- The anon key is PUBLIC (it ships in the GitHub Pages HTML). Never let anon read
--- the staff table (it holds password_hash). Direct staff reads go through the
--- staff-auth Edge Function (service role) instead.
+-- The anon key is PUBLIC (it ships in the GitHub Pages HTML). Hide ONLY the
+-- password_hash column: revoke table-level SELECT, then grant column-level SELECT
+-- on every other column. So the app can list staff (names/roles/last-login) but
+-- neither anon nor authenticated can ever read password_hash (only the service
+-- role, used by the staff-auth Edge Function, can).
 revoke select on public.staff from anon, authenticated;
+grant select (username, display_name, role, is_active, last_login, created_at)
+  on public.staff to anon, authenticated;
 
 -- ---------- FUNCTIONS (public ticket page + backups) ----------
 
