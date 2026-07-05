@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#111111">
+<meta name="theme-color" content="#262525">
 <title>Your Valet Ticket — Chadstone</title>
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=6">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=6">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=6">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=7">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=7">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=7">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
   html,body{margin:0;padding:0}
   body{
     font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-    background:linear-gradient(135deg,#111111 0%,#000000 100%);
+    background:linear-gradient(135deg,#262525 0%,#262525 100%);
     min-height:100vh;
     display:flex;align-items:center;justify-content:center;
     padding:10px;
@@ -42,7 +42,7 @@
   .ticket-number{
     font-family:'Courier New',monospace;
     font-size:30px;font-weight:bold;
-    color:#111111;letter-spacing:3px;
+    color:#262525;letter-spacing:3px;
     margin-bottom:8px;
   }
   .qr-wrap{
@@ -78,7 +78,7 @@
     border-top:1px solid #e6e6e6;
     font-size:11px;color:#6b6b6b;line-height:1.6;
   }
-  .footer a{color:#111111;text-decoration:none;font-weight:bold}
+  .footer a{color:#262525;text-decoration:none;font-weight:bold}
   .error{
     font-size:14px;color:#a83838;
     background:#fbe5e5;border-radius:6px;
@@ -90,7 +90,7 @@
     border-top:1px solid #e6e6e6;
   }
   .req-title{
-    font-size:13px;font-weight:bold;color:#111111;margin-bottom:2px;
+    font-size:13px;font-weight:bold;color:#262525;margin-bottom:2px;
   }
   .req-sub{
     font-size:11px;color:#6b6b6b;margin-bottom:8px;line-height:1.35;
@@ -100,15 +100,15 @@
   }
   .req-btn{
     appearance:none;-webkit-appearance:none;
-    border:1.5px solid #111111;border-radius:8px;
-    background:#fff;color:#111111;
+    border:1.5px solid #262525;border-radius:8px;
+    background:#fff;color:#262525;
     font-size:13px;font-weight:bold;
     padding:10px 4px;cursor:pointer;
     font-family:inherit;
     transition:background .12s,color .12s,transform .05s;
   }
   .req-btn:active{transform:scale(.97)}
-  .req-btn.now{grid-column:1 / -1;background:#111111;color:#fff}
+  .req-btn.now{grid-column:1 / -1;background:#262525;color:#fff}
   .req-btn[disabled]{opacity:.5;cursor:default}
   .req-status{
     font-size:14px;line-height:1.5;color:#2a6b2a;
@@ -117,7 +117,7 @@
   }
   .req-status .big{font-size:17px;font-weight:bold;display:block;margin-bottom:4px}
   .req-change{
-    display:inline-block;margin-top:12px;font-size:13px;color:#111111;
+    display:inline-block;margin-top:12px;font-size:13px;color:#262525;
     text-decoration:underline;cursor:pointer;background:none;border:none;font-family:inherit;
   }
   .req-error{
@@ -393,7 +393,7 @@
     }
     if (row.pickup_status === 'fetching') {
       buttons.style.display = 'none';
-      resultBox.innerHTML = '<div class="req-status" style="color:#111111;background:#f7ecec;border-color:#e0b8b8">' +
+      resultBox.innerHTML = '<div class="req-status" style="color:#262525;background:#f7ecec;border-color:#e0b8b8">' +
         '<span class="big">Your car is on its way!</span>Our valet is bringing it round now — please head to the valet desk.</div>';
       return;
     }

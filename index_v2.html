@@ -7,14 +7,14 @@
 <!-- PWA + push-notification support (lets staff phones get car-request
      alerts even when the dashboard isn't open). -->
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#111111">
+<meta name="theme-color" content="#262525">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Chadstone Valet">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=6">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=6">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=6">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=7">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=7">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=7">
 <!-- Inter — matches the official chadstone.com.au typeface -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,8 +22,8 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --maroon:#111111;
-  --maroon-dark:#000000;
+  --maroon:#262525;
+  --maroon-dark:#262525;
   --maroon-light:#333333;
   --sandstone:#f5f5f5;
   --bone:#e6e6e6;
@@ -175,7 +175,7 @@ body{
 /* label shown as a tooltip to the right on hover */
 .tab-label{
   position:absolute;left:calc(100% + 10px);top:50%;transform:translateY(-50%);
-  background:#111111;color:#fff;padding:6px 11px;border-radius:6px;
+  background:#262525;color:#fff;padding:6px 11px;border-radius:6px;
   font-size:12px;letter-spacing:.6px;text-transform:uppercase;font-weight:600;white-space:nowrap;
   opacity:0;pointer-events:none;transition:opacity .12s;z-index:120;box-shadow:0 3px 12px rgba(0,0,0,.35);
 }
@@ -218,7 +218,7 @@ body.mobile-mode .tab.desktop-only{display:none}
 .view.active{display:block}
 
 /* ─── SETTINGS FLYOUT SUB-MENU (pops out beside the icon rail) ─── */
-.nav-flyout{display:none;flex:0 0 212px;background:#111111;align-self:stretch;padding:14px 10px;flex-direction:column;gap:2px}
+.nav-flyout{display:none;flex:0 0 212px;background:#262525;align-self:stretch;padding:14px 10px;flex-direction:column;gap:2px}
 .nav-flyout.open{display:flex}
 .nav-flyout-title{color:var(--champagne);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;padding:4px 12px 12px}
 .flyout-item{display:block;width:100%;text-align:left;padding:11px 14px;border-radius:6px;border:none;background:none;color:rgba(255,255,255,.82);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .12s,color .12s}
@@ -608,7 +608,7 @@ body.dark-mode .ico-group{background:transparent}
   transition:all .15s;
 }
 .scan-btn:hover{background:var(--bg);border-color:var(--bronze)}
-.scan-btn.active{background:#6b6b6b;color:#111111;border-color:#6b6b6b;animation:scanPulse 2s ease-in-out infinite}
+.scan-btn.active{background:#6b6b6b;color:#262525;border-color:#6b6b6b;animation:scanPulse 2s ease-in-out infinite}
 @keyframes scanPulse{0%,100%{box-shadow:0 0 0 0 rgba(240,217,168,.6)}50%{box-shadow:0 0 0 8px rgba(240,217,168,0)}}
 @keyframes bagDotFlash{0%,100%{opacity:1}50%{opacity:.25}}
 .bag-dot-flash{animation:bagDotFlash 1s ease-in-out infinite}
@@ -616,12 +616,12 @@ body.dark-mode .ico-group{background:transparent}
 /* Scan mode overlay banner */
 .scan-banner{
   position:fixed;top:0;left:0;right:0;
-  background:#6b6b6b;color:#111111;
+  background:#6b6b6b;color:#262525;
   padding:8px 16px;text-align:center;
   padding-top:calc(8px + env(safe-area-inset-top, 0px));
   font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
   z-index:80;
-  border-bottom:2px solid #111111;
+  border-bottom:2px solid #262525;
   display:none;
 }
 .scan-banner.show{display:block}
@@ -785,7 +785,7 @@ body.mobile-mode .scan-ready-pill{display:none}
 #login-overlay {
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg, #111111 0%, #000000 100%);
+  background: linear-gradient(135deg, #262525 0%, #262525 100%);
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -816,7 +816,7 @@ body.mobile-mode .scan-ready-pill{display:none}
 }
 .login-input:focus {
   outline: none;
-  border-color: #111111;
+  border-color: #262525;
   box-shadow: 0 0 0 3px rgba(107, 29, 36, 0.1);
 }
 .login-error {
@@ -829,7 +829,7 @@ body.mobile-mode .scan-ready-pill{display:none}
 .login-btn {
   width: 100%;
   padding: 12px 24px;
-  background: #111111;
+  background: #262525;
   color: #f5f5f5;
   border: none;
   border-radius: 6px;
@@ -878,7 +878,7 @@ body.mobile-mode .scan-ready-pill{display:none}
 .user-pick-btn .avatar {
   width: 32px;
   height: 32px;
-  background: #111111;
+  background: #262525;
   color: #6b6b6b;
   border-radius: 50%;
   display: flex;
@@ -937,7 +937,7 @@ body.dark-mode .welcome-box {
 /* ─── DARK MODE ─── */
 body.dark-mode {
   --maroon: #333333;
-  --maroon-dark: #111111;
+  --maroon-dark: #262525;
   --maroon-light: #666666;
   --sandstone: #333333;
   --bone: #3a342a;
@@ -1190,7 +1190,7 @@ body.dark-mode .scan-banner {
 
     <div id="login-stage-password" class="login-stage" style="display:none">
       <div style="font-size:16px;color:#2b2b2b;margin-bottom:8px;font-weight:600">
-        Signing in as <span id="login-selected-user" style="color:#111111;font-weight:700"></span>
+        Signing in as <span id="login-selected-user" style="color:#262525;font-weight:700"></span>
       </div>
       <input type="password" id="login-password" autocomplete="current-password" class="login-input" placeholder="Password">
       <div id="login-password-error" class="login-error"></div>
@@ -1209,8 +1209,8 @@ body.dark-mode .scan-banner {
 </div>
 
 <!-- HEADER -->
-<div class="scan-banner" id="bag-banner" style="background:#111111;color:#fff;border-bottom-color:#000000;display:none"></div>
-<div class="scan-banner" id="eod-banner" style="background:#111111;color:#fff;border-bottom-color:#000000;display:none"></div>
+<div class="scan-banner" id="bag-banner" style="background:#262525;color:#fff;border-bottom-color:#262525;display:none"></div>
+<div class="scan-banner" id="eod-banner" style="background:#262525;color:#fff;border-bottom-color:#262525;display:none"></div>
 
 <div class="scan-banner" id="offline-banner" style="background:#ffbb77;color:#5a3a00;border-bottom-color:#a06400;display:none">
   OFFLINE — Data saved locally on this device, will sync when reconnected (if multi-device sync is set up)
@@ -4987,7 +4987,7 @@ function showCheckoutToast(entry, total) {
     <button class="save-toast-close" onclick="dismissSaveToast()">✕</button>
   `;
   // Bronze gradient for checkout
-  toast.style.background = 'linear-gradient(135deg, #111111 0%, #000000 100%)';
+  toast.style.background = 'linear-gradient(135deg, #262525 0%, #262525 100%)';
   toast.style.borderLeftColor = '#808080';
   toast.classList.add('show');
 
@@ -5283,9 +5283,9 @@ function donutSVG(pct, centre, sub) {
   const r = 54, c = 2 * Math.PI * r, off = c * (1 - pct / 100);
   return `<svg viewBox="0 0 140 140" width="132" height="132" aria-hidden="true">
     <circle cx="70" cy="70" r="${r}" fill="none" stroke="#ece8e2" stroke-width="15"/>
-    <circle cx="70" cy="70" r="${r}" fill="none" stroke="#111111" stroke-width="15" stroke-linecap="round"
+    <circle cx="70" cy="70" r="${r}" fill="none" stroke="#262525" stroke-width="15" stroke-linecap="round"
       stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" transform="rotate(-90 70 70)"/>
-    <text x="70" y="68" text-anchor="middle" font-size="30" font-weight="700" fill="#111111" font-family="Inter,sans-serif">${centre}</text>
+    <text x="70" y="68" text-anchor="middle" font-size="30" font-weight="700" fill="#262525" font-family="Inter,sans-serif">${centre}</text>
     <text x="70" y="90" text-anchor="middle" font-size="11" letter-spacing="1" fill="#9a948c" font-family="Inter,sans-serif">${sub}</text>
   </svg>`;
 }
@@ -5320,9 +5320,9 @@ function syncFeatureToggleButtons() {
     const btn = document.getElementById(id);
     if (!btn) return;
     btn.textContent = on ? 'On' : 'Off';
-    btn.style.background = on ? '#111111' : 'var(--bone)';
+    btn.style.background = on ? '#262525' : 'var(--bone)';
     btn.style.color = on ? '#fff' : 'var(--text)';
-    btn.style.border = '1px solid ' + (on ? '#111111' : 'var(--border)');
+    btn.style.border = '1px solid ' + (on ? '#262525' : 'var(--border)');
   });
 }
 async function setFeatureFlag(which, on) {
@@ -7237,7 +7237,7 @@ function updateBagBadge(count) {
     if (allowed && newReqs.length && !bagBannerDismissed) {
       const latest = newReqs.sort((a,b)=>new Date(b.j.requested)-new Date(a.j.requested))[0];
       banner.innerHTML = `<strong>${newReqs.length} bag pickup${newReqs.length!==1?'s':''} waiting</strong> · newest: ${latest.j.location || 'Valet Desk'} `
-        + `<button onclick="showView('bags')" style="background:#fff;color:#111111;border:none;padding:2px 10px;border-radius:3px;margin-left:8px;cursor:pointer;font-weight:bold">Open</button>`
+        + `<button onclick="showView('bags')" style="background:#fff;color:#262525;border:none;padding:2px 10px;border-radius:3px;margin-left:8px;cursor:pointer;font-weight:bold">Open</button>`
         + `<button onclick="dismissBagBanner()" style="background:transparent;color:inherit;border:1px solid;padding:2px 8px;border-radius:3px;margin-left:6px;cursor:pointer">Dismiss</button>`;
       banner.style.display = 'block';
     } else {
@@ -7587,10 +7587,10 @@ function printShopStatement(shop) {
   const w = window.open('', '_blank', 'width=800,height=900');
   w.document.write(`<!DOCTYPE html><html><head><title>Statement — ${shop}</title>
     <style>body{font-family:Arial,Helvetica,sans-serif;color:#222;padding:28px;max-width:720px;margin:0 auto}
-    h1{font-size:20px;color:#111111;margin:0 0 2px}.sub{color:#666;font-size:13px;margin-bottom:18px}
+    h1{font-size:20px;color:#262525;margin:0 0 2px}.sub{color:#666;font-size:13px;margin-bottom:18px}
     table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px 6px;border-bottom:1px solid #ddd;text-align:left}
     th{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#888}
-    .tot{margin-top:16px;text-align:right;font-size:18px;font-weight:bold;color:#111111}
+    .tot{margin-top:16px;text-align:right;font-size:18px;font-weight:bold;color:#262525}
     .meta{margin-top:22px;font-size:12px;color:#666}@media print{button{display:none}}</style></head>
     <body>
     <h1>${CENTRE.name} Valet — Parking Statement</h1>
@@ -7599,7 +7599,7 @@ function printShopStatement(shop) {
     <tbody>${rows}</tbody></table>
     <div class="tot">Total due: ${fmtMoney(total)}</div>
     <div class="meta">${list.length} parking session${list.length !== 1 ? 's' : ''} · Valet desk ${CENTRE.phone}</div>
-    <button onclick="window.print()" style="margin-top:22px;padding:10px 20px;background:#111111;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:14px">Print</button>
+    <button onclick="window.print()" style="margin-top:22px;padding:10px 20px;background:#262525;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:14px">Print</button>
     </body></html>`);
   w.document.close();
 }
@@ -8013,17 +8013,17 @@ function printDailySummary() {
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Inter',sans-serif;color:#333333;padding:30px;line-height:1.5;max-width:780px;margin:0 auto;background:#fff}
-  h1{font-size:24px;letter-spacing:2px;color:#111111;margin-bottom:4px}
+  h1{font-size:24px;letter-spacing:2px;color:#262525;margin-bottom:4px}
   h2{font-size:14px;letter-spacing:2px;text-transform:uppercase;color:#6b6b6b;margin:24px 0 10px;padding-bottom:4px;border-bottom:1px solid #6b6b6b}
   .sub{font-size:13px;color:#6f6b66;font-style:italic;margin-bottom:20px}
   table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px}
   th{background:#f5f5f5;text-align:left;padding:6px 8px;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#6b6b6b;border-bottom:1px solid #6b6b6b}
   td{padding:5px 8px;border-bottom:1px solid #e6e6e6}
   .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
-  .stat-box{background:#fafafa;padding:10px 12px;border-left:3px solid #111111;border-radius:3px}
+  .stat-box{background:#fafafa;padding:10px 12px;border-left:3px solid #262525;border-radius:3px}
   .stat-label{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#6b6b6b;margin-bottom:3px}
-  .stat-value{font-size:22px;font-weight:bold;color:#111111}
-  .money{font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;color:#111111}
+  .stat-value{font-size:22px;font-weight:bold;color:#262525}
+  .money{font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;color:#262525}
   .green{color:#4a7c4f;font-weight:bold}
   .red{color:#a83838;font-weight:bold}
   .footer{margin-top:30px;padding-top:14px;border-top:1px solid #6b6b6b;font-size:11px;color:#6f6b66;text-align:center;font-style:italic}
@@ -8032,7 +8032,7 @@ function printDailySummary() {
   .sig-label{font-size:10px;color:#6f6b66;letter-spacing:1px;text-transform:uppercase}
   @media print{body{padding:15px}}
   .toolbar{margin-bottom:20px;padding:10px;background:#f5f5f5;border-radius:4px;text-align:center}
-  .btn{padding:8px 18px;background:#111111;color:#fff;border:none;border-radius:3px;cursor:pointer;font-size:13px;margin:0 4px}
+  .btn{padding:8px 18px;background:#262525;color:#fff;border:none;border-radius:3px;cursor:pointer;font-size:13px;margin:0 4px}
   @media print{.toolbar{display:none}}
 </style>
 </head><body>
@@ -8396,12 +8396,12 @@ function downloadReportPDF() {
   const w = window.open('', '_blank', 'width=820,height=900');
   w.document.write(`<!DOCTYPE html><html><head><title>Valet Report ${r.from} to ${r.to}</title>
     <style>body{font-family:Arial,Helvetica,sans-serif;color:#222;padding:28px;max-width:760px;margin:0 auto}
-    h1{font-size:20px;color:#111111;margin:0 0 2px}h2{font-size:14px;color:#111111;margin:22px 0 8px;border-bottom:2px solid #6b6b6b;padding-bottom:4px}
+    h1{font-size:20px;color:#262525;margin:0 0 2px}h2{font-size:14px;color:#262525;margin:22px 0 8px;border-bottom:2px solid #6b6b6b;padding-bottom:4px}
     .sub{color:#666;font-size:13px;margin-bottom:14px}
     table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:6px}th,td{padding:6px 8px;border-bottom:1px solid #ddd;text-align:left}
     th{font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:#888}
     .sg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:6px}
-    .sc{background:#f5f5f5;border-radius:6px;padding:10px 12px}.sc b{display:block;font-size:20px;color:#111111}.sc span{font-size:11px;color:#777;text-transform:uppercase;letter-spacing:1px}
+    .sc{background:#f5f5f5;border-radius:6px;padding:10px 12px}.sc b{display:block;font-size:20px;color:#262525}.sc span{font-size:11px;color:#777;text-transform:uppercase;letter-spacing:1px}
     @media print{button{display:none}}</style></head><body>
     <h1>${CENTRE.name} Valet — Report</h1>
     <div class="sub">${fmtDate(new Date(r.from))} → ${fmtDate(new Date(r.to))}</div>
@@ -8417,7 +8417,7 @@ function downloadReportPDF() {
     <h2>Peak Times &amp; Customer Stay</h2>${tbl(['Measure', 'Value'], peakRows)}
     <h2>Daily Volume</h2>${tbl(['Date', 'Cars', 'Revenue'], dailyRows)}
     <h2>Brand Breakdown</h2>${tbl(['Brand', 'Cars'], brandRows)}
-    <button onclick="window.print()" style="margin-top:22px;padding:10px 20px;background:#111111;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:14px">Print / Save as PDF</button>
+    <button onclick="window.print()" style="margin-top:22px;padding:10px 20px;background:#262525;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:14px">Print / Save as PDF</button>
     </body></html>`);
   w.document.close();
 }
@@ -8830,7 +8830,7 @@ let _lastMonthlyRows = [];
 
 // Themed line-style weather icons (Feather family — matches the app's other
 // icons) rendered in the brand maroon, so the report looks modern and on-brand
-// instead of using mismatched colour emoji. The #111111 fallback keeps them
+// instead of using mismatched colour emoji. The #262525 fallback keeps them
 // maroon inside the print/PDF window (which doesn't define the CSS variable).
 const WX_ICON_PATHS = {
   sun: '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>',
@@ -8845,7 +8845,7 @@ const WX_ICON_PATHS = {
 function wxSvg(cat) {
   const p = WX_ICON_PATHS[cat];
   if (!p) return '';
-  return `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;color:var(--maroon,#111111)">${p}</svg>`;
+  return `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;color:var(--maroon,#262525)">${p}</svg>`;
 }
 // Map a WMO weather code to a themed icon + short description. Returns
 // [iconSvgHtml, description]; the table/PDF show the icon, the CSV uses [1].
@@ -9089,13 +9089,13 @@ function downloadMonthlyPDF() {
   const w = window.open('', '_blank', 'width=900,height=900');
   w.document.write(`<!DOCTYPE html><html><head><title>Valet Monthly — ${monthName}</title>
     <style>body{font-family:Arial,Helvetica,sans-serif;color:#222;padding:24px;max-width:900px;margin:0 auto}
-    h1{font-size:20px;color:#111111;margin:0 0 2px}h2{font-size:14px;color:#111111;margin:20px 0 8px;border-bottom:2px solid #6b6b6b;padding-bottom:4px}
+    h1{font-size:20px;color:#262525;margin:0 0 2px}h2{font-size:14px;color:#262525;margin:20px 0 8px;border-bottom:2px solid #6b6b6b;padding-bottom:4px}
     .sub{color:#666;font-size:13px;margin-bottom:12px}
     table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:5px 7px;border-bottom:1px solid #ddd;text-align:left}
     th{font-size:10px;letter-spacing:.4px;text-transform:uppercase;color:#888}
     tfoot td{font-weight:bold;border-top:2px solid #999}
     .sg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:6px}
-    .sc{background:#f5f5f5;border-radius:6px;padding:10px 12px}.sc b{display:block;font-size:20px;color:#111111}.sc span{font-size:10px;color:#777;text-transform:uppercase;letter-spacing:1px}
+    .sc{background:#f5f5f5;border-radius:6px;padding:10px 12px}.sc b{display:block;font-size:20px;color:#262525}.sc span{font-size:10px;color:#777;text-transform:uppercase;letter-spacing:1px}
     @media print{button{display:none}}</style></head><body>
     <h1>${CENTRE.name} Valet — Monthly Report</h1>
     <div class="sub">${monthName} · Sydney weather &amp; NSW public/school holidays vs daily car volume</div>
@@ -9110,7 +9110,7 @@ function downloadMonthlyPDF() {
     <table><thead><tr><th>Date</th><th>Day</th><th style="text-align:right">Cars</th><th style="text-align:right">Revenue</th><th>Weather</th><th style="text-align:right">Max/Min</th><th style="text-align:right">Rain</th><th>Public holiday</th><th>School holiday</th></tr></thead>
     <tbody>${bodyRows}</tbody>
     <tfoot><tr><td colspan="2">Total</td><td style="text-align:right">${totalCars}</td><td style="text-align:right">${fmtMoney(totalRev)}</td><td colspan="5">Avg ${(totalCars / rows.length).toFixed(1)} cars/day · ${rows.filter(r => r.cars).length} active days</td></tr></tfoot></table>
-    <button onclick="window.print()" style="margin-top:22px;padding:10px 20px;background:#111111;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:14px">Print / Save as PDF</button>
+    <button onclick="window.print()" style="margin-top:22px;padding:10px 20px;background:#262525;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:14px">Print / Save as PDF</button>
     </body></html>`);
   w.document.close();
 }
@@ -9811,10 +9811,10 @@ function downloadMgmtPDF() {
   const w = window.open('', '_blank', 'width=820,height=900');
   w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Valet Management Summary ${from} to ${to}</title>
     <style>body{font-family:Arial,Helvetica,sans-serif;color:#222;padding:28px;max-width:760px;margin:0 auto}
-    h1{font-size:20px;color:#111111;margin:0 0 2px}h2{font-size:14px;color:#111111;margin:22px 0 8px;border-bottom:2px solid #6b6b6b;padding-bottom:4px}
+    h1{font-size:20px;color:#262525;margin:0 0 2px}h2{font-size:14px;color:#262525;margin:22px 0 8px;border-bottom:2px solid #6b6b6b;padding-bottom:4px}
     .sub{color:#666;font-size:13px;margin-bottom:16px}
     .sg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-    .sc{background:#f5f5f5;border-radius:6px;padding:10px 12px}.sc b{display:block;font-size:19px;color:#111111;margin-top:2px}.sc span{font-size:10px;color:#777;text-transform:uppercase;letter-spacing:1px}.sc i{display:block;font-size:11px;color:#888;font-style:normal;margin-top:2px}
+    .sc{background:#f5f5f5;border-radius:6px;padding:10px 12px}.sc b{display:block;font-size:19px;color:#262525;margin-top:2px}.sc span{font-size:10px;color:#777;text-transform:uppercase;letter-spacing:1px}.sc i{display:block;font-size:11px;color:#888;font-style:normal;margin-top:2px}
     table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:6px 8px;border-bottom:1px solid #ddd;text-align:left}.r{text-align:right;font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace}.tot{font-weight:bold}
     @media print{button{display:none}}</style></head><body>
     <h1>${CENTRE.name} Valet — Management Summary</h1>
@@ -9831,7 +9831,7 @@ function downloadMgmtPDF() {
     </div>
     <h2>Tenant Validations</h2>
     <table><thead><tr><th>Tenant</th><th class="r">Validations</th><th class="r">Value</th></tr></thead><tbody>${valRows}</tbody></table>
-    <button onclick="window.print()" style="margin-top:22px;padding:10px 20px;background:#111111;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:14px">Print / Save as PDF</button>
+    <button onclick="window.print()" style="margin-top:22px;padding:10px 20px;background:#262525;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:14px">Print / Save as PDF</button>
     </body></html>`);
   w.document.close();
 }
@@ -13531,7 +13531,7 @@ async function renderStaffList() {
           <div style="font-size:11px;color:var(--text-muted)">@${s.username} · ${s.role === 'admin' ? 'Admin' : 'Staff'} · Last login: ${lastLogin}</div>
         </div>
         <div style="display:flex;gap:6px">
-          <button class="btn btn-sm" onclick="toggleBagStaff('${s.username.replace(/'/g, "\\'")}')" title="Hands-free shopping: whether this person receives bag-collection alerts" style="${bagStaffList().includes(s.username) ? 'background:#111111;color:#fff;border:1px solid #111111' : 'background:var(--bone);color:var(--text);border:1px solid var(--border)'}">Bags ${bagStaffList().includes(s.username) ? 'On' : 'Off'}</button>
+          <button class="btn btn-sm" onclick="toggleBagStaff('${s.username.replace(/'/g, "\\'")}')" title="Hands-free shopping: whether this person receives bag-collection alerts" style="${bagStaffList().includes(s.username) ? 'background:#262525;color:#fff;border:1px solid #262525' : 'background:var(--bone);color:var(--text);border:1px solid var(--border)'}">Bags ${bagStaffList().includes(s.username) ? 'On' : 'Off'}</button>
           <button class="btn btn-secondary btn-sm" onclick="openEditStaffModal('${s.username.replace(/'/g, "\\'")}', '${(s.display_name||'').replace(/'/g, "\\'")}', '${s.role}')">Edit</button>
           ${!isMe ? `<button class="btn btn-danger btn-sm" onclick="toggleStaffActive('${s.username.replace(/'/g, "\\'")}', ${!s.is_active})">${s.is_active ? 'Disable' : '✓ Enable'}</button>` : ''}
         </div>
@@ -14029,7 +14029,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </div><!-- /checkout-more-body -->
 
     <div id="square-pay-row" style="display:none;margin-bottom:14px">
-      <button class="btn btn-primary" id="square-charge-btn" onclick="chargeOnTerminal()" style="width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#111111">
+      <button class="btn btn-primary" id="square-charge-btn" onclick="chargeOnTerminal()" style="width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#262525">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         <span id="square-charge-label">Charge on Square Terminal</span>
       </button>
