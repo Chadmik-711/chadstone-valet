@@ -43,9 +43,8 @@
   --red:#a83838;
 }
 
-/* Gold accent on the key data values in the New Entry form (rego/ticket also set inline). */
-#view-new-entry .form-input{ color:var(--gold); font-weight:600; }
-#view-new-entry .form-input::placeholder{ color:var(--text-muted); font-weight:400; }
+/* Gold accent on the New Entry field LABELS (the questions), not the typed values. */
+#view-new-entry .form-label{ color:var(--gold); }
 
 body{
   font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
@@ -1366,7 +1365,7 @@ body.dark-mode .scan-banner {
           </span>
         </label>
         <div style="display:flex;gap:6px">
-          <input type="text" id="f-ticket" class="form-input" readonly="" style="background:var(--sandstone);font-family:ui-monospace,&#39;Cascadia Code&#39;,&#39;Segoe UI Mono&#39;,Menlo,Consolas,monospace;font-weight:bold;font-size:13px;color:var(--gold);flex:1">
+          <input type="text" id="f-ticket" class="form-input" readonly="" style="background:var(--sandstone);font-family:ui-monospace,&#39;Cascadia Code&#39;,&#39;Segoe UI Mono&#39;,Menlo,Consolas,monospace;font-weight:normal;font-size:13px;color:var(--text-muted);flex:1">
           <button type="button" class="btn btn-secondary btn-sm" onclick="useAutoTicket()" id="auto-ticket-btn" style="white-space:nowrap;display:none">⟳ Auto</button>
         </div>
       </div>
@@ -1379,7 +1378,7 @@ body.dark-mode .scan-banner {
           <span style="font-weight:normal;color:var(--text-muted);text-transform:none;letter-spacing:0;font-size:11px;margin-left:6px">Snap · Type</span>
         </label>
         <div style="display:flex;gap:6px">
-          <input type="text" id="f-rego" class="form-input" placeholder="e.g. ABC 123" autocomplete="off" style="text-transform:uppercase;font-weight:bold;color:var(--gold);flex:1">
+          <input type="text" id="f-rego" class="form-input" placeholder="e.g. ABC 123" autocomplete="off" style="text-transform:uppercase;flex:1">
           <button type="button" class="btn btn-secondary btn-sm btn-save-green" onclick="openPlateScan()" title="Use camera to scan number plate" style="white-space:nowrap">Snap</button>
         </div>
       </div>
@@ -5527,7 +5526,7 @@ function renderDashInfographics() {
         if (!list.length) return '<div class="dash-empty">No entries yet — use New Entry to start</div>';
         return `<div style="overflow-x:auto"><table style="width:100%;font-size:12px;border-collapse:collapse">
           <tr style="text-align:left;color:var(--text-muted)"><th style="padding:4px 8px 4px 0">Rego</th><th style="padding:4px 8px 4px 0">Vehicle</th><th style="padding:4px 8px 4px 0">Spot</th><th style="padding:4px 8px 4px 0">In</th><th style="padding:4px 8px 4px 0">Status</th></tr>
-          ${list.map(e => `<tr style="border-top:1px solid var(--border)"><td style="padding:5px 8px 5px 0;font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;font-weight:bold;color:var(--gold)">${escAttr(e.rego||'—')}</td><td style="padding:5px 8px 5px 0">${escAttr((e.brand||'')+(e.model?' '+e.model:''))}</td><td style="padding:5px 8px 5px 0">${escAttr(e.bay||'—')}</td><td style="padding:5px 8px 5px 0">${e.timeIn?fmtTime(new Date(e.timeIn)):'—'}</td><td style="padding:5px 8px 5px 0">${e.timeOut?'<span class="status-pill status-completed">Out</span>':'<span class="status-pill status-active">On Site</span>'}</td></tr>`).join('')}
+          ${list.map(e => `<tr style="border-top:1px solid var(--border)"><td style="padding:5px 8px 5px 0;font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;font-weight:bold">${escAttr(e.rego||'—')}</td><td style="padding:5px 8px 5px 0">${escAttr((e.brand||'')+(e.model?' '+e.model:''))}</td><td style="padding:5px 8px 5px 0">${escAttr(e.bay||'—')}</td><td style="padding:5px 8px 5px 0">${e.timeIn?fmtTime(new Date(e.timeIn)):'—'}</td><td style="padding:5px 8px 5px 0">${e.timeOut?'<span class="status-pill status-completed">Out</span>':'<span class="status-pill status-active">On Site</span>'}</td></tr>`).join('')}
         </table></div>`;
       }
       case 'turnover':
@@ -6170,7 +6169,7 @@ function renderWashDialog() {
   const body = document.getElementById('wash-modal-body');
   if (!e || !body) return;
   const cw = e.carWash;
-  const carLine = `<div style="color:var(--text-muted);margin-bottom:14px"><b style="color:var(--maroon);font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace">${e.ticket}</b> · ${e.brand}${e.model ? ' ' + e.model : ''} · <span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;color:var(--gold);font-weight:bold">${e.rego}</span></div>`;
+  const carLine = `<div style="color:var(--text-muted);margin-bottom:14px"><b style="color:var(--maroon);font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace">${e.ticket}</b> · ${e.brand}${e.model ? ' ' + e.model : ''} · <span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace">${e.rego}</span></div>`;
   const curSvc = cw ? cw.service : '';
   const curSize = cw ? cw.size : 'small';
   const optHtml = ['<option value="">— Select a wash —</option>']
@@ -6298,7 +6297,7 @@ function renderOverstayBanner() {
   const chip = (e, urgent) => {
     const dur = fmtDuration(now - new Date(e.timeIn));
     return `<button onclick="checkout('${e.id}')" title="Check out ${e.ticket}" style="display:inline-flex;align-items:center;gap:6px;border:1px solid ${urgent ? '#a83838' : '#6b6b6b'};background:#fff;border-radius:20px;padding:3px 10px;font-size:12px;cursor:pointer;white-space:nowrap;font-family:inherit">
-      <span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;font-weight:bold;color:var(--gold)">${e.ticket}</span>
+      <span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;font-weight:bold;color:var(--maroon)">${e.ticket}</span>
       <span style="color:var(--text-muted)">Bay ${e.bay} · ${dur}${e.name ? ' · ' + e.name : ''}</span></button>`;
   };
   let html = '';
@@ -6330,7 +6329,7 @@ function renderNoBayBanner() {
     const dur = fmtDuration(now - new Date(e.timeIn));
     const car = [e.brand, e.model].filter(Boolean).join(' ');
     return `<button onclick="assignBay('${e.id}')" title="Assign a bay to ${e.ticket}" style="display:inline-flex;align-items:center;gap:6px;border:1px solid #2f6db3;background:#fff;border-radius:20px;padding:4px 11px;font-size:12px;cursor:pointer;white-space:nowrap;font-family:inherit">
-      <span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;font-weight:bold;color:var(--gold)">${e.ticket}</span>
+      <span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;font-weight:bold;color:var(--maroon)">${e.ticket}</span>
       <span style="color:var(--text-muted)">${[car, e.rego].filter(Boolean).join(' · ')} · ${dur}${e.name ? ' · ' + e.name : ''}</span>
       <span style="color:#2f6db3;font-weight:600">+ Bay</span></button>`;
   }).join('');
@@ -6499,7 +6498,7 @@ function renderActive() {
     const row = `<tr class="active" style="${rowStyle}">
       <td class="ticket-num">${e.ticket}</td>
       <td>${e.name || '—'}${vipTag(e.vip)}</td>
-      <td style="font-weight:bold;color:var(--gold)">${e.rego}</td>
+      <td style="font-weight:bold">${e.rego}</td>
       <td><b>${canonicalBrand(e.brand)}</b></td>
       <td>${e.model || '—'}</td>
       <td><b>${e.bay || '—'}</b></td>
@@ -6514,7 +6513,7 @@ function renderActive() {
         <span class="acard-ticket">${e.ticket}</span>
         <span style="${durStyle}">${fmtDuration(dur)}${durBadge}</span>
       </div>
-      <div class="acard-car"><b>${canonicalBrand(e.brand)}</b>${e.model ? ' ' + e.model : ''} · <span class="mono" style="color:var(--gold);font-weight:bold">${e.rego}</span></div>
+      <div class="acard-car"><b>${canonicalBrand(e.brand)}</b>${e.model ? ' ' + e.model : ''} · <span class="mono">${e.rego}</span></div>
       <div class="acard-meta">
         <span>Bay <b style="color:var(--text)">${e.bay || '—'}</b></span>
         <span>In ${fmtTime(new Date(e.timeIn))}</span>
@@ -6562,7 +6561,7 @@ function renderCheckedOutToday() {
     rows.push(`<tr>
       <td class="ticket-num">${e.ticket}</td>
       <td>${e.name || '—'}${vipTag(e.vip)}</td>
-      <td style="font-weight:bold;color:var(--gold)">${e.rego}</td>
+      <td style="font-weight:bold">${e.rego}</td>
       <td><b>${e.brand || ''}</b></td>
       <td><b>${e.bay || '—'}</b></td>
       <td>${fmtTime(new Date(e.timeIn))}</td>
@@ -6577,7 +6576,7 @@ function renderCheckedOutToday() {
         <span class="acard-ticket">${e.ticket}</span>
         <span class="acard-fee">${fmtMoney(e.totalFee || 0)} · ${payLabel(e)}</span>
       </div>
-      <div class="acard-car"><b>${e.brand || ''}</b>${e.model ? ' ' + e.model : ''} · <span class="mono" style="color:var(--gold);font-weight:bold">${e.rego}</span></div>
+      <div class="acard-car"><b>${e.brand || ''}</b>${e.model ? ' ' + e.model : ''} · <span class="mono">${e.rego}</span></div>
       <div class="acard-meta">
         <span>Bay <b style="color:var(--text)">${e.bay || '—'}</b></span>
         <span>${fmtTime(new Date(e.timeIn))} → ${fmtTime(new Date(e.timeOut))}</span>
@@ -6926,7 +6925,7 @@ function renderLostTicketResults() {
   c.innerHTML = list.slice(0, 8).map(e => `
     <div style="border:1px solid var(--border);border-radius:6px;padding:12px;margin-bottom:8px">
       <div style="font-size:13px;margin-bottom:8px">
-        <span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;font-weight:bold;color:var(--gold)">${e.ticket}</span> · <b>${e.brand}</b>${e.model ? ' ' + e.model : ''}
+        <span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;font-weight:bold;color:var(--maroon)">${e.ticket}</span> · <b>${e.brand}</b>${e.model ? ' ' + e.model : ''}
         <div style="color:var(--text-muted);margin-top:2px">${e.name || '—'} · ${e.rego || '—'} · ${e.phone || 'no phone'} · Bay ${e.bay}</div>
       </div>
       <button class="btn btn-primary btn-sm" onclick="releaseLostTicket('${e.id}')">✓ Identity verified — checkout</button>
@@ -7048,17 +7047,17 @@ function renderQuickPickup() {
       ${requestedBadge}
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px">
         <div style="flex:1;min-width:0">
-          <div style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;font-size:20px;font-weight:bold;color:var(--gold);letter-spacing:1px">${e.ticket}</div>
+          <div style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;font-size:20px;font-weight:bold;color:var(--maroon);letter-spacing:1px">${e.ticket}</div>
           <div style="font-size:13px;color:var(--text-muted);margin-top:2px">${e.name || 'No name'}${vipTag(e.vip)}</div>
         </div>
         <div style="text-align:right;flex-shrink:0">
           <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--bronze);font-weight:600">Bay</div>
-          <div style="font-size:24px;font-weight:bold;color:var(--gold);line-height:1">${e.bay}</div>
+          <div style="font-size:24px;font-weight:bold;color:var(--maroon);line-height:1">${e.bay}</div>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:13px;padding:10px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:10px">
         <div><span style="color:var(--text-muted);font-size:11px">BRAND</span><br><b>${e.brand}</b></div>
-        <div><span style="color:var(--text-muted);font-size:11px">REGO</span><br><b style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;color:var(--gold);font-weight:bold">${e.rego}</b></div>
+        <div><span style="color:var(--text-muted);font-size:11px">REGO</span><br><b style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace">${e.rego}</b></div>
         <div><span style="color:var(--text-muted);font-size:11px">IN AT</span><br>${fmtTime(new Date(e.timeIn))}</div>
         <div><span style="color:var(--text-muted);font-size:11px">DURATION</span><br><b style="color:${borderColor}">${fmtDuration(dur)}</b></div>
       </div>
@@ -8233,7 +8232,7 @@ function renderLog() {
       <td><b>${e.brand}</b></td>
       <td>${e.model || '—'}</td>
       <td>${e.colour || '—'}</td>
-      <td style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;font-weight:bold;color:var(--gold)">${e.rego}</td>
+      <td style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;font-weight:bold">${e.rego}</td>
       <td>${e.bay}</td>
       <td>${e.timeOut
         ? '<span class="status-pill status-completed">Completed</span>'
@@ -9674,7 +9673,7 @@ function renderIncidents(filtered) {
       : '<span style="color:#a83838;font-weight:600">not acknowledged</span>';
     return `<div style="padding:10px 12px;background:var(--sandstone);border-left:3px solid #a83838;border-radius:5px;margin-bottom:8px">
       <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:12px;margin-bottom:4px">
-        <div><span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;font-weight:bold;color:var(--gold)">${e.ticket}</span> · ${e.brand}${e.model ? ' ' + e.model : ''} · <span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;color:var(--gold);font-weight:bold">${e.rego}</span></div>
+        <div><span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;font-weight:bold;color:var(--maroon)">${e.ticket}</span> · ${e.brand}${e.model ? ' ' + e.model : ''} · <span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace">${e.rego}</span></div>
         <div style="color:var(--text-muted)">${when}${e.incident.by ? ' · ' + e.incident.by : ''} · ${ackBadge}</div>
       </div>
       <div style="font-size:13px">${(e.incident.notes || '').replace(/</g, '&lt;')}</div>
