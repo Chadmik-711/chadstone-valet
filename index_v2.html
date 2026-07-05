@@ -106,8 +106,8 @@ body{
 
 /* ─── HEADER ─── */
 .header{
-  background:var(--white);
-  color:var(--text);
+  background:#262525;
+  color:#fff;
   padding:18px 32px;
   /* viewport-fit=cover lets content slide under the iOS status bar/notch in
      installed-PWA mode; push the header down so the logo/clock stay clear. */
@@ -115,12 +115,12 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  border-bottom:1px solid var(--border);
-  box-shadow:0 1px 6px rgba(0,0,0,.05);
+  border-bottom:1px solid #1c1b1b;
+  box-shadow:0 1px 6px rgba(0,0,0,.15);
 }
 .header-left{display:flex;align-items:center;gap:18px}
 .header-logo{height:22px;width:auto;max-width:220px;display:block}
-.header-subtitle{font-size:11px;letter-spacing:1.5px;color:var(--bronze);font-style:italic;text-transform:uppercase;margin-top:2px}
+.header-subtitle{font-size:11px;letter-spacing:1.5px;color:rgba(255,255,255,.6);font-style:italic;text-transform:uppercase;margin-top:2px}
 .header-date{
   font-family:'Inter',sans-serif;
   text-align:right;
@@ -135,13 +135,13 @@ body{
   font-weight:700;
   letter-spacing:2px;
   text-transform:uppercase;
-  color:var(--bronze);
+  color:rgba(255,255,255,.6);
 }
 .header-clock{
   font-size:42px;
   font-weight:700;
   letter-spacing:1px;
-  color:var(--maroon);
+  color:#fff;
   font-variant-numeric:tabular-nums;
   line-height:1;
 }
@@ -1234,7 +1234,7 @@ body.dark-mode .scan-banner {
 
 <div class="header">
   <div class="header-left">
-    <img src="logo-maroon.png?v=5" alt="Chadstone" class="header-logo">
+    <img src="logo-gold.png?v=5" alt="Chadstone" class="header-logo">
   </div>
 
   <div class="quick-search">
@@ -13718,7 +13718,7 @@ function updateUserBadge() {
   if (!badge) {
     badge = document.createElement('div');
     badge.id = 'user-badge';
-    badge.style.cssText = 'font-size:11px;font-weight:600;letter-spacing:.5px;margin-top:3px;color:var(--maroon);cursor:pointer';
+    badge.style.cssText = 'font-size:11px;font-weight:600;letter-spacing:.5px;margin-top:3px;color:#fff;cursor:pointer';
     const dateEl = document.querySelector('.header-date');
     if (dateEl) dateEl.appendChild(badge);
   }
