@@ -43,6 +43,10 @@
   --red:#a83838;
 }
 
+/* Gold accent on the key data values in the New Entry form (rego/ticket also set inline). */
+#view-new-entry .form-input{ color:var(--gold); font-weight:600; }
+#view-new-entry .form-input::placeholder{ color:var(--text-muted); font-weight:400; }
+
 body{
   font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
   background:var(--maroon);
@@ -6166,7 +6170,7 @@ function renderWashDialog() {
   const body = document.getElementById('wash-modal-body');
   if (!e || !body) return;
   const cw = e.carWash;
-  const carLine = `<div style="color:var(--text-muted);margin-bottom:14px"><b style="color:var(--maroon);font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace">${e.ticket}</b> · ${e.brand}${e.model ? ' ' + e.model : ''} · <span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace">${e.rego}</span></div>`;
+  const carLine = `<div style="color:var(--text-muted);margin-bottom:14px"><b style="color:var(--maroon);font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace">${e.ticket}</b> · ${e.brand}${e.model ? ' ' + e.model : ''} · <span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;color:var(--gold);font-weight:bold">${e.rego}</span></div>`;
   const curSvc = cw ? cw.service : '';
   const curSize = cw ? cw.size : 'small';
   const optHtml = ['<option value="">— Select a wash —</option>']
@@ -7049,12 +7053,12 @@ function renderQuickPickup() {
         </div>
         <div style="text-align:right;flex-shrink:0">
           <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--bronze);font-weight:600">Bay</div>
-          <div style="font-size:24px;font-weight:bold;color:var(--maroon);line-height:1">${e.bay}</div>
+          <div style="font-size:24px;font-weight:bold;color:var(--gold);line-height:1">${e.bay}</div>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:13px;padding:10px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:10px">
         <div><span style="color:var(--text-muted);font-size:11px">BRAND</span><br><b>${e.brand}</b></div>
-        <div><span style="color:var(--text-muted);font-size:11px">REGO</span><br><b style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace">${e.rego}</b></div>
+        <div><span style="color:var(--text-muted);font-size:11px">REGO</span><br><b style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;color:var(--gold);font-weight:bold">${e.rego}</b></div>
         <div><span style="color:var(--text-muted);font-size:11px">IN AT</span><br>${fmtTime(new Date(e.timeIn))}</div>
         <div><span style="color:var(--text-muted);font-size:11px">DURATION</span><br><b style="color:${borderColor}">${fmtDuration(dur)}</b></div>
       </div>
@@ -9670,7 +9674,7 @@ function renderIncidents(filtered) {
       : '<span style="color:#a83838;font-weight:600">not acknowledged</span>';
     return `<div style="padding:10px 12px;background:var(--sandstone);border-left:3px solid #a83838;border-radius:5px;margin-bottom:8px">
       <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:12px;margin-bottom:4px">
-        <div><span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;font-weight:bold;color:var(--gold)">${e.ticket}</span> · ${e.brand}${e.model ? ' ' + e.model : ''} · <span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace">${e.rego}</span></div>
+        <div><span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;font-weight:bold;color:var(--gold)">${e.ticket}</span> · ${e.brand}${e.model ? ' ' + e.model : ''} · <span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;color:var(--gold);font-weight:bold">${e.rego}</span></div>
         <div style="color:var(--text-muted)">${when}${e.incident.by ? ' · ' + e.incident.by : ''} · ${ackBadge}</div>
       </div>
       <div style="font-size:13px">${(e.incident.notes || '').replace(/</g, '&lt;')}</div>
