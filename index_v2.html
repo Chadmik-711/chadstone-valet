@@ -338,6 +338,19 @@ body.mobile-mode .tab.desktop-only{display:none}
   text-transform:uppercase;
   font-weight:bold;
 }
+/* Inverted (dark) panels — Log New Car + Valet Rates Reference. Re-scopes the
+   palette vars so every child text flips light on the #262525 bg; the form inputs
+   and returning-customer banner are protected so they stay readable on their own
+   light backgrounds. */
+.dark-panel{
+  background:#262525;
+  color:#fff;
+  --maroon:#fff; --text:#fff; --text-muted:rgba(255,255,255,.6);
+  --bronze:rgba(255,255,255,.72); --border:rgba(255,255,255,.16);
+  --sandstone:#333131; --bg:#262525;
+}
+.dark-panel .form-input, .dark-panel .form-select{ color:#2b2b2b; background:#fff; border-color:#d8d6d2; }
+.dark-panel #customer-banner{ color:#2b2b2b; --text:#2b2b2b; --text-muted:#5b554e; --bronze:#a48d53; }
 
 /* ─── FORM ─── */
 .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:14px}
@@ -1335,7 +1348,7 @@ body.dark-mode .scan-banner {
     </div>
     <button class="btn btn-secondary btn-sm" id="btn-quick-add" onclick="toggleQuickAdd()" style="background:var(--bone);color:var(--maroon)">Turn ON</button>
   </div>
-  <div class="section">
+  <div class="section dark-panel">
     <div class="section-header">
       <div class="section-title">Log New Car</div>
       <div style="font-size:12px;color:var(--text-muted)">Ticket # auto-generated</div>
@@ -1633,7 +1646,7 @@ body.dark-mode .scan-banner {
   </div>
 
   <!-- VALET RATES REFERENCE -->
-  <div class="section">
+  <div class="section dark-panel">
     <div class="section-header">
       <div class="section-title">Valet Rates Reference</div>
       <div style="font-size:11px;color:var(--text-muted);font-style:italic">As per chadstone.com.au</div>
