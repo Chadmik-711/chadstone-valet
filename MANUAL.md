@@ -1,4 +1,4 @@
-# Chatswood Chase Valet App — Staff & Manager Manual
+# Chadstone Valet App — Staff & Manager Manual
 
 How to run the day-to-day valet operation and manage the system.
 
@@ -13,7 +13,7 @@ How to run the day-to-day valet operation and manage the system.
 ---
 
 ## 1. What this app is
-The Chatswood Chase valet dashboard — a single web app that runs in the browser on every device at the stand (counter PC, tablets, staff phones). It tracks every car from drop-off to pick-up, takes payment, prints key tags, texts customers their ticket, and gives the manager live reports.
+The Chadstone valet dashboard — a single web app that runs in the browser on every device at the stand (counter PC, tablets, staff phones). It tracks every car from drop-off to pick-up, takes payment, prints key tags, texts customers their ticket, and gives the manager live reports.
 
 - **Cloud-synced:** all devices share the same live data. A car logged on the tablet appears on the counter PC within a couple of seconds.
 - **Works offline:** if the internet drops, the app keeps working and syncs everything once it reconnects.
@@ -252,4 +252,4 @@ Paint correction, paint protection and other specialty services are quote-only.
 | VIP | A flagged customer who gets a star and priority handling. |
 
 ---
-*Chatswood Chase Valet App. Open this any time from Settings → Help & Manual, or print `manual.html` for a desk copy.*
+*Chadstone Valet App. Open this any time from Settings → Help & Manual, or print `manual.html` for a desk copy.*

@@ -7,5 +7,9 @@ SUPABASE-SETUP.md
 # Supabase CLI local state (points at whichever project was last linked)
 supabase/.temp/
 
-# Screenshots carried over from the source centre (may contain its customer PII)
-screenshots/
+# Screenshots may contain another centre's customer PII — ignore everything
+# EXCEPT screenshots/manual/, which are generated Chadstone demo captures used
+# by manual.html (fictional data, safe to publish).
+screenshots/*
+!screenshots/manual/
+!screenshots/manual/**
