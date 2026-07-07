@@ -4419,6 +4419,8 @@ function checkout(id) {
   // Return condition: default to "no new damage" (prefill if one was already logged).
   document.getElementById('checkout-incident-notes').value = (e.incident && e.incident.notes) || '';
   document.getElementById('checkout-incident-ack').checked = !!(e.incident && e.incident.ack);
+  pendingIncidentPhoto = (e.incident && e.incident.photo) || null;
+  setIncidentPhotoPreview(pendingIncidentPhoto);
   setReturnCondition(e.incident && e.incident.condition === 'damage' ? 'damage' : 'ok');
   // Charge-to-shop: populate the shop list and pre-select if it was set at check-in.
   const shopSel = document.getElementById('checkout-shop');
@@ -4936,6 +4938,7 @@ function confirmCheckout() {
     const incNotes = document.getElementById('checkout-incident-notes').value.trim();
     if (!incNotes) { alert('Describe the new damage found, or switch to “No new damage”.'); return; }
     incidentRec = { condition: 'damage', notes: incNotes, ack: document.getElementById('checkout-incident-ack').checked, by: attOut };
+    if (pendingIncidentPhoto) incidentRec.photo = pendingIncidentPhoto;
   } else {
     incidentRec = { condition: 'ok', by: attOut };
   }
@@ -8013,6 +8016,12 @@ function printDailySummary() {
 
   // Unpaid
   const unpaid = todayOut.filter(e => e.paymentStatus === 'unpaid');
+  // Reconciliation exceptions (unpaid + no-charge + tender-not-recorded) and the
+  // cash the drawer should hold (cash-tender trips only).
+  const recon = reconExceptions(todayOut);
+  const cashExpected = todayOut
+    .filter(e => (e.paymentStatus || 'paid') === 'paid' && e.paymentMethod === 'cash')
+    .reduce((s, e) => s + (e.totalFee || 0), 0);
 
   // Brand counts
   const brandMap = {};
@@ -8136,6 +8145,7 @@ function printDailySummary() {
   ).join('')}
   <tr style="border-top:2px solid #6b6b6b"><td><b>TOTAL REVENUE</b></td><td style="text-align:right" class="money"><b>${fmtMoney(totalRev)}</b></td></tr>
   <tr><td>Tips collected</td><td style="text-align:right" class="money green">${fmtMoney(totalTips)}</td></tr>
+  <tr><td>Expected cash in drawer <span style="color:#6f6b66">(cash-tender trips)</span></td><td style="text-align:right" class="money"><b>${fmtMoney(cashExpected)}</b></td></tr>
   ${unpaid.length > 0 ? `<tr><td>Unpaid (${unpaid.length} ticket${unpaid.length !== 1 ? 's' : ''})</td><td style="text-align:right" class="money red">${fmtMoney(unpaid.reduce((s,e)=>s+(e.totalFee||0),0))}</td></tr>` : ''}
 </table>
 
@@ -8171,11 +8181,12 @@ ${stillOnSite.length > 0 ? `
 </table>
 ` : ''}
 
-${unpaid.length > 0 ? `
-<h2 style="color:#a83838">Unpaid Tickets</h2>
+${recon.length > 0 ? `
+<h2 style="color:#a83838">Reconciliation — Needs Attention</h2>
+<div class="sub" style="margin-bottom:8px">Tickets closed today that are unpaid, charged $0 without being comped, or paid with no tender recorded. Clear these before signing off.</div>
 <table>
-  <tr><th>Ticket</th><th>Customer</th><th>Brand / Rego</th><th style="text-align:right">Amount</th></tr>
-  ${unpaid.map(e => `<tr><td><b>${e.ticket}</b></td><td>${e.name || '—'} ${e.phone ? '· '+e.phone : ''}</td><td>${e.brand} · ${e.rego}</td><td style="text-align:right" class="money red">${fmtMoney(e.totalFee || 0)}</td></tr>`).join('')}
+  <tr><th>Ticket</th><th>Customer</th><th>Brand / Rego</th><th>Flag</th><th style="text-align:right">Amount</th></tr>
+  ${recon.map(({ e, reason }) => `<tr><td><b>${e.ticket}</b></td><td>${e.name || '—'} ${e.phone ? '· '+e.phone : ''}</td><td>${e.brand} · ${e.rego}</td><td class="red">${reason}</td><td style="text-align:right" class="money red">${fmtMoney(e.totalFee || 0)}</td></tr>`).join('')}
 </table>
 ` : ''}
 
@@ -8297,10 +8308,13 @@ function viewPhoto(id, which, jobId) {
     const j = ensureBagJobs(e).find(x => x.id === jobId)
       || ensureBagJobs(e).find(x => x.status !== 'done') || ensureBagJobs(e)[0];
     src = j ? (which === 'bag' ? j.photo : j.shopPhoto) : null;
+  } else if (which === 'incident') {
+    src = e.incident && e.incident.photo;
   }
   if (!src) return;
   const caption = which === 'bag' ? 'Bag proof photo (sent to customer)'
     : which === 'shop' ? 'In-shop proof photo (staff only)'
+    : which === 'incident' ? 'Damage found at handover'
     : (e.brand + ' ' + (e.model || ''));
   const w = window.open('', '_blank', 'width=800,height=900');
   w.document.write(`<title>Photo — ${e.ticket} ${e.rego}</title>
@@ -9419,6 +9433,37 @@ function repHeading(text) {
   return `<div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--bronze);font-weight:600;margin:18px 0 8px">${text}</div>`;
 }
 
+// Reconciliation exceptions: completed trips where money may have gone missing.
+// A car handed back with NO charge that isn't a deliberate comp or shop-cover,
+// a "paid" trip with no tender recorded, or an unpaid ticket — all need a look
+// before the drawer is signed off. Returns [{ e, reason, col }], newest first.
+function reconExceptions(list) {
+  return list.filter(e => e.timeOut).map(e => {
+    const st = e.paymentStatus || 'paid';
+    if (st === 'comp' || st === 'shop') return null;       // intentionally $0 / billed elsewhere
+    if (st === 'unpaid')            return { e, reason: 'Unpaid — money owed', col: '#a83838' };
+    if (!(e.totalFee > 0))          return { e, reason: 'Checked out with no charge', col: '#a83838' };
+    if (!e.paymentMethod)           return { e, reason: 'Paid — tender not recorded', col: '#b8860b' };
+    return null;
+  }).filter(Boolean).sort((a, b) => new Date(b.e.timeOut) - new Date(a.e.timeOut));
+}
+
+// Live drawer variance in the Payments report: counted cash vs expected cash.
+function cashVariance() {
+  const inp = document.getElementById('cashup-counted');
+  const out = document.getElementById('cashup-variance');
+  if (!inp || !out) return;
+  const expected = parseFloat(inp.dataset.expected || '0') || 0;
+  const raw = inp.value.trim();
+  if (raw === '') { out.textContent = 'Enter the counted cash to see the variance.'; out.style.color = 'var(--text-muted)'; return; }
+  const counted = parseFloat(raw);
+  if (isNaN(counted)) { out.textContent = 'Enter a number.'; out.style.color = 'var(--text-muted)'; return; }
+  const diff = counted - expected;
+  if (Math.abs(diff) < 0.005)      { out.textContent = '✓ Balanced — drawer matches expected cash.'; out.style.color = 'var(--green)'; }
+  else if (diff > 0)               { out.textContent = `Over by ${fmtMoney(diff)} — more cash in the drawer than expected.`; out.style.color = 'var(--bronze)'; }
+  else                             { out.textContent = `Short by ${fmtMoney(-diff)} — less cash than expected.`; out.style.color = '#a83838'; }
+}
+
 // Payments & Cash-Up: split paid revenue by method (cash vs card/EFTPOS),
 // surface tips, and break down by payment status for the nightly drawer count.
 const PAY_METHOD_LABELS = { cash: 'Cash', card: 'Card', eftpos: 'EFTPOS', other: 'Other' };
@@ -9498,7 +9543,48 @@ function renderPayments(filtered) {
         byStatus[s].total / statusMax,
         s === 'unpaid' ? 'linear-gradient(90deg,#a83838,#c45a5a)' : 'linear-gradient(90deg,var(--green),#6fae73)')).join('');
 
-  c.innerHTML = repCards(cards) + exceptionBlock + statusBars;
+  // ── Cash-up: count the drawer ─────────────────────────────────────────────
+  // Expected cash = cash-tender paid trips only. Card / EFTPOS settle
+  // electronically so they never hit the drawer; tips are excluded because the
+  // tender they were paid on isn't tracked.
+  const cashExpected = (byMethod.cash && byMethod.cash.total) || 0;
+  const cashUpBlock = repHeading('Cash-up — count the drawer')
+    + `<div style="padding:12px 14px;background:var(--sandstone);border-radius:6px;margin-bottom:6px">
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:10px">
+          <span>Expected cash (cash-tender trips):</span>
+          <strong style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace">${fmtMoney(cashExpected)}</strong>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <label style="font-size:13px">Counted in drawer:</label>
+          <input id="cashup-counted" type="number" inputmode="decimal" step="0.01" min="0"
+            data-expected="${cashExpected}" oninput="cashVariance()"
+            class="form-input" style="width:130px" placeholder="0.00">
+        </div>
+        <div id="cashup-variance" style="font-size:13px;margin-top:10px;color:var(--text-muted)">Enter the counted cash to see the variance.</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:8px;font-style:italic">Card / EFTPOS settle electronically and aren't counted here. Tips are excluded (tender not tracked).</div>
+      </div>`;
+
+  // ── Reconciliation: tickets that need a look before sign-off ──────────────
+  const recon = reconExceptions(completed);
+  let reconBlock = repHeading('Reconciliation — needs attention');
+  if (!recon.length) {
+    reconBlock += `<div style="padding:10px 12px;background:var(--sandstone);border-radius:5px;border-left:3px solid var(--green);font-size:12px;color:var(--text-muted)">Every completed trip in this range is paid with a tender recorded, comped, or billed to a shop. Nothing to chase.</div>`;
+  } else {
+    reconBlock += recon.map(({ e, reason, col }) => {
+      const when = e.timeOut ? fmtDate(new Date(e.timeOut)) : '';
+      const att = e.attendantOut ? ' · ' + e.attendantOut : '';
+      const who = e.name ? ' · ' + e.name : '';
+      return `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 10px;background:var(--sandstone);border-radius:5px;margin-bottom:6px;border-left:3px solid ${col}">
+        <div style="font-size:12px">
+          <span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;font-weight:bold;color:var(--maroon)">${e.ticket}</span>
+          <span style="color:var(--text-muted)"> · ${e.rego || '—'}${who} · ${when}${att}</span>
+        </div>
+        <div style="font-size:12px;font-weight:600;color:${col};white-space:nowrap">${reason} · ${fmtMoney(e.totalFee || 0)}</div>
+      </div>`;
+    }).join('');
+  }
+
+  c.innerHTML = repCards(cards) + exceptionBlock + statusBars + cashUpBlock + reconBlock;
 }
 
 // Staff Performance: cars parked per check-in attendant, plus checkouts,
@@ -9715,7 +9801,10 @@ function renderIncidents(filtered) {
         <div><span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;font-weight:bold;color:var(--maroon)">${e.ticket}</span> · ${e.brand}${e.model ? ' ' + e.model : ''} · <span style="font-family:ui-monospace,'Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace">${e.rego}</span></div>
         <div style="color:var(--text-muted)">${when}${e.incident.by ? ' · ' + e.incident.by : ''} · ${ackBadge}</div>
       </div>
-      <div style="font-size:13px">${(e.incident.notes || '').replace(/</g, '&lt;')}</div>
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <div style="font-size:13px;flex:1">${(e.incident.notes || '').replace(/</g, '&lt;')}</div>
+        ${e.incident.photo ? `<img src="${e.incident.photo}" onclick="viewPhoto('${e.id}','incident')" style="width:60px;height:60px;object-fit:cover;border-radius:6px;border:1px solid var(--border);cursor:pointer;flex:0 0 auto" title="Damage photo — tap to enlarge">` : ''}
+      </div>
     </div>`;
   }).join('');
   c.innerHTML = repCards(cards) + repHeading('Logged incidents') + rows;
@@ -11638,6 +11727,51 @@ function onCarPhotoSelected(event) {
     img.src = e.target.result;
   };
   reader.readAsDataURL(file);
+}
+
+// Return-damage photo (checkout incident). Timestamped proof of new damage
+// found at handover — rides along in the incident jsonb, shows in the Incidents
+// report and a full-size view. Same downscale as the intake car photo.
+let pendingIncidentPhoto = null;
+function takeIncidentPhoto() {
+  document.getElementById('checkout-incident-photo-input').click();
+}
+function onIncidentPhotoSelected(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const maxDim = 1200;
+      let w = img.width, h = img.height;
+      if (w > maxDim || h > maxDim) {
+        const ratio = Math.min(maxDim / w, maxDim / h);
+        w = Math.round(w * ratio); h = Math.round(h * ratio);
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      pendingIncidentPhoto = canvas.toDataURL('image/jpeg', 0.7);
+      setIncidentPhotoPreview(pendingIncidentPhoto);
+      hapticFeedback('success');
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+  event.target.value = '';   // allow re-picking the same file
+}
+// Reflect the current incident photo (or none) in the checkout modal.
+function setIncidentPhotoPreview(src) {
+  const status = document.getElementById('checkout-incident-photo-status');
+  const thumb = document.getElementById('checkout-incident-photo-thumb');
+  if (src) {
+    if (thumb) { thumb.src = src; thumb.style.display = ''; }
+    if (status) { status.textContent = '✓ Damage photo attached'; status.style.color = 'var(--green)'; }
+  } else {
+    if (thumb) { thumb.style.display = 'none'; thumb.removeAttribute('src'); }
+    if (status) { status.textContent = ''; status.style.color = 'var(--text-muted)'; }
+  }
 }
 
 function captureGPS() {
@@ -13976,6 +14110,12 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       <div id="checkout-incident-fields" style="display:none;margin-top:12px">
         <textarea id="checkout-incident-notes" class="form-input" rows="2" placeholder="Describe the new damage — where on the car, what it is" style="width:100%;resize:vertical"></textarea>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="takeIncidentPhoto()">📷 Photo of damage</button>
+          <span id="checkout-incident-photo-status" style="font-size:12px;color:var(--text-muted);font-style:italic"></span>
+          <input type="file" id="checkout-incident-photo-input" accept="image/*" capture="environment" style="display:none" onchange="onIncidentPhotoSelected(event)">
+          <img id="checkout-incident-photo-thumb" alt="" style="display:none;width:56px;height:56px;object-fit:cover;border-radius:6px;border:1px solid var(--border);cursor:pointer" onclick="if(this.src)window.open().document.write('<body style=\'margin:0;background:#000\'><img src=\''+this.src+'\' style=\'max-width:100%\'>')">
+        </div>
         <label style="display:flex;align-items:center;gap:8px;font-size:13px;margin-top:8px;cursor:pointer">
           <input type="checkbox" id="checkout-incident-ack"> Customer was shown and acknowledged the damage
         </label>
