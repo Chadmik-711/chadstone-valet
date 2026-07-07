@@ -208,6 +208,10 @@ body.mobile-mode .tab.desktop-only{display:none}
     position: sticky;
     top: var(--header-h, 78px);
     align-self: flex-start;
+    /* Lift the rail's stacking context above .main so the hover tab-label
+       tooltips (z-index:120, trapped inside this sticky context) paint over
+       the dashboard widgets instead of behind them. Below the header (200). */
+    z-index: 150;
   }
 }
 
