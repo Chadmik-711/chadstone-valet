@@ -43,8 +43,9 @@
   --red:#a83838;
 }
 
-/* Gold accent on the New Entry field LABELS (the questions), not the typed values. */
-#view-new-entry .form-label{ color:var(--gold); }
+/* New Entry field LABELS (the questions): dark + bold so they're easy to read
+   on the white form (gold was too low-contrast). */
+#view-new-entry .form-label{ color:#262525; font-weight:700; }
 /* Keep every input bottom-aligned across a row even when one label wraps to two
    lines (e.g. Customer Name's "★ VIP customer" line), so the boxes line up. */
 #view-new-entry .form-field > .form-input,
