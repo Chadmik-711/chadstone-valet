@@ -1594,30 +1594,36 @@ body.dark-mode .scan-banner {
       </div>
     </div>
 
-    <div class="form-grid mobile-hide-now">
-      <div class="form-field">
-        <label class="form-label">Car wash (optional)
-          <span style="font-weight:normal;color:var(--text-muted);text-transform:none;letter-spacing:0;font-size:11px;margin-left:6px">Star Car Wash · added to bill</span>
-        </label>
-        <select id="f-wash-service" class="form-select" onchange="updateWashPriceHint('f')">
-          <option value="">— No car wash —</option>
-          <option value="express">Express Wash</option>
-          <option value="platinum">Platinum Wash</option>
-          <option value="polish">Star Polish</option>
-          <option value="interior">Interior Detail</option>
-          <option value="full">Full Detail</option>
-          <option value="paint">Paint Protection</option>
-        </select>
-      </div>
-      <div class="form-field">
-        <label class="form-label">Vehicle size</label>
-        <select id="f-wash-size" class="form-select" onchange="updateWashPriceHint('f')">
-          <option value="small">Small (sedan / hatch)</option>
-          <option value="large">Large (SUV / 4WD)</option>
-        </select>
-      </div>
+    <!-- Car wash: hidden by default; staff reveal it only if the customer wants a wash. -->
+    <div class="mobile-hide-now" style="margin-bottom:4px">
+      <button type="button" id="carwash-toggle" class="btn btn-secondary btn-sm" onclick="toggleCarWash()">+ Add car wash</button>
     </div>
-    <div id="f-wash-hint" style="font-size:11px;color:var(--bronze);font-weight:600;margin-top:5px;min-height:14px"></div>
+    <div id="carwash-section" class="mobile-hide-now" style="display:none">
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="form-label">Car wash
+            <span style="font-weight:normal;color:var(--text-muted);text-transform:none;letter-spacing:0;font-size:11px;margin-left:6px">Star Car Wash · added to bill</span>
+          </label>
+          <select id="f-wash-service" class="form-select" onchange="updateWashPriceHint('f')">
+            <option value="">— No car wash —</option>
+            <option value="express">Express Wash</option>
+            <option value="platinum">Platinum Wash</option>
+            <option value="polish">Star Polish</option>
+            <option value="interior">Interior Detail</option>
+            <option value="full">Full Detail</option>
+            <option value="paint">Paint Protection</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Vehicle size</label>
+          <select id="f-wash-size" class="form-select" onchange="updateWashPriceHint('f')">
+            <option value="small">Small (sedan / hatch)</option>
+            <option value="large">Large (SUV / 4WD)</option>
+          </select>
+        </div>
+      </div>
+      <div id="f-wash-hint" style="font-size:11px;color:var(--bronze);font-weight:600;margin-top:5px;min-height:14px"></div>
+    </div>
 
     <div class="form-grid">
       <div class="form-field" style="grid-column:1/-1">
@@ -3336,6 +3342,23 @@ function updateWashPriceHint(prefix) {
   hint.textContent = `${washLabel({ service: svc.value, size: size.value })} — ${fmtMoney(price)} · added to the customer's bill`;
 }
 
+// Car wash on the check-in form is hidden until the customer actually wants one.
+// Pass true/false to force a state, or nothing to toggle. Hiding also clears the
+// picked service so a hidden section never saves a wash by accident.
+function toggleCarWash(show) {
+  const sec = document.getElementById('carwash-section');
+  const btn = document.getElementById('carwash-toggle');
+  if (!sec) return;
+  const on = (show === undefined) ? sec.style.display === 'none' : !!show;
+  sec.style.display = on ? '' : 'none';
+  if (btn) btn.textContent = on ? '✕ Remove car wash' : '+ Add car wash';
+  if (!on) {
+    const svc = document.getElementById('f-wash-service');
+    if (svc) svc.value = '';
+    updateWashPriceHint('f');
+  }
+}
+
 // ═══════════════════════════════════════════════════
 // HEADER CLOCK
 // ═══════════════════════════════════════════════════
@@ -4293,6 +4316,7 @@ function resetForm() {
   const washSvc = document.getElementById('f-wash-service'); if (washSvc) washSvc.value = '';
   const washSize = document.getElementById('f-wash-size'); if (washSize) washSize.value = 'small';
   const washHint = document.getElementById('f-wash-hint'); if (washHint) washHint.textContent = '';
+  toggleCarWash(false);   // collapse the car-wash section back to hidden
   document.getElementById('customer-banner').style.display = 'none';
   const aiHint = document.getElementById('ai-fill-hint');
   if (aiHint) aiHint.style.display = 'none';
