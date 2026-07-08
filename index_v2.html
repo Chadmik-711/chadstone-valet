@@ -563,7 +563,7 @@ body.dark-mode .ico-group{background:transparent}
 .pmap-board{position:relative;width:720px;height:430px;margin:0 auto;background:var(--white);
   background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
   background-size:36px 36px;background-position:-1px -1px;border:1px solid var(--border);border-radius:10px}
-.pmap-spot{position:absolute;width:28px;height:22px;border-radius:4px;display:flex;align-items:center;justify-content:center;
+.pmap-spot{position:absolute;width:32px;height:22px;border-radius:4px;display:flex;align-items:center;justify-content:center;
   font-size:11px;font-weight:bold;color:#fff;box-shadow:0 1px 3px rgba(0,0,0,.28);cursor:default}
 .pmap-spot.free{background:var(--green)}
 .pmap-spot.occ{background:#a83838;cursor:pointer}
@@ -6084,7 +6084,7 @@ function renderParkingMap() {
     // sideways. Re-centre on the original 28×22 footprint so positions and tap
     // targets don't move into a neighbour.
     const portrait = !!s.rot;
-    const w = portrait ? 22 : 28, h = portrait ? 28 : 22;
+    const w = portrait ? 22 : 32, h = portrait ? 28 : 22;
     const left = s.rx + (28 - w) / 2, top = s.ry + (22 - h) / 2;
     const dims = portrait ? `;width:${w}px;height:${h}px` : '';
     const label = s.rot ? `<span style="display:inline-block;transform:rotate(${s.rot}deg)">${s.n}</span>` : s.n;
