@@ -50,6 +50,16 @@
    lines (e.g. Customer Name's "★ VIP customer" line), so the boxes line up. */
 #view-new-entry .form-field > .form-input,
 #view-new-entry .form-field > .form-select{ margin-top:auto; }
+/* Main New Entry row (Brand · Model · Customer · Phone · Colour · Bay): on wide
+   screens give Customer Name room for the "★ VIP" label and keep the short-answer
+   fields (Phone, Colour, Parking Bay) narrower so nothing overlaps. */
+@media (min-width: 900px) {
+  #view-new-entry .ne-main-row {
+    grid-template-columns: minmax(0,1.1fr) minmax(0,1fr) minmax(0,1.35fr) minmax(0,0.9fr) minmax(0,0.8fr) minmax(0,0.8fr);
+  }
+  #view-new-entry .ne-main-row .form-field,
+  #view-new-entry .ne-main-row .form-input { min-width: 0; }
+}
 /* Bolder black edge on every New Entry answer box so the fields stand out. */
 #view-new-entry .form-input,
 #view-new-entry .form-select,
@@ -1411,7 +1421,7 @@ body.dark-mode .scan-banner {
       </div>
     </div>
 
-    <div class="form-grid">
+    <div class="form-grid ne-main-row">
       <div class="form-field">
         <label class="form-label">Car Brand<span class="required">*</span></label>
         <input type="text" id="f-brand" class="form-input" list="brand-list" placeholder="Type or pick a brand…" autocomplete="off">
