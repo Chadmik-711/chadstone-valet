@@ -58,7 +58,7 @@ Go to **New Entry**. Ticket number and time-in fill automatically. Required fiel
 | **Parking Bay** *(required)* | Where you parked it (e.g. `A1`). Critical for finding it. |
 | **Number plate (Rego)** *(required)* | Type it, or use the camera to read it (Plate scan). |
 | **Attendant** | Your initials — credits you as the parker. |
-| **Charge parking to shop** | VIP / store-validated — shop pays, settle later. Optionally set the amount covered. |
+| **Charge parking to shop** | VIP / store-validated — shop pays, settle later. Type the shop name (autocomplete lists every Chadstone store; any name works). Optionally set the amount covered. |
 | **Car wash** | Optional — add a wash now (section 10). |
 | **Notes** | Damage, special instructions, etc. |
 | **VIP** | Tick to flag a VIP. |
@@ -113,7 +113,7 @@ Tap **✓ Mark Out**. The window shows duration and the flat valet fee (weekday 
 - **Discounts & validations** — add a store validation or a %/$ discount; each is recorded for the manager (Reports → Payments → Discounts).
 - **Payment status:** **Paid** (choose method — Card is the norm here, Cash, EFTPOS or Other), **Unpaid** (shows as outstanding), **Complimentary** (free parking; a car wash is still charged), **Charged to account/shop** (settle later).
 - Optionally add a **tip** or override the fee. The **Attendant (returning car)** field credits who fetched it.
-- **Return condition:** every checkout has a **Return condition** step — leave it on *✓ No new damage*, or tap *⚠ New damage / incident* to describe damage found on return and tick that the customer acknowledged it. Logged incidents appear in *Reports → Incidents*.
+- **Return condition:** every checkout has a **Return condition** step — leave it on *✓ No new damage*, or tap *⚠ New damage / incident* to describe damage found on return, take a **📷 photo of the damage**, and tick that the customer acknowledged it. Logged incidents (with photos) appear in *Reports → Incidents*.
 - **Square Terminal:** tap *Charge on Square Terminal* to send the amount to the card machine; a successful charge checks the car out automatically.
 
 > **Car still at the wash?** Checkout warns you if a car is marked "At car wash" — don't hand it back until it's returned and marked "Washed — back".
@@ -134,7 +134,7 @@ The Bags badge shows open jobs.
 ## 10. Car wash service
 Valet customers can add a car wash from **Star Car Wash** in the centre. Valet handles it end-to-end and the customer pays on the same valet bill.
 
-1. **Add the wash** — at check-in (the "Car wash" picker) or anytime parked (the droplet icon on Active Cars). Choose package and size (Small = sedan/hatch, Large = SUV/4WD); the price fills in automatically.
+1. **Add the wash** — at check-in tap **+ Add car wash** (hidden until needed), or anytime parked use the droplet icon on Active Cars. Choose package and size (Small = sedan/hatch, Large = SUV/4WD); the price fills in automatically.
 2. **Take it to Star Car Wash** — valet drives it over, tap **Taken to car wash** (chip turns maroon "At car wash").
 3. **Bring it back** — tap **✓ Back from wash** (chip turns green "Washed — back").
 4. **Customer pays once** — at checkout the wash is its own line, added to the parking total.
@@ -166,7 +166,7 @@ Pick a date range at the top; every panel updates. Menu groups related panels:
 |---|---|
 | **Management Summary** | Centre-facing roll-up (cars, revenue, tips, car wash, validation value, avg pickup wait, peak occupancy, incidents) + **Pickup Wait Times** (request→handover SLA) + **Tenant Validations** (by retailer). Has a **Print / PDF** one-pager. |
 | **Daily Volume** | Cars per day (with revenue), busiest/slowest day + trend, average by weekday, peak times by hour, peak cars on site, customer spend, brand breakdown. |
-| **Payments** | Cash-up (Card/EFTPOS vs cash, tips, outstanding, non-card flagged) plus **Shop Accounts**, **Car Wash** and **Discounts** panels. |
+| **Payments** | Cash-up (Card/EFTPOS vs cash, tips, outstanding, non-card flagged), a **drawer count** (type the counted cash for an instant over/short) and a **Reconciliation — needs attention** list flagging tickets closed unpaid, with no charge, or with no tender recorded. Plus **Shop Accounts**, **Car Wash** and **Discounts** panels. |
 | **Staff Performance** | Cars parked per attendant; checkouts + revenue + tips per attendant. |
 | **Customers** | Stay-length tiers (free <2h vs paid) and repeat customers. |
 | **Bag Jobs by Staff** | Hands-free shopping jobs per staff member, split into **Collected** (picked the bags up at the shop) and **Delivered** (put them in the car), plus **Avg time** per job per person. A breakdown at the top shows the average **Wait to claim** (requested → claimed), **To shop** (claimed → bags photographed at the shop), **Shop → car** (shop → loaded in car) and **Total per job**, over the selected range. |
