@@ -1561,7 +1561,7 @@ body.dark-mode .scan-banner {
         </datalist>
       </div>
       <div class="form-field">
-        <label class="form-label">Parking Bay <span style="color:var(--text-muted);font-weight:normal;font-style:italic">(optional)</span></label>
+        <label class="form-label">Parking Bay</label>
         <input type="text" id="f-bay" class="form-input" placeholder="e.g. B-12" autocomplete="off">
       </div>
     </div>
@@ -1595,9 +1595,8 @@ body.dark-mode .scan-banner {
         <label class="form-label">Charge parking to shop
           <span style="font-weight:normal;color:var(--text-muted);text-transform:none;letter-spacing:0;font-size:11px;margin-left:6px">VIP — shop pays, settle later</span>
         </label>
-        <select id="f-shop" class="form-select">
-          <option value="">— No · customer pays —</option>
-        </select>
+        <input type="text" id="f-shop" class="form-input" list="shop-list" placeholder="Type a shop… (blank = customer pays)" autocomplete="off">
+        <datalist id="shop-list"></datalist>
       </div>
       <div class="form-field">
         <label class="form-label">Amount shop covers</label>
@@ -3503,11 +3502,16 @@ function prepareNewEntry() {
   document.getElementById('f-ticket').readOnly = true;
   document.getElementById('f-ticket').style.background = 'var(--sandstone)';
   document.getElementById('auto-ticket-btn').style.display = 'none';
-  // Populate the charge-to-shop dropdown from the Level 1 shop list.
-  const shopSel = document.getElementById('f-shop');
-  if (shopSel && shopSel.options.length <= 1) {
-    shopSel.innerHTML = '<option value="">— No · customer pays —</option>'
-      + L1_SHOPS.map(s => `<option value="${escAttr(s)}">${s.replace(/</g, '&lt;')}</option>`).join('');
+  // Populate the charge-to-shop autocomplete with every Chadstone shop plus any
+  // custom retailers set in Settings. It's a type-in, so staff can enter any
+  // shop even if it's not listed.
+  const shopList = document.getElementById('shop-list');
+  if (shopList && !shopList.dataset.filled) {
+    const extra = (typeof getRetailerList === 'function') ? getRetailerList() : [];
+    const all = [...new Set([...CHADSTONE_SHOPS, ...extra])]
+      .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+    shopList.innerHTML = all.map(s => `<option value="${escAttr(s)}"></option>`).join('');
+    shopList.dataset.filled = '1';
   }
   // Draw the (empty) damage diagram for this fresh entry
   renderDamageMarkers();
@@ -7572,6 +7576,11 @@ function renderBagQueue() {
     </div>`;
   }).join('');
 }
+
+// Every Chadstone shop — powers the "Charge parking to shop" type-in autocomplete
+// on the check-in form. Scraped from the chadstone.com.au store directory; staff
+// can still type any shop not listed. (Bag/validation pickers use L1_SHOPS below.)
+const CHADSTONE_SHOPS = ["2XU","7 Apples Gelato","Acne Studios","Adairs","adidas","Aesop","Aje","Aldi","Allkinds","Altus","Amalfi Fresh Pasta","Anker Innovations","Anton Jewellery","ANZ Bank","APM Monaco","Apple","Aquila","Arc'teryx","ASICS","atomica","Au79","Australia Post Parcels","Australian Skin Clinics","Axil Coffee Roasters","Baby Bunting","Bakers Delight","Balenciaga","Bath & Body Works","Bec + Bridge","Bed Bath N Table","Betty's Burgers","Bevilles Jewellers","Blakeaway","BoConcept","Bonds","Boost","Boost (Food)","BOSS","Bottega Veneta","Boutique Le Vin","Breadtop","Breitling","Brunetti Oro","Bspoke Barbershop","Bubble Cup","Build-A-Bear Workshop","Bupa","Burberry","Bvlgari","BWS","By Charlotte","Caffe Ducale","CALIBRE","Calvin Klein","Camilla","CAMILLA AND MARC","Canada Goose","Cannoleria","Card and Caboodle","Cartier","Casa Nata","Celine","Chanel","Chanel Fragrance and Beauty","Chaumet","Chemist Warehouse","Chilli India","Chopard","Cinque Terre","Coach","Coco Republic","Coles","Colonial Fresh Market","Commonwealth Bank","Connor","Converse","COS","Cotton On Mega Store","Country Road","Croissant Bar by Laurent","Culture Kings","Cuts Only","Dainty Sichuan Noodle Express","Daiso","Dangerfield","David Jones","Dior","Dior Cosmetics","Dior Men","Diptyque","DISSH","DJI","Dolce&Gabbana","Dotti","Dr.Martens","Dumplings Plus","Dusk","Dymocks Bookshop","Dyson","EB Games","Elite Eleven","Emporio Armani","Endota Spa","Essential Beauty & Piercing","Fast Times","Fendi","Ferguson Plarre's Bakehouse","Ferragamo","FinerRings","Fishbowl","Fishmonger","Flight Centre","Florsheim","Flowers Vasette","Fonda","Foot Locker","Forever New","Frank Green","Gant","General Pants Co.","Georg Jensen","Gewurzhaus","Gewurzhaus (G)","Ghanda","Golden Goose","Gong cha","Gorman","Gotcha Fresh Tea","Gram Cafe & Pancakes","Green Cup","Gregory Jewellers","Grill'd","Grown Alchemist","Gucci","H&M","Hairhouse (G)","Happytel","Hella Good","Helly Hansen","Hermès","Hi-Touch","Hommey","House","House (G)","HSBC","Hungry Jack's","Hype DC","iBarber","Icebreaker","Incu","Industrie","Industry Beans Chadstone","Insight Early Learning","IWC Schaffhausen","Jacqui E","Jaeger-LeCoultre","Jay Jays","JB Hi-Fi","JD Sports","Jimmy Choo","Jo Mercer","JSY Tea","Jurlique (LG)","Just Cuts","Just Jeans","Kathmandu","KENZO","KFC","Kiehl's","KIVARI","Kmart","Koko Black","Kookai","Krispy Kreme","L'Occitane","L2 Skin & Beauty Clinics","La Belle Miette","La Francaise Nails and Beauty","Lanzhou Noodle Bar","Laurent","Le Creuset","Leica","Levi's","Liquorland Cellars","Little Sister Bakery","Little Sparrow Express","Little Sparrow Melbourne","Little White Duck","Loewe","Longines","LookSmart Alterations","Lorna Jane","Louis Vuitton","Lovisa","LSKD","Lukfook Jewellery","Lululemon","Lush Cosmetics","M.J.Bale","Macpac","Maguro","Maita Asian Grocer","Maje","Mala Kitchen","Mama's Buoi","Marae Izakaya","Marais","Max Mara","Mazzucchelli's Jewellers","McDonald's","MECCA","Mecca Cosmetica","Medibank","Melbourne Pearls Specialist","Memory Block","Michael Hill","Michael Kors","Minimaru","Miniso","MiniYama","Mister Minit","Miu Miu","Mobile Clinic World","Moncler","Muji","mycar Tyre & Auto","Myer","Nando's","National Australia Bank (NAB)","NeNe Chicken","Nespresso","New Balance","NewFactorie","Nike","Nude Lucy","Nudie Glow","Nudie Jeans","Oakley","OMI wagyu","Optus","Orlebar Brown","Oroton","Oscar Oscar Hair Salon","Palermo Perfumes","Pandora (G)","Panerai","PASPALEY","Pastore","Peter Alexander","Peter Jackson","Phuoc Thanh Bakery","Piaget","Piccolina Gelateria","Pierluigi","Platypus Shoes","Polestar","Politix","POP MART","Portmans","Pottery Barn","Pottery Barn Kids","Prada","Prime Nail Salon","Prosegur Change","PTC Phone Tech & Comm (Kiosk)","Purebaby","Puzzle Coffee","R.M.Williams","Ralph Lauren","Rebecca Vallance","Rebel","Rebel (Outside)","Red Rate Exchange","Rice Workshop","Rimowa","Ripe Maternity","Rodd & Gunn","Rolex","Roll'd","Rozzi's Italian Canteen","Saba","Saint Laurent","Salera's Jewellmasters","Samsung","Sandro","Sarah & Sebastian","Scanlan Theodore","Schnitz","Seafolly","Secret Sneaker Store","Secrets by Amaar","Seed Heritage","Sephora","Shanghai Red","Shaver Shop","Sheike","Sheridan","Shichida Education Centre","Simon Curwood Jewellers","Skechers","Soho Nails","Soho Workshop","Soul Origin","SOUTH.ST","Sportsgirl","Star Car Wash (Car Park A)","Star Car Wash (Car Park C)","Star Car Wash (Car Park E)","Starbucks","Studio K","Style Alterations","Stylerunner","Subway","Superdry","Supre","Sushi Jiro (Food Atrium)","Sushi Jiro (Near Target)","Sushi Sushi (Food Central)","Sushi Sushi (Fresh Food)","Sushi Sushi (Near Myer)","Swarovski","Swatch","Sweet As","T2","TAG Heuer","Target","Ted's Cameras","Telstra","TGI Fridays","Thailander","That's Amore Cheesery","The AFL Store","The Archive Store","The Barber Shop by Double Edged","The Beauty and Brow Parlour","The Body Shop","The Confectionist","The Cupcake Queens","The Meat & Wine Co","The North Face","The Nut Bar","Tiffany & Co.","TODCO","Tom Ford","Tommy Hilfiger","Tory Burch","Travel Money Oz","Travelex","Trinny London","Uniqlo","Unison","Universal Store","Urban Alley Brewery","Van Cleef & Arpels","Vans","Versace","Vic's Butcher & Deli","Victoria's Secret","Viktoria & Woods","Vodafone","W Cosmetics","Warhammer","Waterman Workspaces","Weekend Max Mara","West Elm","Westpac","Wine More Cellars","Winning Appliances","Witchery","Wittner Shoes","Woolworths","Yd","Yo-Chi","YSL Beauty","Zara","Zara Mens","Zimmermann"];
 
 // Shop list for hands-free shopping (Level 1). Used by the staff "log
 // request" modal; the customer ticket page (ticket.html) keeps its own copy,
