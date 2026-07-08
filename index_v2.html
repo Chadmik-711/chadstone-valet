@@ -1273,6 +1273,7 @@ body.dark-mode .scan-banner {
     <div class="header-clock" id="header-clock">11:32</div>
     <div id="header-date">03/06/26</div>
     <div id="online-indicator" style="font-size: 11px; font-weight: 600; letter-spacing: .5px; margin-top: 2px; color: #4a7c4f;">● Online</div>
+    <div id="realtime-indicator" style="font-size: 11px; font-weight: 600; letter-spacing: .5px; margin-top: 1px; color: #8a8a8a;" title="Live alerts &amp; sync status">◌ Live: connecting…</div>
   </div>
 </div>
 
@@ -11690,6 +11691,32 @@ function updateOnlineStatus() {
 window.addEventListener('online', updateOnlineStatus);
 window.addEventListener('offline', updateOnlineStatus);
 
+// Header realtime indicator. The desktop can be "Online" (internet fine) yet
+// have no realtime channel — e.g. Realtime not enabled on the entries table, or
+// the websocket dropped — which silently kills the customer pickup/bag pop-ups
+// and cross-device sync. This surfaces that at a glance. Driven by the Supabase
+// channel's subscribe() status callback (see startRealtimeSync).
+let realtimeStatus = 'connecting';
+function setRealtimeStatus(status) {
+  realtimeStatus = status;
+  const el = document.getElementById('realtime-indicator');
+  if (!el) return;
+  if (status === 'SUBSCRIBED') {
+    el.textContent = '● Live';
+    el.style.color = '#4a7c4f';
+    el.title = 'Live alerts & sync are working — customer pickup and hands-free requests pop up here instantly.';
+  } else if (status === 'connecting') {
+    el.textContent = '◌ Live: connecting…';
+    el.style.color = '#8a8a8a';
+    el.title = 'Connecting to live updates…';
+  } else {
+    // CHANNEL_ERROR · TIMED_OUT · CLOSED
+    el.textContent = '⚠ No live alerts';
+    el.style.color = '#b5651d';
+    el.title = 'Live updates are OFF — customer pickup/hands-free requests will NOT pop up here and other devices won\'t sync until you refresh. Check that Realtime is enabled for the entries table, then reload.';
+  }
+}
+
 // ═══════════════════════════════════════════════════
 // CAR PHOTO + GPS BAY LOCATION (legal protection extras)
 // ═══════════════════════════════════════════════════
@@ -12844,6 +12871,7 @@ async function hashPassword(password) {
 // ─── Real-time subscription ───
 function startRealtimeSync() {
   if (realtimeChannel) realtimeChannel.unsubscribe();
+  setRealtimeStatus('connecting');
   realtimeChannel = supa.channel('valet-changes')
     .on('postgres_changes', { event: '*', schema: 'public', table: 'entries' }, payload => {
       handleRealtimeEntryChange(payload);
@@ -12851,7 +12879,7 @@ function startRealtimeSync() {
     .on('postgres_changes', { event: '*', schema: 'public', table: 'app_settings' }, payload => {
       handleRealtimeSettingsChange(payload);
     })
-    .subscribe();
+    .subscribe(status => setRealtimeStatus(status));
 }
 
 // Print Station auto-print. Only devices with "Print Station" turned ON
