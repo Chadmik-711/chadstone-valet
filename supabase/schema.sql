@@ -264,9 +264,34 @@ revoke execute on function public.make_data_backup(text) from anon;
 grant  execute on function public.latest_backup_info()   to authenticated, service_role;
 grant  execute on function public.make_data_backup(text) to authenticated, service_role;
 
+-- ---------- REALTIME ----------
+-- The staff app subscribes to postgres_changes on `entries` and `app_settings`
+-- (startRealtimeSync) to raise the customer pickup/bag alarms and keep every
+-- device in sync live. Realtime publication membership is a PER-PROJECT setting
+-- and is NOT captured by table/RLS/function DDL — so a "structure-only" clone
+-- starts with realtime OFF, and the alarms never fire. Add both tables here
+-- (idempotent). Equivalent to Dashboard → Database → Replication → toggle these on.
+do $$
+begin
+  if not exists (select 1 from pg_publication where pubname = 'supabase_realtime') then
+    create publication supabase_realtime;
+  end if;
+  if not exists (select 1 from pg_publication_tables
+                 where pubname='supabase_realtime' and schemaname='public' and tablename='entries') then
+    alter publication supabase_realtime add table public.entries;
+  end if;
+  if not exists (select 1 from pg_publication_tables
+                 where pubname='supabase_realtime' and schemaname='public' and tablename='app_settings') then
+    alter publication supabase_realtime add table public.app_settings;
+  end if;
+end $$;
+
 -- ============================================================================
 -- AFTER running this file, do the steps in SUPABASE-SETUP.md:
 --   1. Create the shared-login row in app_config (for staff-auth).
 --   2. Deploy the staff-auth Edge Function (and optional feature functions).
 --   3. Paste the Project URL + anon key into index_v2.html (const CENTRE).
+--   4. Confirm Realtime is ON for `entries` + `app_settings` (the block above,
+--      or Dashboard → Database → Replication) — without it the pickup/bag
+--      alarms won't pop up and devices won't sync live.
 -- ============================================================================
