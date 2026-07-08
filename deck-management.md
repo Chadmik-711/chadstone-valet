@@ -1,12 +1,12 @@
-# Deck 1 — Chatswood Chase Valet: Operations & Performance
-**Audience:** Centre management (Chatswood Chase / Vicinity Centres) · **Length:** ~12 slides · **Tone:** confident, numbers-led
+# Deck 1 — Chadstone Valet: Operations & Performance
+**Audience:** Centre management (Chadstone / Vicinity Centres) · **Length:** ~12 slides · **Tone:** confident, numbers-led
 
-> **How to use in Canva:** Open Canva → *Create a design → Presentation* → **Magic Design / "Docs to Decks"** and paste this file (each `## Slide` heading becomes a slide). Or paste slide-by-slide. Apply your Brand Kit (maroon `#531620`, bronze `#a48d53`, Inter font). Replace every `[…]` with your real figures from **Reports → Management Summary**.
+> **How to use in Canva:** Open Canva → *Create a design → Presentation* → **Magic Design / "Docs to Decks"** and paste this file (each `## Slide` heading becomes a slide). Or paste slide-by-slide. Apply your Brand Kit (maroon `#262525`, bronze `#a48d53`, Inter font). Replace every `[…]` with your real figures from **Reports → Management Summary**.
 
 ---
 
 ## Slide 1 — Title
-**Chatswood Chase Valet**
+**Chadstone Valet**
 Operations & Performance Review
 - Presented by [name / role] · [month, year]
 
@@ -80,8 +80,8 @@ Operations & Performance Review
 ---
 
 ## Slide 8 — Revenue & reconciliation
-- Parking + valet fee, calculated automatically by stay tier
-- Nightly cash-up: card vs cash split, tips, outstanding flagged
+- Flat valet fee per visit (weekday $35 / weekend $55), applied automatically
+- Nightly cash-up: card vs cash split, tips, outstanding flagged, drawer reconciled
 - Car wash revenue tracked separately, with the Xtream settlement
 - Clean audit trail of every transaction
 

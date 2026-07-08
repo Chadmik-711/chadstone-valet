@@ -2209,7 +2209,7 @@ body.dark-mode .scan-banner {
 
   <div class="section rep-section" data-repgroup="customers">
     <div class="section-header">
-      <div class="section-title">Customer Stay &amp; Pricing Tiers</div>
+      <div class="section-title">Customer Stay Times</div>
     </div>
     <div id="rep-stay"><div class="empty">No completed trips in this range</div></div>
   </div>
@@ -9622,13 +9622,14 @@ function renderStaff(filtered) {
   c.innerHTML = parkedBars + outBars;
 }
 
-// Customer Stay & Pricing Tiers: bucket completed stays by the fee tiers so you
-// can see how many cars park free vs paid, and the revenue each tier brings.
+// Customer Stay Times: bucket completed stays by how long the car was on site,
+// with the revenue each duration band brought in. Chadstone charges a flat fee
+// per visit, so this is a stay-length distribution — not a pricing breakdown.
 const STAY_TIERS = [
-  { label: '0–2 hr (free)', min: 0, max: 2, col: 'var(--bronze)' },
+  { label: '0–2 hr', min: 0, max: 2, col: 'var(--bronze)' },
   { label: '2–4 hr', min: 2, max: 4, col: 'var(--green)' },
   { label: '4–7 hr', min: 4, max: 7, col: 'var(--maroon)' },
-  { label: '7+ hr (daily max)', min: 7, max: Infinity, col: 'var(--maroon-dark)' },
+  { label: '7 hr+', min: 7, max: Infinity, col: 'var(--maroon-dark)' },
 ];
 function renderStayTiers(filtered) {
   const c = document.getElementById('rep-stay');
@@ -9645,15 +9646,15 @@ function renderStayTiers(filtered) {
   });
   const total = stays.length;
   const avgHrs = stays.reduce((a, s) => a + s.hrs, 0) / total;
-  const freeCount = buckets[0].count;
-  const paidCount = total - freeCount;
+  const shortCount = buckets[0].count;            // ≤2 hr
+  const longCount = total - shortCount;           // over 2 hr
   const cards = [
     ['Completed trips', String(total), `avg ${fmtDuration(avgHrs * 3600000)} stay`, 'var(--maroon)'],
-    ['Free (≤2 hr)', String(freeCount), `${Math.round(freeCount / total * 100)}% parked free`, 'var(--bronze)'],
-    ['Paid parking', String(paidCount), `${Math.round(paidCount / total * 100)}% over 2 hr`, 'var(--green)'],
+    ['Short stays (≤2 hr)', String(shortCount), `${Math.round(shortCount / total * 100)}% under 2 hr`, 'var(--bronze)'],
+    ['Longer stays (2 hr+)', String(longCount), `${Math.round(longCount / total * 100)}% over 2 hr`, 'var(--green)'],
   ];
   const max = Math.max(1, ...buckets.map(b => b.count));
-  const bars = repHeading('Stays by pricing tier')
+  const bars = repHeading('Stays by duration')
     + buckets.map(b => repBar(b.label,
         `${b.count} car${b.count !== 1 ? 's' : ''} · ${fmtMoney(b.rev)}`,
         b.count / max, `linear-gradient(90deg,${b.col},${b.col})`)).join('');

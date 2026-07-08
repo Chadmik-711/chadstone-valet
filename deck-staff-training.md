@@ -1,13 +1,13 @@
-# Deck 2 — Valet Staff Training: Chatswood Chase
+# Deck 2 — Valet Staff Training: Chadstone
 **Audience:** Valet staff / new starters · **Length:** ~14 slides · **Tone:** clear, practical, friendly
 
-> **How to use in Canva:** *Create a design → Presentation* → **Magic Design / "Docs to Decks"**, paste this file (each `## Slide` = one slide). Apply the Brand Kit (maroon `#531620`, bronze `#a48d53`, Inter). Use the screenshots in `screenshots/manual/` for the "show me" slides. Keep it visual — staff scan, they don't read.
+> **How to use in Canva:** *Create a design → Presentation* → **Magic Design / "Docs to Decks"**, paste this file (each `## Slide` = one slide). Apply the Brand Kit (maroon `#262525`, bronze `#a48d53`, Inter). Use the screenshots in `screenshots/manual/` for the "show me" slides. Keep it visual — staff scan, they don't read.
 
 ---
 
 ## Slide 1 — Title
 **Valet Staff Training**
-Running the Chatswood Chase valet, step by step
+Running the Chadstone valet, step by step
 - [Trainer name] · [date]
 
 *Speaker notes:* Welcome. By the end you'll be able to check a car in and out, handle pickups, and use every feature confidently.
@@ -97,7 +97,7 @@ Running the Chatswood Chase valet, step by step
 ---
 
 ## Slide 10 — Checking a car OUT
-- Tap **✓ Mark Out** → review the fee (parking + $20 valet)
+- Tap **✓ Mark Out** → review the flat valet fee (weekday $35 / weekend $55)
 - Add any **validation / discount**; choose **payment** (Card is normal)
 - **Return condition:** "No new damage" or log new damage + customer acknowledges
 - **Square Terminal:** charge to the card machine; auto-checks-out on success
