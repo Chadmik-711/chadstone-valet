@@ -13151,6 +13151,7 @@ function showNextBagAlarm() {
   const cnt = Number(j.count) || 1;
   document.getElementById('bag-alarm-loc').textContent = j.location || 'Valet Desk';
   document.getElementById('bag-alarm-count').textContent = cnt + (cnt === 1 ? ' bag' : ' bags');
+  document.getElementById('bag-alarm-trolley').style.display = j.trolley ? '' : 'none';
   document.getElementById('bag-alarm-ticket').textContent = e.ticket || '—';
   document.getElementById('bag-alarm-car').textContent =
     [e.brand, e.model].filter(Boolean).join(' ') + (e.rego ? ' · ' + e.rego : '');
@@ -14665,6 +14666,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div style="font-size:11px;letter-spacing:3px;color:#6b6b6b;text-transform:uppercase">Collect from</div>
       <div id="bag-alarm-loc" style="font-family:'Inter',sans-serif;font-size:30px;font-weight:bold;color:var(--maroon);line-height:1.2;margin:8px 0">—</div>
       <div id="bag-alarm-count" style="font-size:15px;color:#333333;font-weight:600">—</div>
+      <div id="bag-alarm-trolley" style="display:none;margin-top:10px;font-size:15px;font-weight:700;color:#fff;background:var(--maroon);border-radius:6px;padding:7px 12px">🛒 Trolley requested — bring a trolley</div>
     </div>
 
     <div id="bag-alarm-car" style="font-size:17px;color:#333333;margin-bottom:4px">—</div>
