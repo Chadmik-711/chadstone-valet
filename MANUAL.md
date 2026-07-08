@@ -108,7 +108,7 @@ Below the list is a **Checked Out Today** section.
 > **Overstay alerts:** a banner at the top of Active Cars lists any cars left **overnight** (still on site since before the last closing time) or **over a set number of hours** (default 6, adjustable in *Settings → Car Park → Overstay Alert*). Tap a car's chip to go straight to its checkout.
 
 ## 8. Checking a car OUT & payment
-Tap **✓ Mark Out**. The window shows duration and the fee (parking + the $20 valet fee). Before confirming:
+Tap **✓ Mark Out**. The window shows duration and the flat valet fee (weekday $35 / weekend $55). Before confirming:
 
 - **Discounts & validations** — add a store validation or a %/$ discount; each is recorded for the manager (Reports → Payments → Discounts).
 - **Payment status:** **Paid** (choose method — Card is the norm here, Cash, EFTPOS or Other), **Unpaid** (shows as outstanding), **Complimentary** (free parking; a car wash is still charged), **Charged to account/shop** (settle later).
@@ -197,24 +197,15 @@ Export any report to **CSV** or a print-ready **PDF**.
 - **Square Terminal:** card payments sent from checkout to a paired terminal; a successful charge checks the car out. Set the Device ID in Settings → Devices.
 
 ## 16. Pricing reference
-**Parking (valet)** — flat **$20 valet fee** plus parking time after the first 2 hours free:
+**Parking (valet)** — a **flat valet fee per visit**, the same whether the car stays one hour or all day. No time limit, no free window, no daily-max tiers:
 
-| Duration | Parking fee |
+| When | Valet fee (per visit) |
 |---|---|
-| 0 – 2 hrs | FREE |
-| 2 – 2.5 hrs | $3 |
-| 2.5 – 3 hrs | $5 |
-| 3 – 3.5 hrs | $7 |
-| 3.5 – 4 hrs | $10 |
-| 4 – 4.5 hrs | $20 |
-| 4.5 – 5 hrs | $25 |
-| 5 – 5.5 hrs | $30 |
-| 5.5 – 6 hrs | $35 |
-| 6 – 6.5 hrs | $40 |
-| 6.5 – 7 hrs | $45 |
-| 7+ hrs (daily max) | $80 |
+| Weekday (Mon – Fri) | $35 |
+| Weekend & public holidays | $55 |
+| High-demand periods (Black Friday week → weekend after Boxing Day) | $60 |
 
-Total = valet fee + parking, calculated automatically at checkout.
+The app auto-applies the weekday or weekend rate by the day; public holidays and the $60 high-demand rate are staff-overridden at checkout. A car wash, if added, is charged on top. Loyalty: every 11 paid visits = 1 free (by number plate), not yet automated.
 
 **Car wash (Xtream Car Care)**
 
@@ -248,7 +239,7 @@ Paint correction, paint protection and other specialty services are quote-only.
 | Comp | Complimentary — parking given free. |
 | ETA | Minutes until a customer wants their car (queue). |
 | Key tag | Printed ticket on the keys, carrying the QR code. |
-| Validation | A store-sponsored discount on the parking fee. |
+| Validation | A store-sponsored discount on the valet fee. |
 | VIP | A flagged customer who gets a star and priority handling. |
 
 ---
