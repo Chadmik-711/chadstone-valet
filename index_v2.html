@@ -7164,6 +7164,18 @@ function canHandleBags(user) {
   if (!user) return false;
   return bagStaffList().includes(user.username);
 }
+// The counter "desk" PC = an admin device in the full Desktop view (staff phones
+// are locked to Mobile). The desk ALWAYS receives hands-free alerts so a request
+// can't be missed at the counter, even when its login isn't on the bag-staff
+// list. Runners still opt in per-staff via canHandleBags().
+function isDeskDevice() {
+  return !!(currentUser && currentUser.role === 'admin') && getUiMode() === 'desktop';
+}
+// Effective device-level gate for the bag alarm + banner: this login can handle
+// bags, OR this is the desk PC (with hands-free on).
+function bagAlertsHere() {
+  return canHandleBags() || (handsFreeOn() && isDeskDevice());
+}
 async function toggleBagStaff(username) {
   const list = bagStaffList().slice();
   const i = list.indexOf(username);
@@ -7275,8 +7287,8 @@ function updateBagBadge(count) {
   // The menu-icon count shows for everyone (just info: how many bag jobs are open).
   const badge = document.getElementById('bag-tab-badge');
   if (badge) { badge.textContent = count; badge.style.display = count > 0 ? '' : 'none'; }
-  // The intrusive banner + alarm stay limited to admins/hands-free-enabled staff.
-  const allowed = canHandleBags();
+  // The intrusive banner + alarm go to hands-free-enabled staff and the desk PC.
+  const allowed = bagAlertsHere();
   // Live banner: show when there are unassigned ('requested') jobs.
   const banner = document.getElementById('bag-banner');
   if (banner) {
@@ -13093,7 +13105,7 @@ function seedBagAlertBaseline() {
 // job we haven't seen yet. Replaces the old per-entry alarm; safe to call after
 // any change (deduped by job key).
 function scanBagAlarms() {
-  if (!canHandleBags()) return;             // only admins + hands-free staff are alerted
+  if (!bagAlertsHere()) return;             // hands-free staff + the desk PC are alerted
   let added = false;
   activeBagJobs().forEach(({ e, j }) => {
     if (j.status !== 'requested') return;
