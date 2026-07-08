@@ -1287,8 +1287,7 @@ body.dark-mode .scan-banner {
   <div class="header-date">
     <div class="header-clock" id="header-clock">11:32</div>
     <div id="header-date">03/06/26</div>
-    <div id="online-indicator" style="font-size: 11px; font-weight: 600; letter-spacing: .5px; margin-top: 2px; color: #4a7c4f;">● Online</div>
-    <div id="realtime-indicator" style="font-size: 11px; font-weight: 600; letter-spacing: .5px; margin-top: 1px; color: #8a8a8a;" title="Live alerts &amp; sync status">◌ Live: connecting…</div>
+    <div id="realtime-indicator" style="font-size: 11px; font-weight: 600; letter-spacing: .5px; margin-top: 2px; color: #8a8a8a;" title="Live alerts &amp; sync status">◌ Live: connecting…</div>
   </div>
 </div>
 
@@ -11736,45 +11735,41 @@ document.addEventListener('visibilitychange', async () => {
 // ═══════════════════════════════════════════════════
 function updateOnlineStatus() {
   const banner = document.getElementById('offline-banner');
-  const indicator = document.getElementById('online-indicator');
-  if (navigator.onLine) {
-    if (banner) banner.style.display = 'none';
-    if (indicator) {
-      indicator.textContent = '● Online';
-      indicator.style.color = '#4a7c4f';
-    }
-  } else {
-    if (banner) banner.style.display = 'block';
-    if (indicator) {
-      indicator.textContent = 'Offline';
-      indicator.style.color = '#b5651d';
-    }
-    hapticFeedback('long');
-  }
+  if (banner) banner.style.display = navigator.onLine ? 'none' : 'block';
+  if (!navigator.onLine) hapticFeedback('long');
+  renderRealtimeIndicator();   // the single header light also reflects offline
 }
 window.addEventListener('online', updateOnlineStatus);
 window.addEventListener('offline', updateOnlineStatus);
 
-// Header realtime indicator. The desktop can be "Online" (internet fine) yet
-// have no realtime channel — e.g. Realtime not enabled on the entries table, or
-// the websocket dropped — which silently kills the customer pickup/bag pop-ups
-// and cross-device sync. This surfaces that at a glance. Driven by the Supabase
-// channel's subscribe() status callback (see startRealtimeSync).
+// Single header status light. Combines connectivity + the Supabase realtime
+// channel into one signal, since "Live" is what actually matters: green means
+// you're online AND the customer pickup/bag pop-ups + cross-device sync work.
+// Offline, a dropped websocket, or Realtime not enabled on the entries table all
+// surface here. Driven by the channel's subscribe() status (see startRealtimeSync)
+// and the online/offline events.
 let realtimeStatus = 'connecting';
 function setRealtimeStatus(status) {
   realtimeStatus = status;
+  renderRealtimeIndicator();
+}
+function renderRealtimeIndicator() {
   const el = document.getElementById('realtime-indicator');
   if (!el) return;
-  if (status === 'SUBSCRIBED') {
+  if (!navigator.onLine) {
+    el.textContent = '⚠ Offline';
+    el.style.color = '#b5651d';
+    el.title = 'No internet connection. Entries save on this device and sync automatically once you\'re back online.';
+  } else if (realtimeStatus === 'SUBSCRIBED') {
     el.textContent = '● Live';
     el.style.color = '#4a7c4f';
-    el.title = 'Live alerts & sync are working — customer pickup and hands-free requests pop up here instantly.';
-  } else if (status === 'connecting') {
+    el.title = 'Online and live — customer pickup and hands-free requests pop up here instantly, and every device is in sync.';
+  } else if (realtimeStatus === 'connecting') {
     el.textContent = '◌ Live: connecting…';
     el.style.color = '#8a8a8a';
     el.title = 'Connecting to live updates…';
   } else {
-    // CHANNEL_ERROR · TIMED_OUT · CLOSED
+    // CHANNEL_ERROR · TIMED_OUT · CLOSED (online, but the realtime channel is down)
     el.textContent = '⚠ No live alerts';
     el.style.color = '#b5651d';
     el.title = 'Live updates are OFF — customer pickup/hands-free requests will NOT pop up here and other devices won\'t sync until you refresh. Check that Realtime is enabled for the entries table, then reload.';
