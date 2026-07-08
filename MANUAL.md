@@ -132,14 +132,14 @@ Customers leave purchases with stores; valet collects everything and loads the c
 The Bags badge shows open jobs.
 
 ## 10. Car wash service
-Valet customers can add a car wash from **Xtream Car Care** in the centre. Valet handles it end-to-end and the customer pays on the same valet bill.
+Valet customers can add a car wash from **Star Car Wash** in the centre. Valet handles it end-to-end and the customer pays on the same valet bill.
 
 1. **Add the wash** — at check-in (the "Car wash" picker) or anytime parked (the droplet icon on Active Cars). Choose package and size (Small = sedan/hatch, Large = SUV/4WD); the price fills in automatically.
-2. **Take it to Xtream** — valet drives it over, tap **Taken to car wash** (chip turns maroon "At car wash").
+2. **Take it to Star Car Wash** — valet drives it over, tap **Taken to car wash** (chip turns maroon "At car wash").
 3. **Bring it back** — tap **✓ Back from wash** (chip turns green "Washed — back").
 4. **Customer pays once** — at checkout the wash is its own line, added to the parking total.
 
-> **Settling with Xtream:** wash money is tracked separately from parking. Enter your **wholesale cost** per package in *Settings → Car Wash*; the *Reports → Payments → Car Wash* panel then shows, per service, what you charged, what you owe Xtream, and your margin.
+> **Settling with Star Car Wash:** wash money is tracked separately from parking. Enter your **wholesale cost** per package in *Settings → Car Wash*; the *Reports → Payments → Car Wash* panel then shows, per service, what you charged, what you owe Star Car Wash, and your margin.
 
 ![Settings — Car Wash costs](screenshots/manual/settings-carwash.png)
 
@@ -182,7 +182,7 @@ Export any report to **CSV** or a print-ready **PDF**.
 | **Staff & Access** | Staff logins/passwords and security. |
 | **Car Park** | Capacity (open spots) for the occupancy gauge, and the **overstay alert** threshold (hours). |
 | **Retailers** | Store list for validations and charge-to-shop. |
-| **Car Wash** | Your wholesale cost per Xtream package/size, so the Car Wash report shows your margin. Customer always pays the retail menu price. |
+| **Car Wash** | Your wholesale cost per Star Car Wash package/size, so the Car Wash report shows your margin. Customer always pays the retail menu price. |
 | **Alerts & Messaging** | Customer SMS (QR ticket via ClickSend) and the end-of-day close reminder. |
 | **Devices** | Key-tag printer (BIXOLON via WebPrint), Square Terminal ID, scanner, keep-screen-awake. |
 | **Data & Backup** | Export/import data; cloud-sync status. |
@@ -207,17 +207,18 @@ Export any report to **CSV** or a print-ready **PDF**.
 
 The app auto-applies the weekday or weekend rate by the day; public holidays and the $60 high-demand rate are staff-overridden at checkout. A car wash, if added, is charged on top. Loyalty: every 11 paid visits = 1 free (by number plate), not yet automated.
 
-**Car wash (Xtream Car Care)**
+**Car wash (Star Car Wash — Car Park A)**
 
 | Service | Small (sedan/hatch) | Large (SUV/4WD) |
 |---|---|---|
-| Xtream Wash (steam wash) | $75 | $95 |
-| Hand Polish (+wax & polish) | $100 | $130 |
-| Interior Detailing | $195 | $245 |
-| Semi Detailing | $250 | $320 |
-| Full Detailing | $295 | $420 |
+| Express Wash | $40 | $50 |
+| Platinum Wash | $60 | $75 |
+| Star Polish | $99 | $120 |
+| Interior Detail | $199 | $269 |
+| Full Detail | $299 | $399 |
+| Paint Protection | $499 | $499 |
 
-Paint correction, paint protection and other specialty services are quote-only.
+Small = Sedan, Large = SUV/4WD (Star's menu rates). X-Large / XXL vehicles cost more — override at checkout. Star Car Wash · Car Park A · 03 9695 5406 · starcarwash.com.au/centres/chadstone-1.
 
 ## 17. Troubleshooting
 | Problem | What to do |

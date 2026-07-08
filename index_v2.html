@@ -1597,15 +1597,16 @@ body.dark-mode .scan-banner {
     <div class="form-grid mobile-hide-now">
       <div class="form-field">
         <label class="form-label">Car wash (optional)
-          <span style="font-weight:normal;color:var(--text-muted);text-transform:none;letter-spacing:0;font-size:11px;margin-left:6px">Xtream Car Care · added to bill</span>
+          <span style="font-weight:normal;color:var(--text-muted);text-transform:none;letter-spacing:0;font-size:11px;margin-left:6px">Star Car Wash · added to bill</span>
         </label>
         <select id="f-wash-service" class="form-select" onchange="updateWashPriceHint('f')">
           <option value="">— No car wash —</option>
-          <option value="xtream">Xtream Wash</option>
-          <option value="hand_polish">Hand Polish</option>
-          <option value="interior">Interior Detailing</option>
-          <option value="semi">Semi Detailing</option>
-          <option value="full">Full Detailing</option>
+          <option value="express">Express Wash</option>
+          <option value="platinum">Platinum Wash</option>
+          <option value="polish">Star Polish</option>
+          <option value="interior">Interior Detail</option>
+          <option value="full">Full Detail</option>
+          <option value="paint">Paint Protection</option>
         </select>
       </div>
       <div class="form-field">
@@ -2200,7 +2201,7 @@ body.dark-mode .scan-banner {
   <div class="section rep-section" data-repgroup="payments">
     <div class="section-header">
       <div class="section-title">Car Wash</div>
-      <div style="font-size:11px;color:var(--text-muted);font-style:italic">Xtream Car Care · paid on the valet bill, settle with Xtream separately</div>
+      <div style="font-size:11px;color:var(--text-muted);font-style:italic">Star Car Wash · paid on the valet bill, settle with Star separately</div>
     </div>
     <div id="rep-carwash"><div class="empty">No car washes in this range</div></div>
   </div>
@@ -2625,10 +2626,10 @@ body.dark-mode .scan-banner {
 
   <div class="section set-section" data-setgroup="carwash">
     <div class="section-header">
-      <div class="section-title">Car Wash — Xtream Costs</div>
+      <div class="section-title">Car Wash — Star Car Wash Costs</div>
     </div>
     <div style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:12px">
-      The <strong>customer pays the retail price</strong> (shown for reference). Enter <strong>your wholesale cost</strong> — what you owe Xtream per wash — so the Car Wash report can show your margin. Leave a cost blank if it isn't agreed yet. Synced to all devices; applied to new washes from now on.
+      The <strong>customer pays the retail price</strong> (shown for reference). Enter <strong>your wholesale cost</strong> — what you owe Star Car Wash per wash — so the Car Wash report can show your margin. Leave a cost blank if it isn't agreed yet. Synced to all devices; applied to new washes from now on.
     </div>
     <div id="wash-cost-table"></div>
     <button class="btn btn-primary" onclick="saveWashCost()" style="margin-top:14px">Save Car Wash Costs</button>
@@ -3283,19 +3284,22 @@ function fmtMoney(amount) {
 }
 
 // ═══════════════════════════════════════════════════
-// CAR WASH — Xtream Car Care (in-centre)
+// CAR WASH — Star Car Wash (Chadstone, Car Park A)
 // Customer pays the menu price on the valet bill; valet drives the car to/from
-// Xtream and settles with them separately. Small = sedan/hatch, Large = SUV/4WD.
+// Star Car Wash and settles with them separately. Small = sedan/hatch,
+// Large = SUV/4WD (Star's X-Large/XXL sizes → override the price at checkout).
+// Menu: starcarwash.com.au/centres/chadstone-1 · 03 9695 5406.
 // An entry's carWash record:
 //   { service, size, price, status, requestedAt, doneAt, settledAt, settledBy }
-// status: 'requested' (booked) → 'at_wash' (with Xtream) → 'ready' (back, clean)
+// status: 'requested' (booked) → 'at_wash' (with Star) → 'ready' (back, clean)
 // ═══════════════════════════════════════════════════
 const WASH_PACKAGES = [
-  { key: 'xtream',      name: 'Xtream Wash',        small: 75,  large: 95  },
-  { key: 'hand_polish', name: 'Hand Polish',        small: 100, large: 130 },
-  { key: 'interior',    name: 'Interior Detailing', small: 195, large: 245 },
-  { key: 'semi',        name: 'Semi Detailing',     small: 250, large: 320 },
-  { key: 'full',        name: 'Full Detailing',     small: 295, large: 420 },
+  { key: 'express',   name: 'Express Wash',     small: 40,  large: 50  },
+  { key: 'platinum',  name: 'Platinum Wash',    small: 60,  large: 75  },
+  { key: 'polish',    name: 'Star Polish',      small: 99,  large: 120 },
+  { key: 'interior',  name: 'Interior Detail',  small: 199, large: 269 },
+  { key: 'full',      name: 'Full Detail',      small: 299, large: 399 },
+  { key: 'paint',     name: 'Paint Protection', small: 499, large: 499 },
 ];
 const WASH_STATUS_LABELS = { requested: 'Wash booked', at_wash: 'At car wash', ready: 'Washed — back' };
 function washPackage(key) { return WASH_PACKAGES.find(p => p.key === key) || null; }
@@ -3305,7 +3309,7 @@ function washLabel(cw) {
   const p = washPackage(cw.service);
   return (p ? p.name : cw.service) + (cw.size === 'large' ? ' (L)' : ' (S)');
 }
-// Wholesale cost owed to Xtream per package/size, set by the manager in
+// Wholesale cost owed to Star Car Wash per package/size, set by the manager in
 // Settings → Car Wash (cloudSettings.washCost = { service: {small, large} }).
 function getWashCost(service, size) {
   const t = (typeof cloudSettings !== 'undefined' && cloudSettings && cloudSettings.washCost) || null;
@@ -4954,7 +4958,7 @@ function confirmCheckout() {
   if (incidentRec.condition === 'damage') cloudAudit('return_damage', 'entry', e.id, { ticket: e.ticket, ack: incidentRec.ack });
   // Car wash is charged on top of the parking/valet fee and paid on this same
   // bill; record when it was collected (kept separate from totalFee so parking
-  // revenue stays clean and the Xtream settlement is easy to total).
+  // revenue stays clean and the Star Car Wash settlement is easy to total).
   if (e.carWash && e.carWash.service) e.carWash.paidAt = e.timeOut;
   e.parkingFee = payStatus === 'comp' ? 0 : parkingFee;
   e.valetFee = payStatus === 'comp' ? 0 : valetFee;
@@ -5402,7 +5406,7 @@ function saveLoyaltySettings() {
   if (typeof quickToast === 'function') quickToast(enabled ? ('✓ Loyalty on — free valet every ' + cfg.threshold + ' visits') : '✓ Loyalty rewards turned off');
   try { const cv = document.getElementById('view-customers'); if (cv && cv.classList.contains('active')) renderCustomers(); } catch (e) {}
 }
-// Car wash wholesale (Xtream) cost editor — one row per package, Small + Large.
+// Car wash wholesale (Star Car Wash) cost editor — one row per package, Small + Large.
 function renderWashSettings() {
   const c = document.getElementById('wash-cost-table');
   if (!c) return;
@@ -9722,7 +9726,7 @@ function renderRepeatCustomers(filtered) {
 }
 
 // Car Wash: washes in range — collected vs still on site — with what you owe
-// Xtream (cost) and your margin, plus a per-service settlement table.
+// Star Car Wash (cost) and your margin, plus a per-service settlement table.
 function renderCarWash(filtered) {
   const c = document.getElementById('rep-carwash');
   if (!c) return;
@@ -9755,7 +9759,7 @@ function renderCarWash(filtered) {
   const cards = [
     ['Washes', String(washes.length), `${collected.length} collected · ${pending.length} on site`, 'var(--maroon)'],
     ['Charged (collected)', fmtMoney(collectedTotal), 'paid by customers', 'var(--green)'],
-    ['Owed to Xtream', haveCosts ? fmtMoney(costTotal) : '—', haveCosts ? `cost of ${costKnown} wash${costKnown !== 1 ? 'es' : ''}` : 'set costs in Settings → Car Wash', 'var(--maroon)'],
+    ['Owed to Star', haveCosts ? fmtMoney(costTotal) : '—', haveCosts ? `cost of ${costKnown} wash${costKnown !== 1 ? 'es' : ''}` : 'set costs in Settings → Car Wash', 'var(--maroon)'],
     ['Your margin', haveCosts ? fmtMoney(marginTotal) : '—', haveCosts ? 'charged − cost' : 'enter wholesale costs', 'var(--bronze)'],
   ];
   if (pendingTotal) cards.push(['Still on site', fmtMoney(pendingTotal), `${pending.length} not checked out`, 'var(--bronze)']);
@@ -9791,7 +9795,7 @@ function renderCarWash(filtered) {
       + `<tbody>${rows}${totalRow}</tbody></table></div>`
     : '';
 
-  let note = `<div style="margin-top:14px;font-size:12px;color:var(--text-muted)">Customers pay washes on the valet bill (on top of parking). “Owed to Xtream” is your wholesale cost — settle it with Xtream separately; the margin is yours.`;
+  let note = `<div style="margin-top:14px;font-size:12px;color:var(--text-muted)">Customers pay washes on the valet bill (on top of parking). “Owed to Star” is your wholesale cost — settle it with Star Car Wash separately; the margin is yours.`;
   if (unknownCost > 0) note += ` <b>${unknownCost} collected wash${unknownCost !== 1 ? 'es have' : ' has'} no cost set</b> (marked *) — add them in Settings → Car Wash.`;
   note += '</div>';
   c.innerHTML = repCards(cards) + table + note;

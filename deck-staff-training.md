@@ -121,7 +121,7 @@ Running the Chadstone valet, step by step
 
 ## Slide 12 — Car wash
 1. **Add** the wash (check-in or the droplet on Active Cars) — pick service + size
-2. **Taken to car wash** when you drive it to Xtream
+2. **Taken to car wash** when you drive it to Star Car Wash
 3. **✓ Back from wash** when it returns
 4. Customer **pays on the same bill** at checkout
 

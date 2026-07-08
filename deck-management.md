@@ -82,7 +82,7 @@ Operations & Performance Review
 ## Slide 8 — Revenue & reconciliation
 - Flat valet fee per visit (weekday $35 / weekend $55), applied automatically
 - Nightly cash-up: card vs cash split, tips, outstanding flagged, drawer reconciled
-- Car wash revenue tracked separately, with the Xtream settlement
+- Car wash revenue tracked separately, with the Star Car Wash settlement
 - Clean audit trail of every transaction
 
 *Speaker notes:* Reassure on financial control and transparency — the drawer reconciles every night.
@@ -92,7 +92,7 @@ Operations & Performance Review
 
 ## Slide 9 — Added services (incremental value)
 - **Hands-free shopping** — bags collected from stores, loaded into the car
-- **Car wash concierge** — Xtream wash added to the valet bill; we handle transport both ways
+- **Car wash concierge** — Star Car Wash wash added to the valet bill; we handle transport both ways
 - Both lift the experience *and* generate incremental revenue/margin
 
 *Speaker notes:* Position these as differentiators that a standard car park can't offer.
