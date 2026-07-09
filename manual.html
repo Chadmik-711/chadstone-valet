@@ -172,10 +172,12 @@
   <h2 id="pickup">5. Returning a car (Quick Pickup)</h2>
   <p>When a customer comes back, use <b>Quick Pickup</b> to find their car instantly:</p>
   <ul>
-    <li><b>Scan the key tag / their QR ticket</b> — the camera reads it and jumps straight to the car.</li>
+    <li><b>Scan their QR at the counter</b> — point the USB scanner gun at the customer's QR ticket (on their phone or a printout) and the car's bay pops up instantly. No need to click into a box first; the desktop is always listening for a scan.</li>
+    <li><b>Scan the key tag / their QR ticket with the camera</b> — on a tablet or phone, the camera reads it and jumps straight to the car.</li>
     <li><b>Search</b> by ticket number, name, plate or bay.</li>
   </ul>
   <p>The card shows the bay, how long the car's been here and the fee due. From here you can go straight to checkout. You can also use the global search box in the top bar from any screen.</p>
+  <div class="note"><b>Counter scanner gun:</b> use a <b>2D imager</b> (e.g. Zebra DS2208) plugged into the desktop by USB — a 1D laser scanner can't read a QR off a phone screen. It types the ticket number and the pickup card opens automatically.</div>
   <figure class="shot"><img src="screenshots/manual/quick-pickup.png" alt="Quick Pickup screen"><figcaption><b>Quick Pickup</b> — search or scan to find a car; requested cars show an arrival badge and pickup-status buttons.</figcaption></figure>
   <div class="note"><b>Lost ticket?</b> Tap <span class="pill">🎫 Lost ticket</span> on Quick Pickup. Search the on-site cars by name, plate or phone, confirm the customer's identity (match at least two details, or check photo ID), then release — the release is logged against your login for accountability.</div>
 
@@ -310,7 +312,7 @@
   <h4>Key-tag printer (BIXOLON)</h4>
   <p>Key tags print to a BIXOLON SPP-R200III through the WebPrint bridge app on the device. A tag prints automatically on check-in; you can reprint from the car's row. Set the printer name and connection in Settings → Devices.</p>
   <h4>QR / key-tag scanner</h4>
-  <p>The camera reads the QR code on a key tag or the customer's ticket to find a car instantly. The scanner library loads the first time you open it. Allow camera access when the browser asks.</p>
+  <p>Two ways to scan. On a tablet or phone, the <b>camera</b> reads the QR on a key tag or the customer's ticket (the scanner library loads the first time you open it — allow camera access when the browser asks). At the counter, a <b>USB scanner gun</b> plugged into the desktop does the same hands-free — the app is always listening, so a scan opens the car straight away. Use a <b>2D imager</b> (e.g. Zebra DS2208) so it can read a QR off a phone screen.</p>
   <h4>Number-plate scan (OCR)</h4>
   <p>On the check-in form you can photograph the plate to read it automatically instead of typing. It tries a fast cloud read first and falls back to on-device reading offline.</p>
   <h4>Customer SMS (ClickSend)</h4>
