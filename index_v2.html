@@ -50,13 +50,6 @@
    lines (e.g. Customer Name's "★ VIP customer" line), so the boxes line up. */
 #view-new-entry .form-field > .form-input,
 #view-new-entry .form-field > .form-select{ margin-top:auto; }
-/* The Phone "auto-filled" hint sits BELOW the answer box but must not stretch the
-   grid cell — otherwise the margin-top:auto above shoves the phone input up and it
-   stops lining up with the rest of the row. Float it out of flow and reserve a bit
-   of room under the row so it doesn't overlap the Time In / Attendant row below. */
-#view-new-entry .form-field{ position:relative; }
-#view-new-entry .autofill-hint{ position:absolute; top:100%; left:0; right:0; }
-#view-new-entry .ne-main-row:has(.autofill-hint:not([style*="none"])){ margin-bottom:46px; }
 /* Main New Entry row (Brand · Model · Customer · Phone · Colour · Bay): on wide
    screens give Customer Name room for the "★ VIP" label and keep the short-answer
    fields (Phone, Colour, Parking Bay) narrower so nothing overlaps. */
@@ -419,10 +412,6 @@ body.dark-mode .form-input.autofilled{
   background:#3a2f12;
   border-color:#6b6b6b;
 }
-.autofill-hint{
-  font-size:11px;color:#9a6a00;font-weight:600;margin-top:4px;line-height:1.3;
-}
-body.dark-mode .autofill-hint{color:#6b6b6b}
 
 /* ─── BUTTON ─── */
 .btn{
@@ -1535,7 +1524,6 @@ body.dark-mode .scan-banner {
       <div class="form-field">
         <label class="form-label">Phone<span class="required">*</span></label>
         <input type="tel" id="f-phone" class="form-input" placeholder="e.g. 0412 345 678" autocomplete="off">
-        <div class="autofill-hint" id="phone-autofill-hint" style="display:none">↩ Auto-filled from last visit — check it's the customer's current number before saving.</div>
       </div>
       <div class="form-field">
         <label class="form-label">Colour</label>
@@ -11418,18 +11406,10 @@ const AUTOFILL_FIELDS = ['f-name', 'f-phone', 'f-brand', 'f-model', 'f-colour'];
 function markAutofilled(id) {
   const el = document.getElementById(id);
   if (el) el.classList.add('autofilled');
-  if (id === 'f-phone') {
-    const hint = document.getElementById('phone-autofill-hint');
-    if (hint) hint.style.display = '';
-  }
 }
 function clearAutofillMark(id) {
   const el = document.getElementById(id);
   if (el) el.classList.remove('autofilled');
-  if (id === 'f-phone') {
-    const hint = document.getElementById('phone-autofill-hint');
-    if (hint) hint.style.display = 'none';
-  }
 }
 function clearAllAutofillMarks() { AUTOFILL_FIELDS.forEach(clearAutofillMark); }
 AUTOFILL_FIELDS.forEach(id => {
