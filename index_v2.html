@@ -50,6 +50,13 @@
    lines (e.g. Customer Name's "★ VIP customer" line), so the boxes line up. */
 #view-new-entry .form-field > .form-input,
 #view-new-entry .form-field > .form-select{ margin-top:auto; }
+/* The Phone "auto-filled" hint sits BELOW the answer box but must not stretch the
+   grid cell — otherwise the margin-top:auto above shoves the phone input up and it
+   stops lining up with the rest of the row. Float it out of flow and reserve a bit
+   of room under the row so it doesn't overlap the Time In / Attendant row below. */
+#view-new-entry .form-field{ position:relative; }
+#view-new-entry .autofill-hint{ position:absolute; top:100%; left:0; right:0; }
+#view-new-entry .ne-main-row:has(.autofill-hint:not([style*="none"])){ margin-bottom:46px; }
 /* Main New Entry row (Brand · Model · Customer · Phone · Colour · Bay): on wide
    screens give Customer Name room for the "★ VIP" label and keep the short-answer
    fields (Phone, Colour, Parking Bay) narrower so nothing overlaps. */
